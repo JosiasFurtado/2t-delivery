@@ -8,7 +8,7 @@ interface AddressChangerProps {
 }
 
 const AddressChanger: React.FC<AddressChangerProps> = ({ style }) => {
-  const mockStreet = 'Rua Lorem Ipsum'
+  const mockStreet = 'Rua Lorem Ipsumasdasdsadas'
   return (
     <TouchableOpacity
       style={[
@@ -17,8 +17,12 @@ const AddressChanger: React.FC<AddressChangerProps> = ({ style }) => {
       ]}
     >
       <Octicons name="location" size={16} color={getColor('primary-500')} />
-      <Text style={tailwind('ml-1 font-medium w-32')}>
-        {mockStreet.slice(0, 12) + '...'}
+      <Text
+        numberOfLines={1}
+        lineBreakMode="tail"
+        style={tailwind('ml-1 font-medium pr-2')}
+      >
+        {mockStreet}
       </Text>
     </TouchableOpacity>
   )

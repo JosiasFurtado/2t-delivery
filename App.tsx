@@ -7,6 +7,8 @@ import 'moment/locale/pt-br'
 Text.defaultProps = Text.defaultProps || {}
 Text.defaultProps.allowFontScaling = false
 
+// console.disableYellowBox = true
+
 const App: React.FC = () => {
   moment().locale('pt-br')
   return (
