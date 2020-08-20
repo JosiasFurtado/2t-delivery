@@ -6,4 +6,10 @@ export type AdvertisingCarouselItemType = {
   description?: string
 }
 
+export type TutorialCarouselItemType = {
+  id: number
+  image: Element
+  title: string
+  description: string
+}
 export type LoginModals = 'signin' | 'signup' | 'forgotMyPassword'
