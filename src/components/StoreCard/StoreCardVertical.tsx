@@ -16,7 +16,7 @@ interface StoreCardVerticalProps {
 
 const StoreCardVertical: React.FC<StoreCardVerticalProps> = ({ style }) => (
   <TouchableOpacity
-    style={[style, tailwind('bg-white shadow-md rounded-lg w-48 px-3 py-2')]}
+    style={[style, tailwind('bg-white shadow-md rounded-lg w-38 px-2 py-2')]}
   >
     <Image
       style={[

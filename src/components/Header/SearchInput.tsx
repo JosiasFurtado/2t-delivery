@@ -5,9 +5,10 @@ import { Ionicons } from '@expo/vector-icons'
 
 interface SearchInputProps {
   readonly style?: StyleProp<ViewStyle>
+  readonly searchProducts?: boolean
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ style }) => {
+const SearchInput: React.FC<SearchInputProps> = ({ style, searchProducts }) => {
   const [searchValue, setSearchValue] = useState('')
 
   const handleSearch = () => {
@@ -31,7 +32,11 @@ const SearchInput: React.FC<SearchInputProps> = ({ style }) => {
         autoCorrect={false}
         autoCapitalize="none"
         keyboardType="default"
-        placeholder="Busque aqui por seus produtos"
+        placeholder={
+          searchProducts
+            ? 'Busque aqui por seus produtos'
+            : 'Busque o estabelecimento'
+        }
         placeholderTextColor="#fcfcfc"
         onChangeText={e => setSearchValue(e)}
         value={searchValue}

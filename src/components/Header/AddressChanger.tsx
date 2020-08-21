@@ -13,7 +13,7 @@ const AddressChanger: React.FC<AddressChangerProps> = ({ style }) => {
     <TouchableOpacity
       style={[
         style,
-        tailwind('bg-white rounded w-32 py-1 px-1 flex-row items-center'),
+        tailwind('bg-white z-10 rounded w-32 py-1 px-1 flex-row items-center'),
       ]}
     >
       <Octicons name="location" size={16} color={getColor('primary-500')} />

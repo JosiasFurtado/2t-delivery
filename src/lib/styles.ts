@@ -39,6 +39,9 @@ const { tailwind, getColor } = create({
   'border-primary-500': {
     borderColor: '#019853',
   },
+  'w-38': {
+    width: 185,
+  },
   'shadow-sm': {
     shadowColor: '#000',
     shadowOffset: {
@@ -71,6 +74,17 @@ const { tailwind, getColor } = create({
     shadowRadius: 2.62,
 
     elevation: 4,
+  },
+  'shadow-t': {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -4,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 18,
   },
 })
 export { tailwind, getColor }
