@@ -12,5 +12,11 @@ export type TutorialCarouselItemType = {
   title: string
   description: string
 }
+
+export type ItemMock = {
+  id: number
+}
+
 export type LoginModals = 'signin' | 'signup' | 'forgotMyPassword'
+
 export type ProfileModals = 'address' | 'help'

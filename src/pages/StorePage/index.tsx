@@ -6,26 +6,16 @@ import {
   SafeAreaView,
   ViewStyle,
   Text,
-  FlatList,
 } from 'react-native'
 import { tailwind } from 'lib/styles'
 import Header from 'components/Header'
 import TaxWarn from 'components/styledComponents/TaxWarn'
-import ItemCard from 'components/ItemCard'
+import ItemList from 'components/List/ItemList'
+
+const storesMock = [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
 
 interface StorePageProps {
   readonly style?: StyleProp<ViewStyle>
-}
-
-const storesMock: itemMock[] = [
-  { id: 0 },
-  { id: 1 },
-  { id: 2 },
-  { id: 3 },
-  { id: 4 },
-]
-type itemMock = {
-  id: number
 }
 
 const StorePage: React.FC<StorePageProps> = () => {
@@ -48,19 +38,7 @@ const StorePage: React.FC<StorePageProps> = () => {
             <Text style={tailwind('text-lg text-primary-500 mb-2')}>
               Produtos em destaque
             </Text>
-            <FlatList
-              data={storesMock}
-              horizontal
-              pagingEnabled
-              style={[{ height: 280 }, tailwind('-ml-4 mb-2 -mr-4')]}
-              showsHorizontalScrollIndicator={false}
-              renderItem={item => (
-                <ItemCard
-                  key={item.item.id}
-                  style={[tailwind('ml-4 mt-1'), { height: 270 }]}
-                />
-              )}
-            />
+            <ItemList data={storesMock} />
           </View>
         </View>
       </ScrollView>

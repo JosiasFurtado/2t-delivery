@@ -8,41 +8,30 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  FlatList,
 } from 'react-native'
 import { tailwind, getColor } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { TouchableHighlight } from 'react-native-gesture-handler'
-import ItemCard from 'components/ItemCard'
+import ItemList from 'components/List/ItemList'
 
 interface ItemPageProps {
   readonly style?: StyleProp<ViewStyle>
 }
-
-const storesMock: itemMock[] = [
-  { id: 0 },
-  { id: 1 },
-  { id: 2 },
-  { id: 3 },
-  { id: 4 },
-]
-type itemMock = {
-  id: number
-}
+const storesMock = [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
 
 const ItemPage: React.FC<ItemPageProps> = () => {
   const { goBack } = useNavigation()
   return (
     <SafeAreaView style={tailwind('flex-1 relative bg-gray-100')}>
       <ScrollView>
-        <View style={tailwind('relative bg-primary-500 h-48')}>
+        <View style={tailwind('relative bg-primary-500 h-56')}>
           <Image
-            style={tailwind('w-full h-48')}
+            style={tailwind('w-full h-56')}
             resizeMode="cover"
             source={{ uri: 'https://belezaesaude.com/i/730/56/tomate.jpg' }}
           />
-          <View style={tailwind('bg-black opacity-25 absolute w-full h-48')} />
+          <View style={tailwind('bg-black opacity-25 absolute w-full h-56')} />
           <TouchableOpacity
             onPress={() => goBack()}
             style={tailwind('px-4 absolute py-8')}
@@ -91,24 +80,12 @@ const ItemPage: React.FC<ItemPageProps> = () => {
             </Text>
           </View>
           <View
-            style={tailwind('py-4 px-4 shadow-t rounded-t-xl bg-white pb-20')}
+            style={tailwind('py-4 px-4 shadow-t rounded-t-xl bg-white pb-16')}
           >
             <Text style={tailwind('text-lg text-primary-500 mb-2')}>
               Produtos relacionados
             </Text>
-            <FlatList
-              data={storesMock}
-              horizontal
-              pagingEnabled
-              style={[{ height: 280 }, tailwind('-ml-4 mb-2 -mr-4')]}
-              showsHorizontalScrollIndicator={false}
-              renderItem={item => (
-                <ItemCard
-                  key={item.item.id}
-                  style={[tailwind('ml-4 mt-1'), { height: 270 }]}
-                />
-              )}
-            />
+            <ItemList data={storesMock} />
           </View>
         </View>
       </ScrollView>

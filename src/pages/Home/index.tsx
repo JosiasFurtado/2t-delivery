@@ -1,20 +1,18 @@
 import React from 'react'
-import { SafeAreaView, View, ScrollView, Text, FlatList } from 'react-native'
+import { SafeAreaView, View, ScrollView, Text } from 'react-native'
 import { tailwind } from 'lib/styles'
 import AdvertisingCarousel from 'components/AdvertisingCarousel'
 import Header from 'components/Header'
-import StoreCard from 'components/StoreCard'
+import { ItemMock } from 'types/app'
+import StoreList from 'components/List/StoreList'
 
-const storesMock: itemMock[] = [
+export const storesMock: ItemMock[] = [
   { id: 0 },
   { id: 1 },
   { id: 2 },
   { id: 3 },
   { id: 4 },
 ]
-type itemMock = {
-  id: number
-}
 
 const Home: React.FC = () => {
   return (
@@ -26,32 +24,13 @@ const Home: React.FC = () => {
           <Text style={tailwind('text-lg text-primary-500 mb-2')}>
             Escolha entre os mais novos
           </Text>
-          <FlatList
-            data={storesMock}
-            horizontal
-            pagingEnabled
-            style={[{ height: 285 }, tailwind('-ml-4 mb-6 -mr-4')]}
-            showsHorizontalScrollIndicator={false}
-            renderItem={store => (
-              <StoreCard
-                key={store.item.id}
-                type="vertical"
-                style={[tailwind('ml-4 mt-1'), { height: 270 }]}
-              />
-            )}
-          />
+          <StoreList data={storesMock} type="vertical" />
           <Text style={tailwind('text-lg text-primary-500 mb-2')}>
             Escolha entre os mais avaliados
           </Text>
-          <FlatList
-            data={storesMock}
-            pagingEnabled
-            style={tailwind('-ml-4 mb-2 -mr-4 px-4')}
-            showsHorizontalScrollIndicator={false}
-            renderItem={store => (
-              <StoreCard key={store.item.id} type="horizontal" />
-            )}
-          />
+          <View style={tailwind('px-4')}>
+            <StoreList data={storesMock} type="horizontal" />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
