@@ -1,25 +1,19 @@
 import React, { Dispatch, SetStateAction, useRef } from 'react'
 import { View, TouchableOpacity, Text, StatusBar, Modal } from 'react-native'
-import styled from 'styled-components/native'
-import { tailwind } from 'lib/styles'
+import { tailwind, getColor } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
 import { LoginModals } from 'types/app'
 import PrimaryButton from 'components/styledComponents/PrimaryButton'
 import SignInForm from 'components/Form/SignInForm'
 import { SubmitHandler, FormHandles } from '@unform/core'
 import { useNavigation } from '@react-navigation/native'
+import { BgModal } from '.'
 
 interface SignInProps {
   readonly open: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
   setTypeModal: Dispatch<SetStateAction<LoginModals>>
 }
-
-const BgModal = styled.View`
-  background-color: rgba(0, 0, 0, 0.2);
-  flex: 1;
-  justify-content: flex-end;
-`
 
 const SignIn: React.FC<SignInProps> = ({
   open,
@@ -63,7 +57,10 @@ const SignIn: React.FC<SignInProps> = ({
       transparent
       onRequestClose={() => setOpenModal(false)}
     >
-      <StatusBar backgroundColor="rgb(1, 124, 68)" barStyle="light-content" />
+      <StatusBar
+        backgroundColor={getColor('primary-700')}
+        barStyle="light-content"
+      />
       <BgModal>
         <TouchableOpacity
           onPress={() => setOpenModal(!open)}

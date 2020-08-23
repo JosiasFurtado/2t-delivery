@@ -5,9 +5,15 @@ import Cart from '../pages/Cart'
 import Profile from '../pages/Profile'
 import { MaterialIcons, FontAwesome, FontAwesome5 } from '@expo/vector-icons'
 
+interface TabNavRoutesProps {
+  readonly route?: {
+    params?: any
+  }
+}
 const Tab = createMaterialTopTabNavigator()
 
-export default function TabNavRoutes() {
+const TabNavRoutes: React.FC<TabNavRoutesProps> = ({ route }) => {
+  const initialRoute = route?.params && route.params.initialRouteName
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -18,7 +24,7 @@ export default function TabNavRoutes() {
         indicatorStyle: { backgroundColor: '#019853' },
       }}
       tabBarPosition="bottom"
-      initialRouteName="Home"
+      initialRouteName={initialRoute ? initialRoute : 'Início'}
     >
       <Tab.Screen
         options={{
@@ -68,3 +74,5 @@ export default function TabNavRoutes() {
     </Tab.Navigator>
   )
 }
+
+export default TabNavRoutes

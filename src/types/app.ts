@@ -13,3 +13,4 @@ export type TutorialCarouselItemType = {
   description: string
 }
 export type LoginModals = 'signin' | 'signup' | 'forgotMyPassword'
+export type ProfileModals = 'address' | 'help'

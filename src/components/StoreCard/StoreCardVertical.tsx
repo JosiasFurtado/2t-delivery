@@ -46,10 +46,10 @@ const StoreCardVertical: React.FC<StoreCardVerticalProps> = ({ style }) => (
     <View style={tailwind('flex-row items-center')}>
       <Image
         resizeMode="contain"
-        style={tailwind('h-6 w-6')}
+        style={tailwind('h-5 w-5')}
         source={DeliverymanIcon}
       />
-      <Text style={tailwind('text-base ml-1')}>Hoje, 12:00 hrs</Text>
+      <Text style={tailwind('text-sm ml-1')}>Hoje, 12:00 hrs</Text>
     </View>
   </TouchableOpacity>
 )

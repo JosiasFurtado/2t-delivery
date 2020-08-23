@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   View,
   Text,
@@ -13,10 +13,15 @@ import logo from '../../../assets/png/logo.png'
 import bgImage from '../../../assets/png/bg-image.png'
 import { LoginModals } from 'types/app'
 import LoginModal from 'components/modals/LoginModal'
+import { useNavigation } from '@react-navigation/native'
 
 const Login: React.FC = () => {
+  const { navigate } = useNavigation()
   const [openModal, setOpenModal] = useState(false)
   const [typeModal, setTypeModal] = useState<LoginModals>('signin')
+  useEffect(() => {
+    // navigate('Home')
+  }, [])
 
   const openSignUpModal = () => {
     setTypeModal('signup')

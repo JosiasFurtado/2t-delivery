@@ -4,7 +4,6 @@ import { tailwind } from 'lib/styles'
 import AdvertisingCarousel from 'components/AdvertisingCarousel'
 import Header from 'components/Header'
 import StoreCard from 'components/StoreCard'
-import ItemCard from 'components/ItemCard'
 
 const storesMock: itemMock[] = [
   { id: 0 },
@@ -47,7 +46,7 @@ const Home: React.FC = () => {
           <FlatList
             data={storesMock}
             pagingEnabled
-            style={[tailwind('-ml-4 mb-2 -mr-4 px-4')]}
+            style={tailwind('-ml-4 mb-2 -mr-4 px-4')}
             showsHorizontalScrollIndicator={false}
             renderItem={store => (
               <StoreCard key={store.item.id} type="horizontal" />

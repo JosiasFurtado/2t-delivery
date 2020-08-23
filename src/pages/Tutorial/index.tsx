@@ -8,12 +8,17 @@ import { useNavigation } from '@react-navigation/native'
 
 interface TutorialProps {
   readonly style?: StyleProp<ViewStyle>
+  readonly route: any
 }
 
-const Tutorial: React.FC<TutorialProps> = () => {
+const Tutorial: React.FC<TutorialProps> = ({ route }) => {
+  const fromProfile = route.params && route.params.fromProfile
   const { navigate } = useNavigation()
   const handleNavigate = () => {
-    navigate('Login')
+    if (fromProfile) {
+      return navigate('Profile')
+    }
+    return navigate('Login')
   }
 
   return (

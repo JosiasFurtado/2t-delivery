@@ -3,6 +3,7 @@ import SignIn from './SignIn'
 import SignUp from './SignUp'
 import ForgotMyPassword from './ForgotMyPassword'
 import { LoginModals } from 'types/app'
+import styled from 'styled-components/native'
 
 interface LoginModalProps {
   readonly type: LoginModals
@@ -10,6 +11,12 @@ interface LoginModalProps {
   setOpenModal: Dispatch<SetStateAction<boolean>>
   setTypeModal: Dispatch<SetStateAction<LoginModals>>
 }
+
+export const BgModal = styled.View`
+  background-color: rgba(0, 0, 0, 0.4);
+  flex: 1;
+  justify-content: flex-end;
+`
 
 const LoginModal: React.FC<LoginModalProps> = ({
   type,
