@@ -11,18 +11,28 @@ const Stack = createStackNavigator()
 
 export default function StackRoutes() {
   return (
-    <Stack.Navigator headerMode="none">
+    <Stack.Navigator mode="modal" headerMode="none">
       <Stack.Screen name="Tutorial" component={Tutorial} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Home" component={TabNavRoutes} />
+      <Stack.Screen name="Help" component={Help} />
+      <Stack.Screen name="StorePage" component={StorePage} />
+      <Stack.Screen name="ItemPage" component={ItemPage} />
       <Stack.Screen
         name="Profile"
         component={TabNavRoutes}
         initialParams={{ initialRouteName: 'Perfil' }}
       />
-      <Stack.Screen name="Help" component={Help} />
-      <Stack.Screen name="StorePage" component={StorePage} />
-      <Stack.Screen name="ItemPage" component={ItemPage} />
+      <Stack.Screen
+        name="Cart"
+        component={TabNavRoutes}
+        initialParams={{ initialRouteName: 'Carrinho' }}
+      />
+      <Stack.Screen
+        name="MyRequests"
+        component={TabNavRoutes}
+        initialParams={{ initialRouteName: 'Pedidos' }}
+      />
     </Stack.Navigator>
   )
 }

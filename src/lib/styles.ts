@@ -4,40 +4,40 @@ import styles from '../../styles.json'
 const { tailwind, getColor } = create({
   ...styles,
   'bg-primary-100': {
-    backgroundColor: '#E6F5EE',
+    backgroundColor: '#E6F9F0',
   },
   'bg-primary-200': {
-    backgroundColor: '#C0E5D4',
+    backgroundColor: '#BFEFD9',
   },
   'bg-primary-300': {
-    backgroundColor: '#99D6BA',
+    backgroundColor: '#99E5C3',
   },
   'bg-primary-400': {
-    backgroundColor: '#4DB787',
+    backgroundColor: '#4DD295',
   },
   'bg-primary-500': {
-    backgroundColor: '#019853',
+    backgroundColor: '#00BF68',
   },
   'bg-primary-600': {
-    backgroundColor: '#01894B',
+    backgroundColor: '#00AC5E',
   },
   'bg-primary-700': {
-    backgroundColor: '#015B32',
+    backgroundColor: '#00733E',
   },
   'bg-primary-800': {
-    backgroundColor: '#004425',
+    backgroundColor: '#00562F',
   },
   'bg-primary-900': {
-    backgroundColor: '#002E19',
+    backgroundColor: '#00391F',
   },
   'bg-white-transparent': {
     backgroundColor: 'rgba(255,255,255,0.1)',
   },
   'text-primary-500': {
-    color: '#019853',
+    color: '#00BF68',
   },
   'border-primary-500': {
-    borderColor: '#019853',
+    borderColor: '#00BF68',
   },
   'w-38': {
     width: 185,

@@ -39,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({
         {!hiddenAddress && (
           <AddressChanger style={tailwind('absolute right-0 mr-4 mt-2')} />
         )}
-        <View style={tailwind('items-center')}>
+        <View style={tailwind('items-center pt-1')}>
           <Image
             source={Logo}
             resizeMode="contain"

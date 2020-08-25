@@ -19,6 +19,8 @@ interface HelpProps {
 const Help: React.FC<HelpProps> = ({ open, setOpenModal }) => {
   const handleDirectToContact2T = () => {}
 
+  const handleDirectToContactStore = () => {}
+
   return (
     <Modal
       visible={open}
@@ -47,12 +49,18 @@ const Help: React.FC<HelpProps> = ({ open, setOpenModal }) => {
           <Text style={tailwind('text-gray-600 text-lg mb-12 leading-7')}>
             A 2T delivery não é responsável pela separação e entrega dos
             produtos. Caso tenha algum problema depois de já feito o pedido,
-            entre em contato direto com o lojista, clicando no botão de ajuda na
-            aba de histórico de pedidos. Caso tenha tido qualquer problema na
-            utilização do app, já pedimos desculpas, mas entre em contato
-            conosco que estaremos prontos para te ajudar.
+            entre em contato direto com o lojista, clicando no botão abaixo.
+            Caso tenha tido qualquer problema na utilização do app, já pedimos
+            desculpas, mas entre em contato conosco que estaremos prontos para
+            te ajudar.
           </Text>
           <Text style={tailwind('text-2xl mb-6')}>Entrar em contato com:</Text>
+          <PrimaryButton
+            onPress={handleDirectToContactStore}
+            style={tailwind('mb-6')}
+          >
+            <Text style={tailwind('text-xl text-white')}>Estabelecimento</Text>
+          </PrimaryButton>
           <PrimaryButton
             onPress={handleDirectToContact2T}
             style={tailwind('mb-2')}

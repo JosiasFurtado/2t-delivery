@@ -18,8 +18,9 @@ const TaxWarn: React.FC<TaxWarnProps> = ({ style }) => {
     <View
       style={[
         style,
-        tailwind('flex-row items-center justify-between rounded-lg py-2 px-4'),
-        { borderColor: '#019853', borderWidth: 2 },
+        tailwind(
+          'flex-row items-center justify-between border-2 border-primary-500 rounded-lg py-2 px-4',
+        ),
       ]}
     >
       <View>

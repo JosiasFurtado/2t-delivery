@@ -2,8 +2,14 @@ import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import Home from '../pages/Home'
 import Cart from '../pages/Cart'
+import MyRequests from '../pages/MyRequests'
 import Profile from '../pages/Profile'
-import { MaterialIcons, FontAwesome, FontAwesome5 } from '@expo/vector-icons'
+import {
+  MaterialIcons,
+  FontAwesome,
+  FontAwesome5,
+  Ionicons,
+} from '@expo/vector-icons'
 
 interface TabNavRoutesProps {
   readonly route?: {
@@ -16,7 +22,9 @@ const TabNavRoutes: React.FC<TabNavRoutesProps> = ({ route }) => {
   const initialRoute = route?.params && route.params.initialRouteName
   return (
     <Tab.Navigator
+      removeClippedSubviews={true}
       tabBarOptions={{
+        allowFontScaling: false,
         showIcon: true,
         showLabel: false,
         labelStyle: { fontSize: 10 },
@@ -55,6 +63,21 @@ const TabNavRoutes: React.FC<TabNavRoutesProps> = ({ route }) => {
         }}
         name="Carrinho"
         component={Cart}
+      />
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ focused }) => {
+            return (
+              <Ionicons
+                name="md-list-box"
+                size={focused ? 28 : 25}
+                color={focused ? '#000' : '#d3d3d3'}
+              />
+            )
+          },
+        }}
+        name="Pedidos"
+        component={MyRequests}
       />
       <Tab.Screen
         options={{

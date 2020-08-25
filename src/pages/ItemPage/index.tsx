@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   StyleProp,
   View,
@@ -9,11 +9,11 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native'
-import { tailwind, getColor } from 'lib/styles'
+import { tailwind } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
-import { TouchableHighlight } from 'react-native-gesture-handler'
 import ItemList from 'components/List/ItemList'
+import AddItemToCart from 'components/AddItemToCart'
 
 interface ItemPageProps {
   readonly style?: StyleProp<ViewStyle>
@@ -22,6 +22,10 @@ const storesMock = [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
 
 const ItemPage: React.FC<ItemPageProps> = () => {
   const { goBack } = useNavigation()
+
+  const itemPrice = 12.99
+  const itemPriceWithComma = String(itemPrice).replace('.', ',')
+
   return (
     <SafeAreaView style={tailwind('flex-1 relative bg-gray-100')}>
       <ScrollView>
@@ -61,7 +65,7 @@ const ItemPage: React.FC<ItemPageProps> = () => {
                 </Text>
               </View>
               <Text style={tailwind('text-2xl font-medium text-primary-500')}>
-                R$ 12,99
+                {`R$ ${itemPriceWithComma}`}
               </Text>
             </View>
             <Text
@@ -80,7 +84,7 @@ const ItemPage: React.FC<ItemPageProps> = () => {
             </Text>
           </View>
           <View
-            style={tailwind('py-4 px-4 shadow-t rounded-t-xl bg-white pb-16')}
+            style={tailwind('py-4 px-4 shadow-t rounded-t-xl bg-white pb-8')}
           >
             <Text style={tailwind('text-lg text-primary-500 mb-2')}>
               Produtos relacionados
@@ -89,38 +93,7 @@ const ItemPage: React.FC<ItemPageProps> = () => {
           </View>
         </View>
       </ScrollView>
-      <View style={tailwind('absolute bottom-0 px-4 w-full py-5')}>
-        <TouchableHighlight
-          underlayColor={getColor('primary-500')}
-          style={tailwind('bg-primary-500 py-3 rounded-lg')}
-          onPress={() => {}}
-        >
-          <View style={tailwind('flex-row items-center justify-between px-4')}>
-            <Text style={tailwind('text-lg font-medium text-white')}>
-              Adicionar ao carrinho
-            </Text>
-            <View style={tailwind('flex-row relative')}>
-              <TouchableOpacity style={tailwind('bg-white px-2 rounded')}>
-                <Ionicons
-                  name="ios-remove"
-                  size={24}
-                  color={getColor('primary-500')}
-                />
-              </TouchableOpacity>
-              <Text style={tailwind('text-lg font-medium text-white px-3')}>
-                0
-              </Text>
-              <TouchableOpacity style={tailwind('bg-white px-2 rounded')}>
-                <Ionicons
-                  name="ios-add"
-                  size={24}
-                  color={getColor('primary-500')}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </TouchableHighlight>
-      </View>
+      <AddItemToCart itemPrice={itemPrice} />
     </SafeAreaView>
   )
 }
