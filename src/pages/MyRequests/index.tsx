@@ -18,13 +18,11 @@ const MyRequests: React.FC = () => {
       <View style={tailwind('bg-primary-500 h-24 px-4 justify-center')}>
         <Text style={tailwind('text-white text-2xl')}>Seus pedidos, Jota</Text>
       </View>
-      <View style={tailwind('-mt-4 rounded-t-xl bg-gray-100')}>
-        <View style={tailwind('px-3')}>
-          <RequestList
-            handleOpenHelpModal={handleOpenHelpModal}
-            data={storesMock}
-          />
-        </View>
+      <View style={tailwind('-mt-4 rounded-t-xl bg-gray-100 px-3')}>
+        <RequestList
+          handleOpenHelpModal={handleOpenHelpModal}
+          data={storesMock}
+        />
       </View>
       <RequestsModal open={openModal} setOpenModal={setOpenModal} />
     </SafeAreaView>

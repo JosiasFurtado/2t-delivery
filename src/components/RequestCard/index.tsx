@@ -11,6 +11,7 @@ import {
 import { tailwind, getColor } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
 import DeliverymanIcon from '../../../assets/png/deliveryman-icon.png'
+import { useNavigation } from '@react-navigation/native'
 
 interface RequestCardProps {
   readonly style?: StyleProp<ViewStyle>
@@ -21,18 +22,18 @@ const RequestCard: React.FC<RequestCardProps> = ({
   style,
   handleOpenHelpModal,
 }) => {
+  const { navigate } = useNavigation()
   return (
     <TouchableHighlight
       style={[tailwind('shadow-md rounded-xl bg-white px-2 py-2'), style]}
       underlayColor={getColor('gray-100')}
-      onPress={() => {}}
+      onPress={() => navigate('RequestDetail')}
     >
       <View>
         <View
-          style={[
-            tailwind('flex-row pb-2 justify-between'),
-            { borderColor: '#edf2f7', borderBottomWidth: 1 },
-          ]}
+          style={tailwind(
+            'flex-row pb-2 justify-between border-b border-gray-300',
+          )}
         >
           <View style={tailwind('flex-row')}>
             <Image

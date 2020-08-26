@@ -8,7 +8,7 @@ import { getColor } from 'lib/styles'
 Text.defaultProps = Text.defaultProps || {}
 Text.defaultProps.allowFontScaling = false
 
-console.disableYellowBox = true
+//console.disableYellowBox = true
 
 const App: React.FC = () => {
   moment().locale('pt-br')
