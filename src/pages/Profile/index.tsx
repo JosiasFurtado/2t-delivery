@@ -44,7 +44,7 @@ const Profile: React.FC = () => {
           <Text style={tailwind('text-gray-800 font-bold text-2xl mb-2')}>
             Jota Furtado
           </Text>
-          <View style={tailwind('flex-row items-center')}>
+          <View style={tailwind('flex-row items-center mb-4')}>
             <Octicons name="location" size={18} color={getColor('gray-700')} />
             <Text
               numberOfLines={1}
@@ -54,7 +54,17 @@ const Profile: React.FC = () => {
               São Paulo, SP
             </Text>
           </View>
+          <View style={tailwind('w-1/3 items-center bg-gray-50 rounded-lg')}>
+            <TouchableOpacity
+              style={tailwind('border-b border-primary-500 py-3 items-center')}
+            >
+              <Text style={tailwind('text-primary-500 text-lg')}>
+                Configurações
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
+
         <View style={tailwind('px-4')}>
           <TouchableOpacity
             onPress={openAddressModal}

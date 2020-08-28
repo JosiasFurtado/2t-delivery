@@ -20,10 +20,10 @@ interface StorePageProps {
 
 const StorePage: React.FC<StorePageProps> = () => {
   return (
-    <SafeAreaView style={tailwind('flex-1 bg-gray-100 relative')}>
+    <SafeAreaView style={tailwind('flex-1 bg-gray-50 relative')}>
       <ScrollView>
         <Header searchProducts />
-        <View style={tailwind('-mt-4 rounded-t-xl bg-gray-100')}>
+        <View style={tailwind('-mt-4 rounded-t-xl bg-gray-50')}>
           <View style={tailwind('px-4 mt-4')}>
             <Text
               style={tailwind(

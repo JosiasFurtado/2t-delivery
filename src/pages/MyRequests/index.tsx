@@ -14,11 +14,11 @@ const MyRequests: React.FC = () => {
   }
 
   return (
-    <SafeAreaView style={tailwind('flex-1 relative bg-gray-100')}>
+    <SafeAreaView style={tailwind('flex-1 relative bg-gray-50')}>
       <View style={tailwind('bg-primary-500 h-24 px-4 justify-center')}>
         <Text style={tailwind('text-white text-2xl')}>Seus pedidos, Jota</Text>
       </View>
-      <View style={tailwind('-mt-4 rounded-t-xl bg-gray-100 px-3')}>
+      <View style={tailwind('-mt-4 rounded-t-xl bg-white px-3')}>
         <RequestList
           handleOpenHelpModal={handleOpenHelpModal}
           data={storesMock}

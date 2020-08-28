@@ -3,6 +3,9 @@ import styles from '../../styles.json'
 
 const { tailwind, getColor } = create({
   ...styles,
+  'bg-gray-50': {
+    backgroundColor: '#FCFCFC',
+  },
   'bg-primary-100': {
     backgroundColor: '#E6F9F0',
   },
