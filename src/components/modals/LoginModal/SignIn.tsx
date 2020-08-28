@@ -1,5 +1,12 @@
 import React, { Dispatch, SetStateAction, useRef } from 'react'
-import { View, TouchableOpacity, Text, StatusBar, Modal } from 'react-native'
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StatusBar,
+  Modal,
+  ScrollView,
+} from 'react-native'
 import { tailwind, getColor } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
 import { LoginModals } from 'types/app'
@@ -70,39 +77,43 @@ const SignIn: React.FC<SignInProps> = ({
         </TouchableOpacity>
         <Text style={tailwind('px-5 mb-4 text-3xl text-white')}>Entrar</Text>
         <View style={tailwind('rounded-t-lg bg-white px-5 py-3')}>
-          <Text style={tailwind('text-primary-500 text-2xl font-medium pt-4')}>
-            Bem-vindo novamente
-          </Text>
-          <Text style={tailwind('text-gray-500 text-lg mb-16')}>
-            Faça o log-in para continuar
-          </Text>
-          <SignInForm
-            formRef={formRef}
-            handleSubmit={handleSubmit}
-            style={tailwind('mb-4')}
-          />
-          <TouchableOpacity
-            onPress={handleChangeToForgotMyPassword}
-            style={tailwind('mb-6')}
-          >
-            <Text style={tailwind('text-primary-500 text-lg')}>
-              Esqueci minha senha
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Text
+              style={tailwind('text-primary-500 text-2xl font-medium pt-4')}
+            >
+              Bem-vindo novamente
             </Text>
-          </TouchableOpacity>
-          <PrimaryButton
-            onPress={handleSubmitFormAndRedirectToHome}
-            style={tailwind('mb-20')}
-          >
-            <Text style={tailwind('text-xl text-white')}>Entrar</Text>
-          </PrimaryButton>
-          <View style={tailwind('mb-2 flex flex-row justify-center')}>
-            <Text style={tailwind('text-lg')}>Não tem uma conta?</Text>
-            <TouchableOpacity onPress={handleChangeToSignUp}>
-              <Text style={tailwind('ml-3 text-primary-500 text-lg')}>
-                Cadastre-se
+            <Text style={tailwind('text-gray-500 text-lg mb-16')}>
+              Faça o log-in para continuar
+            </Text>
+            <SignInForm
+              formRef={formRef}
+              handleSubmit={handleSubmit}
+              style={tailwind('mb-4')}
+            />
+            <TouchableOpacity
+              onPress={handleChangeToForgotMyPassword}
+              style={tailwind('mb-6')}
+            >
+              <Text style={tailwind('text-primary-500 text-lg')}>
+                Esqueci minha senha
               </Text>
             </TouchableOpacity>
-          </View>
+            <PrimaryButton
+              onPress={handleSubmitFormAndRedirectToHome}
+              style={tailwind('mb-20')}
+            >
+              <Text style={tailwind('text-xl text-white')}>Entrar</Text>
+            </PrimaryButton>
+            <View style={tailwind('mb-2 flex flex-row justify-center')}>
+              <Text style={tailwind('text-lg')}>Não tem uma conta?</Text>
+              <TouchableOpacity onPress={handleChangeToSignUp}>
+                <Text style={tailwind('ml-3 text-primary-500 text-lg')}>
+                  Cadastre-se
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
         </View>
       </BgModal>
     </Modal>

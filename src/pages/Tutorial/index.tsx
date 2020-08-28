@@ -23,7 +23,7 @@ const Tutorial: React.FC<TutorialProps> = ({ route }) => {
 
   return (
     <SafeAreaView style={tailwind('flex-1 relative bg-white')}>
-      <View style={tailwind('py-4')}>
+      <View style={tailwind('py-4 flex-1')}>
         <Text style={tailwind('text-center text-primary-500 text-3xl mt-4')}>
           Tutorial
         </Text>

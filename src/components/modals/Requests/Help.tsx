@@ -54,7 +54,7 @@ const Help: React.FC<HelpProps> = ({ open, setOpenModal }) => {
             desculpas, mas entre em contato conosco que estaremos prontos para
             te ajudar.
           </Text>
-          <Text style={tailwind('text-2xl mb-6')}>Entrar em contato com:</Text>
+          <Text style={tailwind('text-2xl mb-4')}>Entrar em contato com:</Text>
           <PrimaryButton
             onPress={handleDirectToContactStore}
             style={tailwind('mb-6')}
@@ -63,7 +63,7 @@ const Help: React.FC<HelpProps> = ({ open, setOpenModal }) => {
           </PrimaryButton>
           <PrimaryButton
             onPress={handleDirectToContact2T}
-            style={tailwind('mb-2')}
+            style={tailwind('mb-10')}
           >
             <Text style={tailwind('text-xl text-white')}>2T Delivery</Text>
           </PrimaryButton>

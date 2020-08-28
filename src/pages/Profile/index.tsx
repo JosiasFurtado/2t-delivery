@@ -26,6 +26,10 @@ const Profile: React.FC = () => {
     setTypeModal('help')
     setOpenModal(true)
   }
+  const openConfigModal = () => {
+    setTypeModal('config')
+    setOpenModal(true)
+  }
 
   return (
     <SafeAreaView style={tailwind('flex-1 relative justify-between bg-white')}>
@@ -56,6 +60,7 @@ const Profile: React.FC = () => {
           </View>
           <View style={tailwind('w-1/3 items-center bg-gray-50 rounded-lg')}>
             <TouchableOpacity
+              onPress={openConfigModal}
               style={tailwind('border-b border-primary-500 py-3 items-center')}
             >
               <Text style={tailwind('text-primary-500 text-lg')}>

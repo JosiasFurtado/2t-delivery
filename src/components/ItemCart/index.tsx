@@ -69,7 +69,7 @@ const ItemCart: React.FC<ItemCartProps> = ({
               numberOfLines={1}
               style={tailwind('text-base font-bold')}
             >
-              Tomates 1kg dasdsdadasd adssadasdsa sdadas
+              Tomates 1kg
             </Text>
             <Text
               lineBreakMode="tail"

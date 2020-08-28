@@ -55,14 +55,17 @@ const TutorialCarousel: React.FC<TutorialCarouselProps> = ({ style }) => {
 
   const renderItem = ({ item }: { item: TutorialCarouselItemType }) => {
     return (
-      <View key={item.id} style={tailwind('justify-center items-center')}>
-        <Text style={tailwind('text-2xl text-center text-gray-700')}>
+      <View
+        key={item.id}
+        style={[tailwind('justify-center items-center'), { height: '85%' }]}
+      >
+        <Text style={tailwind('text-2xl text-center text-gray-700 mb-2')}>
           {item.title}
         </Text>
         <Image
           source={item.image}
           resizeMode="contain"
-          style={[tailwind('w-4/5 mb-4'), { height: '75%' }]}
+          style={[tailwind('w-4/5 mb-4'), { height: '70%' }]}
         />
         <Text style={tailwind('text-xl px-4 text-center text-gray-700')}>
           {item.description}
@@ -79,7 +82,6 @@ const TutorialCarousel: React.FC<TutorialCarouselProps> = ({ style }) => {
         renderItem={renderItem}
         sliderWidth={viewportWidth}
         itemWidth={viewportWidth}
-        slideStyle={{ flex: 1 }}
         inactiveSlideOpacity={1}
         inactiveSlideScale={1}
         onSnapToItem={index => setActiveSlide(index)}

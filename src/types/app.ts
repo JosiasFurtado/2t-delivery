@@ -19,4 +19,4 @@ export type ItemMock = {
 
 export type LoginModals = 'signin' | 'signup' | 'forgotMyPassword'
 
-export type ProfileModals = 'address' | 'help'
+export type ProfileModals = 'address' | 'help' | 'config'

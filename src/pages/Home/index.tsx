@@ -5,6 +5,7 @@ import AdvertisingCarousel from 'components/AdvertisingCarousel'
 import Header from 'components/Header'
 import { ItemMock } from 'types/app'
 import StoreList from 'components/List/StoreList'
+import StoreCard from 'components/StoreCard'
 
 export const storesMock: ItemMock[] = [
   { id: 0 },
@@ -28,9 +29,9 @@ const Home: React.FC = () => {
           <Text style={tailwind('text-lg text-primary-500 mb-2')}>
             Escolha entre os mais avaliados
           </Text>
-          <View style={tailwind('px-4')}>
-            <StoreList data={storesMock} type="horizontal" />
-          </View>
+          {storesMock.map(store => (
+            <StoreCard key={store.id} type="horizontal" />
+          ))}
         </View>
       </ScrollView>
     </SafeAreaView>
