@@ -15,7 +15,7 @@ const RequestList: React.FC<RequestListProps> = ({
   data,
   handleOpenHelpModal,
 }) => {
-  const renderItem = ({ item }: any) => (
+  const renderItem = ({ item }: { item: ItemMock }) => (
     <RequestCard
       key={item.id}
       handleOpenHelpModal={handleOpenHelpModal}
@@ -23,9 +23,11 @@ const RequestList: React.FC<RequestListProps> = ({
     />
   )
   const memoizedValue = useMemo(() => renderItem, [data])
+
   return (
     <FlatList
       data={data}
+      maxToRenderPerBatch={30}
       keyExtractor={item => item.id.toString()}
       showsVerticalScrollIndicator={false}
       style={[tailwind('-ml-4 mb-24 -mr-4 pt-4'), style]}

@@ -11,7 +11,7 @@ interface StoreListProps {
 }
 
 const StoreList: React.FC<StoreListProps> = ({ style, data, type }) => {
-  const renderItem = ({ item }: any) => (
+  const renderItem = ({ item }: { item: ItemMock }) => (
     <StoreCard
       key={item.id}
       type={type}
@@ -21,9 +21,11 @@ const StoreList: React.FC<StoreListProps> = ({ style, data, type }) => {
     />
   )
   const memoizedValue = useMemo(() => renderItem, [data])
+
   return (
     <FlatList
       data={data}
+      maxToRenderPerBatch={30}
       horizontal={type === 'vertical' ? true : false}
       pagingEnabled
       keyExtractor={item => item.id.toString()}

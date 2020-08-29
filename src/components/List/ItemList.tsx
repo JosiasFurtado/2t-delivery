@@ -10,15 +10,17 @@ interface ItemListProps {
 }
 
 const ItemList: React.FC<ItemListProps> = ({ style, data }) => {
-  const renderItem = ({ item }: any) => (
+  const renderItem = ({ item }: { item: ItemMock }) => (
     <ItemCard key={item.id} style={[tailwind('ml-4 mt-1'), { height: 270 }]} />
   )
   const memoizedValue = useMemo(() => renderItem, [data])
+
   return (
     <FlatList
       data={data}
       horizontal
       pagingEnabled
+      maxToRenderPerBatch={30}
       keyExtractor={item => item.id.toString()}
       style={[{ height: 280 }, tailwind('-ml-4 mb-2 -mr-4'), style]}
       showsHorizontalScrollIndicator={false}

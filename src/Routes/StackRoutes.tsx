@@ -10,12 +10,13 @@ import RequestDetail from '../pages/RequestDetail'
 import Checkout from '../pages/Checkout'
 import Help from '../pages/Help'
 import MyRequests from '../pages/MyRequests'
+import StackNavigator from './StackNavigator'
 
 const Stack = createStackNavigator()
 
 export default function StackRoutes() {
   return (
-    <Stack.Navigator headerMode="none">
+    <StackNavigator>
       <Stack.Screen name="Tutorial" component={Tutorial} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Home" component={TabNavRoutes} />
@@ -32,24 +33,24 @@ export default function StackRoutes() {
         component={TabNavRoutes}
         initialParams={{ initialRouteName: 'Carrinho' }}
       />
-    </Stack.Navigator>
+    </StackNavigator>
   )
 }
 
 export function HomeStack() {
   return (
-    <Stack.Navigator headerMode="none">
+    <StackNavigator>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="StorePage" component={StorePage} />
-    </Stack.Navigator>
+    </StackNavigator>
   )
 }
 
 export function RequestStack() {
   return (
-    <Stack.Navigator headerMode="none">
+    <StackNavigator>
       <Stack.Screen name="MyRequests" component={MyRequests} />
       <Stack.Screen name="RequestDetail" component={RequestDetail} />
-    </Stack.Navigator>
+    </StackNavigator>
   )
 }
