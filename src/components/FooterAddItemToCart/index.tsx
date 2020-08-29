@@ -11,12 +11,15 @@ import { getColor, tailwind } from 'lib/styles'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 
-interface AddItemToCartProps {
+interface FooterAddItemToCartProps {
   readonly style?: StyleProp<ViewStyle>
   readonly itemPrice: number
 }
 
-const AddItemToCart: React.FC<AddItemToCartProps> = ({ style, itemPrice }) => {
+const FooterAddItemToCart: React.FC<FooterAddItemToCartProps> = ({
+  style,
+  itemPrice,
+}) => {
   const { navigate } = useNavigation()
   const [quantityMock, setQuantityMock] = useState(1)
 
@@ -106,6 +109,6 @@ const AddItemToCart: React.FC<AddItemToCartProps> = ({ style, itemPrice }) => {
   )
 }
 
-AddItemToCart.displayName = 'AddItemToCart'
+FooterAddItemToCart.displayName = 'FooterAddItemToCart'
 
-export default AddItemToCart
+export default FooterAddItemToCart

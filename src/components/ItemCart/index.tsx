@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native'
 import { tailwind, getColor } from 'lib/styles'
-import { FontAwesome5, Ionicons } from '@expo/vector-icons'
+import { FontAwesome5 } from '@expo/vector-icons'
 import AddAndRemoveBtns from 'components/styledComponents/AddAndRemoveBtns'
 
 interface ItemCartProps {
@@ -43,7 +43,7 @@ const ItemCart: React.FC<ItemCartProps> = ({
   }
 
   return (
-    <View style={tailwind('w-full mb-2')}>
+    <View style={[tailwind('w-full mb-2'), style]}>
       <View
         style={tailwind(
           'flex-row justify-between border-b pb-3 border-gray-500',

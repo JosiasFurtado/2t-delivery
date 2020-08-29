@@ -12,7 +12,7 @@ const Stack = createStackNavigator()
 
 export default function StackRoutes() {
   return (
-    <Stack.Navigator mode="modal" headerMode="none">
+    <Stack.Navigator mode="card" headerMode="none">
       <Stack.Screen name="Tutorial" component={Tutorial} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Home" component={TabNavRoutes} />

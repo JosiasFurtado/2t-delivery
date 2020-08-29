@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   StyleProp,
   View,
@@ -8,12 +8,13 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  TouchableHighlight,
 } from 'react-native'
 import { tailwind, getColor } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import ItemList from 'components/List/ItemList'
-import AddItemToCart from 'components/AddItemToCart'
+import AddItemToCart from 'components/FooterAddItemToCart'
 import { TextInput } from 'react-native-gesture-handler'
 
 interface ItemPageProps {
@@ -23,6 +24,8 @@ const storesMock = [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
 
 const ItemPage: React.FC<ItemPageProps> = () => {
   const { goBack } = useNavigation()
+  const [openCommentArea, setOpenCommentArea] = useState(false)
+  const [commentValue, setCommentValue] = useState('')
 
   const itemPrice = 12.99
   const itemPriceWithComma = String(itemPrice).replace('.', ',')
@@ -83,16 +86,41 @@ const ItemPage: React.FC<ItemPageProps> = () => {
               lacinia odio justo, molestie euismod elit accumsan a. Mauris
               ultrices sapien at fringilla
             </Text>
-            <TextInput
-              placeholder="Caso precise, adicione uma observação"
-              allowFontScaling={false}
-              multiline={true}
-              numberOfLines={3}
-              autoCorrect={false}
-              autoCapitalize="none"
-              placeholderTextColor={getColor('gray-500')}
-              style={tailwind('bg-gray-200 rounded-lg px-4 py-2 text-lg')}
-            />
+            <TouchableHighlight
+              underlayColor="#fff"
+              style={tailwind(`${openCommentArea ? '' : 'mb-4'}`)}
+              onPress={() => setOpenCommentArea(!openCommentArea)}
+            >
+              <View
+                style={tailwind(
+                  `flex-row bg-primary-500 items-center px-2 py-1 ${
+                    openCommentArea ? 'rounded-t-lg' : 'rounded-lg'
+                  }`,
+                )}
+              >
+                <Ionicons name="ios-add" size={26} color="#fff" />
+                <Text style={tailwind('text-white ml-2 text-lg')}>
+                  Adicionar observação
+                </Text>
+              </View>
+            </TouchableHighlight>
+            {openCommentArea && (
+              <TextInput
+                placeholder="Caso precise, adicione aqui uma observação.        
+              Ex: Quero bananas mais verdes"
+                allowFontScaling={false}
+                multiline={true}
+                numberOfLines={3}
+                autoCorrect={false}
+                autoCapitalize="none"
+                value={commentValue}
+                onChangeText={text => setCommentValue(text)}
+                placeholderTextColor={getColor('gray-500')}
+                style={tailwind(
+                  'bg-gray-200 rounded-b-lg px-4 py-2 mb-4 text-lg',
+                )}
+              />
+            )}
           </View>
           <View
             style={tailwind('py-4 px-4 shadow-t rounded-t-xl bg-white pb-8')}
