@@ -8,11 +8,11 @@ import StoreList from 'components/List/StoreList'
 import StoreCard from 'components/StoreCard'
 
 export const storesMock: ItemMock[] = [
-  { id: 0 },
-  { id: 1 },
-  { id: 2 },
-  { id: 3 },
-  { id: 4 },
+  { id: '0' },
+  { id: '1' },
+  { id: '2' },
+  { id: '3' },
+  { id: '4' },
 ]
 
 const Home: React.FC = () => {

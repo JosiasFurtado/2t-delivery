@@ -19,6 +19,7 @@ const ItemList: React.FC<ItemListProps> = ({ style, data }) => {
       data={data}
       horizontal
       pagingEnabled
+      keyExtractor={item => item.id.toString()}
       style={[{ height: 280 }, tailwind('-ml-4 mb-2 -mr-4'), style]}
       showsHorizontalScrollIndicator={false}
       renderItem={memoizedValue}

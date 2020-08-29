@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleProp, View, ViewStyle } from 'react-native'
+import { StyleProp, ViewStyle } from 'react-native'
 import StoreCardVertical from './StoreCardVertical'
 import StoreCardHorizontal from './StoreCardHorizontal'
 

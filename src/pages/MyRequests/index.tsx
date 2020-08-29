@@ -4,7 +4,13 @@ import { tailwind } from 'lib/styles'
 import RequestList from 'components/List/RequestList'
 import RequestsModal from 'components/modals/Requests'
 
-const storesMock = [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
+const storesMock = [
+  { id: '0' },
+  { id: '1' },
+  { id: '2' },
+  { id: '3' },
+  { id: '4' },
+]
 
 const MyRequests: React.FC = () => {
   const [openModal, setOpenModal] = useState(false)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, Text, ScrollView } from 'react-native'
+import { View, Image, Text } from 'react-native'
 import { tailwind, getColor } from 'lib/styles'
 import { Fontisto } from '@expo/vector-icons'
 import Bakery from '../../../assets/icons/bakery.png'

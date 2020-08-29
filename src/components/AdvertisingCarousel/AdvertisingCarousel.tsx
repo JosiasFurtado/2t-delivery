@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, PureComponent, useMemo } from 'react'
 import { StyleProp, View, ViewStyle, Dimensions } from 'react-native'
 import CarouselView, { Pagination } from 'react-native-snap-carousel'
 import { tailwind } from 'lib/styles'
@@ -11,23 +11,23 @@ interface CarouselProps {
 
 const dataCarousel: AdvertisingCarouselItemType[] = [
   {
-    id: 0,
+    id: '0',
     image_url:
       'https://image.freepik.com/vetores-gratis/modelo-de-anuncio-comida-para-hamburguer_23-2148449854.jpg',
   },
   {
-    id: 1,
+    id: '1',
     image_url:
       'https://i.pinimg.com/736x/e2/c9/80/e2c980b8ea4ca3c53be25d7d885012a5.jpg',
   },
   {
-    id: 2,
+    id: '2',
     image_url:
       'https://image.freepik.com/fotos-gratis/close-up-de-escuro-ardosia-preta-pedra-fundo_23-2148118059.jpg',
     description: 'Descrição opcional',
   },
   {
-    id: 3,
+    id: '3',
     description: 'Descrição de exemplo',
   },
 ]
@@ -40,12 +40,13 @@ const Carousel: React.FC<CarouselProps> = ({ style }) => {
     return <AdvertisingCarouselItem key={item.id} item={item} />
   }
 
+  const memoizedValue = useMemo(() => renderItem, [dataCarousel])
   return (
     <View style={style}>
       <CarouselView
         layout="default"
         data={dataCarousel}
-        renderItem={renderItem}
+        renderItem={memoizedValue}
         sliderWidth={viewportWidth}
         itemWidth={viewportWidth}
         slideStyle={{ flex: 1 }}

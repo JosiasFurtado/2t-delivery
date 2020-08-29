@@ -26,6 +26,7 @@ const StoreList: React.FC<StoreListProps> = ({ style, data, type }) => {
       data={data}
       horizontal={type === 'vertical' ? true : false}
       pagingEnabled
+      keyExtractor={item => item.id.toString()}
       style={[
         type === 'vertical' ? { height: 285 } : null,
         tailwind('-ml-4 mb-6 -mr-4'),

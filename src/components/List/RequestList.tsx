@@ -26,6 +26,7 @@ const RequestList: React.FC<RequestListProps> = ({
   return (
     <FlatList
       data={data}
+      keyExtractor={item => item.id.toString()}
       showsVerticalScrollIndicator={false}
       style={[tailwind('-ml-4 mb-24 -mr-4 pt-4'), style]}
       renderItem={memoizedValue}

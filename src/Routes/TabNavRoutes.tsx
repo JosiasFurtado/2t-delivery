@@ -1,8 +1,6 @@
 import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import Home from '../pages/Home'
 import Cart from '../pages/Cart'
-import MyRequests from '../pages/MyRequests'
 import Profile from '../pages/Profile'
 import {
   MaterialIcons,
@@ -10,6 +8,7 @@ import {
   FontAwesome5,
   Ionicons,
 } from '@expo/vector-icons'
+import { HomeStack, RequestStack } from './StackRoutes'
 
 interface TabNavRoutesProps {
   readonly route?: {
@@ -47,7 +46,7 @@ const TabNavRoutes: React.FC<TabNavRoutesProps> = ({ route }) => {
           },
         }}
         name="Início"
-        component={Home}
+        component={HomeStack}
       />
       <Tab.Screen
         options={{
@@ -77,7 +76,7 @@ const TabNavRoutes: React.FC<TabNavRoutesProps> = ({ route }) => {
           },
         }}
         name="Pedidos"
-        component={MyRequests}
+        component={RequestStack}
       />
       <Tab.Screen
         options={{

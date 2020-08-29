@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import {
   StyleProp,
   View,
@@ -74,12 +74,14 @@ const TutorialCarousel: React.FC<TutorialCarouselProps> = ({ style }) => {
     )
   }
 
+  const memoizedValue = useMemo(() => renderItem, [dataCarousel])
+
   return (
     <View style={style}>
       <CarouselView
         layout="default"
         data={dataCarousel}
-        renderItem={renderItem}
+        renderItem={memoizedValue}
         sliderWidth={viewportWidth}
         itemWidth={viewportWidth}
         inactiveSlideOpacity={1}

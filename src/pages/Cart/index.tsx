@@ -6,8 +6,10 @@ import { FontAwesome5, Ionicons } from '@expo/vector-icons'
 import PrimaryButton from 'components/styledComponents/PrimaryButton'
 import ItemCart from 'components/ItemCart'
 import CartModal from 'components/modals/Cart'
+import { useNavigation } from '@react-navigation/native'
 
 const Cart: React.FC = () => {
+  const { navigate } = useNavigation()
   const [openModal, setOpenModal] = useState(false)
   const [quantityMock, setQuantityMock] = useState(1)
 
@@ -74,7 +76,10 @@ const Cart: React.FC = () => {
         </View>
       </ScrollView>
       <View style={tailwind('px-8 pb-4')}>
-        <PrimaryButton onPress={() => {}} style={tailwind('flex-row')}>
+        <PrimaryButton
+          onPress={() => navigate('Checkout')}
+          style={tailwind('flex-row')}
+        >
           <Text style={tailwind('mr-2 text-lg text-white')}>CONFIRMAR</Text>
           <Ionicons name="md-checkmark" size={20} color="#fff" />
         </PrimaryButton>

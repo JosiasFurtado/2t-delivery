@@ -15,7 +15,13 @@ import ItemList from 'components/List/ItemList'
 import AddItemToCart from 'components/FooterAddItemToCart'
 import { TextInput } from 'react-native-gesture-handler'
 
-const storesMock = [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
+const storesMock = [
+  { id: '0' },
+  { id: '1' },
+  { id: '2' },
+  { id: '3' },
+  { id: '4' },
+]
 
 const ItemPage: React.FC = () => {
   const { goBack } = useNavigation()

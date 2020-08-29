@@ -16,7 +16,7 @@ const Help: React.FC<HelpProps> = ({ open, setOpenModal }) => {
 
   return (
     <LayoutModal title="Ajuda" open={open} setOpenModal={setOpenModal}>
-      <ScrollView style={tailwind('rounded-t-lg bg-white px-5 py-3')}>
+      <ScrollView style={tailwind('rounded-t-lg bg-white px-5')}>
         <Text
           style={tailwind('text-primary-500 text-2xl font-medium pt-4 mb-2')}
         >
@@ -38,7 +38,7 @@ const Help: React.FC<HelpProps> = ({ open, setOpenModal }) => {
         </PrimaryButton>
         <PrimaryButton
           onPress={handleDirectToContact2T}
-          style={tailwind('mb-10')}
+          style={tailwind('mb-8')}
         >
           <Text style={tailwind('text-xl text-white')}>2T Delivery</Text>
         </PrimaryButton>
