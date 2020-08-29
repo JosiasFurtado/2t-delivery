@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   StyleProp,
   View,
@@ -7,11 +7,11 @@ import {
   Image,
   TouchableOpacity,
   TouchableHighlight,
-  TouchableHighlightBase,
 } from 'react-native'
 import { tailwind } from 'lib/styles'
 import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
+import AddAndRemoveBtns from 'components/styledComponents/AddAndRemoveBtns'
 
 interface ItemCardProps {
   readonly style?: StyleProp<ViewStyle>
@@ -19,6 +19,7 @@ interface ItemCardProps {
 
 const ItemCard: React.FC<ItemCardProps> = ({ style }) => {
   const { navigate } = useNavigation()
+  const [addItemToCartStat, setAddItemToCartStat] = useState(false)
 
   return (
     <View
@@ -64,12 +65,25 @@ const ItemCard: React.FC<ItemCardProps> = ({ style }) => {
           </Text>
         </View>
       </TouchableHighlight>
-      <TouchableOpacity style={tailwind('bg-primary-500 py-1 rounded')}>
-        <View style={tailwind('flex-row items-center justify-center')}>
-          <MaterialIcons name="add-shopping-cart" size={16} color="#fff" />
-          <Text style={tailwind('text-white text-lg ml-1')}>Adicionar</Text>
+      {!addItemToCartStat ? (
+        <TouchableOpacity
+          onPress={() => setAddItemToCartStat(true)}
+          style={tailwind('bg-primary-500 py-1 rounded')}
+        >
+          <View style={tailwind('flex-row items-center justify-center')}>
+            <MaterialIcons name="add-shopping-cart" size={16} color="#fff" />
+            <Text style={tailwind('text-white text-lg ml-1')}>Adicionar</Text>
+          </View>
+        </TouchableOpacity>
+      ) : (
+        <View style={tailwind('items-center')}>
+          <AddAndRemoveBtns
+            quantity={1}
+            handleDecreasesItemQuantity={() => {}}
+            handleIncreasesItemQuantity={() => {}}
+          />
         </View>
-      </TouchableOpacity>
+      )}
     </View>
   )
 }

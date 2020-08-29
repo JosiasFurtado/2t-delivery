@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   StyleProp,
   Text,
@@ -6,10 +6,10 @@ import {
   ViewStyle,
   TouchableOpacity,
   Image,
-  TouchableHighlight,
 } from 'react-native'
 import { tailwind, getColor } from 'lib/styles'
 import { FontAwesome5, Ionicons } from '@expo/vector-icons'
+import AddAndRemoveBtns from 'components/styledComponents/AddAndRemoveBtns'
 
 interface ItemCartProps {
   readonly style?: StyleProp<ViewStyle>
@@ -94,41 +94,11 @@ const ItemCart: React.FC<ItemCartProps> = ({
             </TouchableOpacity>
           </View>
         </View>
-        <View style={tailwind('flex-row items-center')}>
-          <TouchableHighlight
-            underlayColor={getColor('gray-200')}
-            onPress={handleDecreasesItemQuantity}
-            style={tailwind(
-              `bg-white border-2 w-8 h-8 justify-center items-center rounded ${
-                quantityMock > 1 ? 'border-primary-500' : 'border-gray-500'
-              }`,
-            )}
-          >
-            <Ionicons
-              name="ios-remove"
-              size={24}
-              color={getColor(
-                `${quantityMock > 1 ? 'primary-500' : 'gray-500'}`,
-              )}
-            />
-          </TouchableHighlight>
-          <Text style={tailwind('text-2xl bg-gray-200 font-medium px-2')}>
-            {quantityMock}
-          </Text>
-          <TouchableHighlight
-            underlayColor={getColor('gray-200')}
-            onPress={handleIncreasesItemQuantity}
-            style={tailwind(
-              'bg-white border-2 border-primary-500 w-8 h-8 justify-center items-center rounded',
-            )}
-          >
-            <Ionicons
-              name="ios-add"
-              size={24}
-              color={getColor('primary-500')}
-            />
-          </TouchableHighlight>
-        </View>
+        <AddAndRemoveBtns
+          quantity={quantityMock}
+          handleIncreasesItemQuantity={handleIncreasesItemQuantity}
+          handleDecreasesItemQuantity={handleDecreasesItemQuantity}
+        />
         <View style={tailwind('justify-center')}>
           <Text style={tailwind('text-lg')}>
             {itemPriceMultipliedWithComma}

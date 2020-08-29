@@ -1,9 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import { View, Text, Modal, StatusBar, TouchableOpacity } from 'react-native'
-import { tailwind, getColor } from 'lib/styles'
-import { Ionicons } from '@expo/vector-icons'
+import { View, Text, ScrollView } from 'react-native'
+import { tailwind } from 'lib/styles'
 import PrimaryButton from 'components/styledComponents/PrimaryButton'
-import { BgModal } from '../LoginModal'
+import LayoutModal from '../LayoutModal'
 
 interface ConfigProps {
   readonly open: boolean
@@ -14,27 +13,9 @@ const Config: React.FC<ConfigProps> = ({ open, setOpenModal }) => {
   const handleChangeUserAddress = () => {}
 
   return (
-    <Modal
-      visible={open}
-      animationType="slide"
-      transparent
-      onRequestClose={() => setOpenModal(false)}
-    >
-      <StatusBar
-        backgroundColor={getColor('primary-700')}
-        barStyle="light-content"
-      />
-      <BgModal>
-        <TouchableOpacity
-          onPress={() => setOpenModal(!open)}
-          style={tailwind('px-5 mb-4')}
-        >
-          <Ionicons name="md-arrow-back" size={35} color="#fff" />
-        </TouchableOpacity>
-        <Text style={tailwind('px-5 mb-4 text-3xl text-white')}>
-          Configurações
-        </Text>
-        <View style={tailwind('rounded-t-lg bg-white px-5 py-3')}>
+    <LayoutModal title="Configurações" open={open} setOpenModal={setOpenModal}>
+      <View style={tailwind('rounded-t-lg bg-white px-5 py-3')}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={tailwind('text-primary-500 text-2xl font-medium pt-4')}>
             Quer alterar algum dos seus dados?
           </Text>
@@ -47,9 +28,9 @@ const Config: React.FC<ConfigProps> = ({ open, setOpenModal }) => {
           >
             <Text style={tailwind('text-xl text-white')}>Alterar</Text>
           </PrimaryButton>
-        </View>
-      </BgModal>
-    </Modal>
+        </ScrollView>
+      </View>
+    </LayoutModal>
   )
 }
 
