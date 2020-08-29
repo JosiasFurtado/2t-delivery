@@ -11,30 +11,38 @@ import Help from '../pages/Help'
 const Stack = createStackNavigator()
 
 export default function StackRoutes() {
+  const user = true
   return (
     <Stack.Navigator mode="card" headerMode="none">
-      <Stack.Screen name="Tutorial" component={Tutorial} />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Home" component={TabNavRoutes} />
-      <Stack.Screen name="Help" component={Help} />
-      <Stack.Screen name="StorePage" component={StorePage} />
-      <Stack.Screen name="ItemPage" component={ItemPage} />
-      <Stack.Screen name="RequestDetail" component={RequestDetail} />
-      <Stack.Screen
-        name="Profile"
-        component={TabNavRoutes}
-        initialParams={{ initialRouteName: 'Perfil' }}
-      />
-      <Stack.Screen
-        name="Cart"
-        component={TabNavRoutes}
-        initialParams={{ initialRouteName: 'Carrinho' }}
-      />
-      <Stack.Screen
-        name="MyRequests"
-        component={TabNavRoutes}
-        initialParams={{ initialRouteName: 'Pedidos' }}
-      />
+      {!user ? (
+        <>
+          <Stack.Screen name="Tutorial" component={Tutorial} />
+          <Stack.Screen name="Login" component={Login} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="Home" component={TabNavRoutes} />
+          <Stack.Screen name="Help" component={Help} />
+          <Stack.Screen name="StorePage" component={StorePage} />
+          <Stack.Screen name="ItemPage" component={ItemPage} />
+          <Stack.Screen name="RequestDetail" component={RequestDetail} />
+          <Stack.Screen
+            name="Profile"
+            component={TabNavRoutes}
+            initialParams={{ initialRouteName: 'Perfil' }}
+          />
+          <Stack.Screen
+            name="Cart"
+            component={TabNavRoutes}
+            initialParams={{ initialRouteName: 'Carrinho' }}
+          />
+          <Stack.Screen
+            name="MyRequests"
+            component={TabNavRoutes}
+            initialParams={{ initialRouteName: 'Pedidos' }}
+          />
+        </>
+      )}
     </Stack.Navigator>
   )
 }

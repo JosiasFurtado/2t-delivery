@@ -5,9 +5,12 @@ import logo from '../../../assets/png/logo-without-text.png'
 import { FontAwesome5, Ionicons } from '@expo/vector-icons'
 import PrimaryButton from 'components/styledComponents/PrimaryButton'
 import ItemCart from 'components/ItemCart'
+import CartModal from 'components/modals/Cart'
 
 const Cart: React.FC = () => {
+  const [openModal, setOpenModal] = useState(false)
   const [quantityMock, setQuantityMock] = useState(1)
+
   const itemPrice = 11.99
   const itemPriceMultipliedByQuantity = parseFloat(
     (itemPrice * quantityMock).toFixed(2),
@@ -16,6 +19,9 @@ const Cart: React.FC = () => {
   const totalmock = itemPriceMultipliedByQuantity + 4
   const totalmockstring = String(totalmock).replace('.', ',')
 
+  const openCommitModal = () => {
+    setOpenModal(true)
+  }
   return (
     <SafeAreaView style={tailwind('flex-1 relative bg-white')}>
       <ScrollView>
@@ -40,6 +46,7 @@ const Cart: React.FC = () => {
             itemPrice={itemPrice}
             quantityMock={quantityMock}
             setQuantityMock={setQuantityMock}
+            openCommitModal={() => openCommitModal()}
           />
           <View style={tailwind('border-b pb-3 border-gray-500 mb-4')}>
             <View style={tailwind('flex-row justify-between mb-1')}>
@@ -72,6 +79,7 @@ const Cart: React.FC = () => {
           <Ionicons name="md-checkmark" size={20} color="#fff" />
         </PrimaryButton>
       </View>
+      <CartModal open={openModal} setOpenModal={setOpenModal} />
     </SafeAreaView>
   )
 }

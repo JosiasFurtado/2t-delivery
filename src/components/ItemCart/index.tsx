@@ -16,6 +16,7 @@ interface ItemCartProps {
   readonly itemPrice: number
   setQuantityMock: any
   quantityMock: number
+  openCommitModal(): void
 }
 
 const ItemCart: React.FC<ItemCartProps> = ({
@@ -23,6 +24,7 @@ const ItemCart: React.FC<ItemCartProps> = ({
   itemPrice,
   setQuantityMock,
   quantityMock,
+  openCommitModal,
 }) => {
   const itemPriceMultipliedByQuantity = parseFloat(
     (itemPrice * quantityMock).toFixed(2),
@@ -78,7 +80,10 @@ const ItemCart: React.FC<ItemCartProps> = ({
             >
               R$ 11,99
             </Text>
-            <TouchableOpacity style={tailwind('flex-row items-center')}>
+            <TouchableOpacity
+              onPress={openCommitModal}
+              style={tailwind('flex-row items-center')}
+            >
               <FontAwesome5
                 name="edit"
                 size={12}

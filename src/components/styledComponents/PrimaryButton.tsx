@@ -1,10 +1,9 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { StyleProp, ViewStyle, TouchableOpacity } from 'react-native'
 import { tailwind } from 'lib/styles'
 
 interface PrimaryButtonProps {
   readonly style?: StyleProp<ViewStyle>
-  readonly children: ReactNode
   readonly disable?: boolean
   onPress(): void
 }

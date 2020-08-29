@@ -1,4 +1,4 @@
-import React, { ReactNode, Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { Text, Modal, StatusBar, TouchableOpacity } from 'react-native'
 import { tailwind, getColor } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
@@ -11,7 +11,6 @@ const BgModal = styled.View`
 `
 
 interface LayoutModalProps {
-  readonly children: ReactNode
   readonly open: boolean
   readonly title?: string
   setOpenModal: Dispatch<SetStateAction<boolean>>

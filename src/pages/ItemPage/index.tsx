@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import {
-  StyleProp,
   View,
-  ViewStyle,
   Text,
   SafeAreaView,
   Image,
@@ -17,12 +15,9 @@ import ItemList from 'components/List/ItemList'
 import AddItemToCart from 'components/FooterAddItemToCart'
 import { TextInput } from 'react-native-gesture-handler'
 
-interface ItemPageProps {
-  readonly style?: StyleProp<ViewStyle>
-}
 const storesMock = [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
 
-const ItemPage: React.FC<ItemPageProps> = () => {
+const ItemPage: React.FC = () => {
   const { goBack } = useNavigation()
   const [openCommentArea, setOpenCommentArea] = useState(false)
   const [commentValue, setCommentValue] = useState('')
@@ -106,8 +101,7 @@ const ItemPage: React.FC<ItemPageProps> = () => {
             </TouchableHighlight>
             {openCommentArea && (
               <TextInput
-                placeholder="Caso precise, adicione aqui uma observação.        
-              Ex: Quero bananas mais verdes"
+                placeholder="Caso precise, adicione aqui uma observação. Exemplo: Quero bananas mais verdes"
                 allowFontScaling={false}
                 multiline={true}
                 numberOfLines={3}
