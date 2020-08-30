@@ -1,11 +1,14 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, SafeAreaView } from 'react-native'
+import { tailwind } from 'lib/styles'
 
 const Checkout: React.FC = () => {
   return (
-    <View>
-      <Text>Checkout</Text>
-    </View>
+    <SafeAreaView style={tailwind('flex-1 relative bg-white')}>
+      <View>
+        <Text>Checkout</Text>
+      </View>
+    </SafeAreaView>
   )
 }
 Checkout.displayName = 'Checkout'

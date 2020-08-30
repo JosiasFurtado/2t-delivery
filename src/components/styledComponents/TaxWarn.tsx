@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import {
   StyleProp,
   View,
@@ -11,9 +11,10 @@ import { FontAwesome5 } from '@expo/vector-icons'
 
 interface TaxWarnProps {
   readonly style?: StyleProp<ViewStyle>
+  setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-const TaxWarn: React.FC<TaxWarnProps> = ({ style }) => {
+const TaxWarn: React.FC<TaxWarnProps> = ({ style, setOpenModal }) => {
   return (
     <View
       style={[
@@ -34,6 +35,7 @@ const TaxWarn: React.FC<TaxWarnProps> = ({ style }) => {
         </Text>
       </View>
       <TouchableOpacity
+        onPress={() => setOpenModal(true)}
         style={tailwind(
           'w-8 h-8 rounded bg-primary-500 items-center justify-center',
         )}

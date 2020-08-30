@@ -31,7 +31,7 @@ const FooterAddItemToCart: React.FC<FooterAddItemToCartProps> = ({
   ).replace('.', ',')
 
   const handleAddItemToCart = () => {
-    navigate('Cart')
+    navigate('Carrinho')
   }
 
   const handleIncreasesItemQuantity = () => {

@@ -6,6 +6,7 @@ import Tutorial from '../pages/Tutorial'
 import TabNavRoutes from './TabNavRoutes'
 import ItemPage from '../pages/ItemPage'
 import StorePage from '../pages/StorePage'
+import StoreDetailsPage from '../pages/StoreDetailsPage'
 import RequestDetail from '../pages/RequestDetail'
 import Checkout from '../pages/Checkout'
 import Help from '../pages/Help'
@@ -28,11 +29,6 @@ export default function StackRoutes() {
         component={TabNavRoutes}
         initialParams={{ initialRouteName: 'Perfil' }}
       />
-      <Stack.Screen
-        name="Cart"
-        component={TabNavRoutes}
-        initialParams={{ initialRouteName: 'Carrinho' }}
-      />
     </StackNavigator>
   )
 }
@@ -42,6 +38,7 @@ export function HomeStack() {
     <StackNavigator>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="StorePage" component={StorePage} />
+      <Stack.Screen name="StoreDetailsPage" component={StoreDetailsPage} />
     </StackNavigator>
   )
 }
