@@ -46,6 +46,7 @@ const Carousel: React.FC<CarouselProps> = ({ style }) => {
       <CarouselView
         layout="default"
         data={dataCarousel}
+        // @ts-ignore
         renderItem={memoizedValue}
         sliderWidth={viewportWidth}
         itemWidth={viewportWidth}

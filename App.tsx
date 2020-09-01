@@ -5,7 +5,9 @@ import moment from 'moment'
 import 'moment/locale/pt-br'
 import { getColor } from 'lib/styles'
 
+// @ts-ignore
 Text.defaultProps = Text.defaultProps || {}
+// @ts-ignore
 Text.defaultProps.allowFontScaling = false
 
 //console.disableYellowBox = true

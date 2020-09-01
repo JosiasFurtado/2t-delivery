@@ -21,27 +21,27 @@ interface TutorialCarouselProps {
 
 const dataCarousel: TutorialCarouselItemType[] = [
   {
-    id: 0,
+    id: '0',
     image: Stores,
     title: 'Escolha sua loja preferida',
     description: 'Compre dos melhores estabelecimentos das sua região',
   },
   {
-    id: 1,
+    id: '1',
     image: CartInCellphone,
     title: 'Adicione produtos ao seu carrinho',
     description:
       'Passeie pelos corredores ou procure por seus produtos favoritos',
   },
   {
-    id: 2,
+    id: '2',
     image: Shoppers,
     title: 'Seu companheiro shopper',
     description:
       'Os shoppers são treinados para escolher seus produtos com carinho',
   },
   {
-    id: 3,
+    id: '3',
     image: TimeManagement,
     title: 'Seu tempo e felicidade importam',
     description:
@@ -81,6 +81,7 @@ const TutorialCarousel: React.FC<TutorialCarouselProps> = ({ style }) => {
       <CarouselView
         layout="default"
         data={dataCarousel}
+        // @ts-ignore
         renderItem={memoizedValue}
         sliderWidth={viewportWidth}
         itemWidth={viewportWidth}
