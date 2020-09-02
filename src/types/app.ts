@@ -20,3 +20,8 @@ export type ItemMock = {
 export type LoginModals = 'signin' | 'signup' | 'forgotMyPassword'
 
 export type ProfileModals = 'address' | 'help' | 'config'
+
+export interface SignInFormData {
+  email: string
+  password1: string
+}

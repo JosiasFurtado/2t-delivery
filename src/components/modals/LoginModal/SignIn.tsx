@@ -1,12 +1,14 @@
-import React, { Dispatch, SetStateAction, useRef } from 'react'
+import React, { Dispatch, SetStateAction, useRef, useCallback } from 'react'
 import { View, TouchableOpacity, Text, ScrollView } from 'react-native'
 import { tailwind } from 'lib/styles'
-import { LoginModals } from 'types/app'
+import { LoginModals, SignInFormData } from 'types/app'
 import PrimaryButton from 'components/styledComponents/PrimaryButton'
 import SignInForm from 'components/Form/SignInForm'
-import { SubmitHandler, FormHandles } from '@unform/core'
+import { FormHandles } from '@unform/core'
 import { useNavigation } from '@react-navigation/native'
 import LayoutModal from '../LayoutModal'
+import * as Yup from 'yup'
+import getValidationsErrors from 'utils/getValidationsErrors'
 
 interface SignInProps {
   readonly open: boolean
@@ -22,11 +24,32 @@ const SignIn: React.FC<SignInProps> = ({
   const formRef = useRef<FormHandles>(null)
   const { navigate } = useNavigation()
 
-  const handleSubmit: SubmitHandler<FormData> = (data, { reset }) => {
-    console.warn(data)
+  const handleSubmit = useCallback(async (data: SignInFormData, { reset }) => {
+    try {
+      formRef.current?.setErrors({})
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .required('E-mail obrigatório')
+          .email('Digite um e-mail válido'),
+        password: Yup.string().required('Senha obrigatória'),
+      })
 
+      await schema.validate(data, {
+        abortEarly: false,
+      })
+      // fazer login na api
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        console.warn('entrou no erro')
+        const errors = getValidationsErrors(error)
+
+        formRef.current?.setErrors(errors)
+        return
+      }
+    }
     reset()
-  }
+  }, [])
+
   const handleChangeToSignUp = () => {
     setOpenModal(false)
     setTypeModal('signup')

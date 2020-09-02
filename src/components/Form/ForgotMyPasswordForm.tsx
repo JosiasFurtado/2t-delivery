@@ -35,6 +35,8 @@ const ForgotMyPasswordForm: React.FC<ForgotMyPasswordFormProps> = ({
           autoCapitalize="none"
           keyboardType="email-address"
           placeholder="Digite seu email"
+          returnKeyType="send"
+          onSubmitEditing={() => formRef.current?.submitForm()}
         />
       </Form>
     </View>

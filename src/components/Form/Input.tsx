@@ -1,10 +1,17 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useImperativeHandle,
+  forwardRef,
+} from 'react'
 import {
   Text,
   TextInput,
   TextInputProps,
   StyleProp,
   ViewStyle,
+  View,
 } from 'react-native'
 import { useField } from '@unform/core'
 import { tailwind } from 'lib/styles'
@@ -15,49 +22,74 @@ interface Props {
   readonly label?: string
 }
 type InputProps = TextInputProps & Props
-const Input: React.FC<InputProps> = ({ style, name, label, ...rest }) => {
-  const inputRef = useRef(null)
-  const [isFocused, setIsFocused] = useState(false)
-  const { fieldName, registerField, defaultValue, error } = useField(name)
 
+interface InputRefProps {
+  focus(): void
+}
+
+interface InputValueRef {
+  value: string
+}
+
+const Input: React.RefForwardingComponent<InputRefProps, InputProps> = (
+  { style, name, label, ...rest },
+  ref,
+) => {
+  const inputElementRef = useRef<any>(null)
+  const { fieldName, registerField, defaultValue = '', error } = useField(name)
+  const inputValueRef = useRef<InputValueRef>({ value: defaultValue })
+  const [isFocused, setIsFocused] = useState(false)
+
+  useImperativeHandle(ref, () => ({
+    focus() {
+      inputElementRef.current.focus()
+    },
+  }))
   useEffect(() => {
-    registerField({
+    registerField<string>({
       name: fieldName,
-      ref: inputRef.current,
-      path: '_lastNativeText',
-      setValue(ref, value) {
-        ref.setNativeProps({ text: value })
-        ref._lastNativeText = value
+      ref: inputValueRef.current,
+      path: 'value',
+      setValue(ref: any, value) {
+        inputValueRef.current.value = value
+        inputElementRef.current.setNativeProps({ text: value })
       },
-      clearValue(ref) {
-        ref.setNativeProps({ text: '' })
-        ref._lastNativeText = ''
+      clearValue() {
+        inputValueRef.current.value = ''
+        inputElementRef.current.clear()
       },
     })
   }, [fieldName, registerField])
-
   return (
-    <>
-      {label && <Text>{label}</Text>}
+    <View>
+      {label && (
+        <Text style={tailwind(`${error ? 'text-red-500' : ''}`)}>{label}</Text>
+      )}
 
       <TextInput
+        ref={inputElementRef}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         style={[
           tailwind(
             `h-10 border-b-2 mb-2 ${
-              isFocused ? 'border-primary-500' : 'border-gray-500'
+              isFocused
+                ? 'border-primary-500'
+                : error
+                ? 'border-red-500'
+                : 'border-gray-500'
             }`,
           ),
           style,
         ]}
-        ref={inputRef}
+        onChangeText={value => {
+          inputValueRef.current.value = value
+        }}
         defaultValue={defaultValue}
         {...rest}
       />
-      {error && <span>{error}</span>}
-    </>
+    </View>
   )
 }
 
-export default Input
+export default forwardRef(Input)

@@ -1,4 +1,10 @@
-import React, { useRef, Dispatch, SetStateAction } from 'react'
+import React, {
+  useRef,
+  Dispatch,
+  SetStateAction,
+  useState,
+  useCallback,
+} from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { SubmitHandler, FormHandles } from '@unform/core'
 import { LoginModals } from 'types/app'
@@ -19,16 +25,27 @@ const ForgotMyPassword: React.FC<ForgotMyPasswordProps> = ({
   setTypeModal,
 }) => {
   const formRef = useRef<FormHandles>(null)
+  const [message, setMessage] = useState<string | null>(null)
 
-  const handleSubmit: SubmitHandler<FormData> = (data, { reset }) => {
-    console.warn(data)
+  const handleSubmit: SubmitHandler<FormData> = useCallback(
+    (data, { reset }) => {
+      console.warn(data)
 
-    reset()
-  }
+      reset()
+    },
+    [],
+  )
   const handleChangeToSignIn = () => {
     setOpenModal(false)
     setTypeModal('signin')
     setOpenModal(true)
+  }
+
+  const handleSubmitAndShowMessage = () => {
+    setMessage(
+      'Se o email existir no nosso banco de dados, você receberá as instruções no seu email.',
+    )
+    formRef.current?.submitForm()
   }
 
   return (
@@ -44,13 +61,16 @@ const ForgotMyPassword: React.FC<ForgotMyPasswordProps> = ({
         <Text style={tailwind('text-gray-500 text-lg mb-16')}>
           Digite seu email para recuperar
         </Text>
+        {message && (
+          <Text style={tailwind('text-red-400 text-lg mb-2')}>{message}</Text>
+        )}
         <ForgotMyPasswordForm
           formRef={formRef}
           handleSubmit={handleSubmit}
           style={tailwind('mb-4')}
         />
         <PrimaryButton
-          onPress={() => formRef.current?.submitForm()}
+          onPress={handleSubmitAndShowMessage}
           style={tailwind('mb-20')}
         >
           <Text style={tailwind('text-xl text-white')}>Enviar</Text>

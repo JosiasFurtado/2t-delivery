@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useRef } from 'react'
+import React, { Dispatch, SetStateAction, useRef, useCallback } from 'react'
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import { tailwind } from 'lib/styles'
 import { LoginModals } from 'types/app'
@@ -20,11 +20,14 @@ const SignUp: React.FC<SignUpProps> = ({
 }) => {
   const formRef = useRef<FormHandles>(null)
 
-  const handleSubmit: SubmitHandler<FormData> = (data, { reset }) => {
-    console.warn(data)
+  const handleSubmit: SubmitHandler<FormData> = useCallback(
+    (data, { reset }) => {
+      console.warn(data)
 
-    reset()
-  }
+      reset()
+    },
+    [],
+  )
   const handleChangeToSignIn = () => {
     setOpenModal(false)
     setTypeModal('signin')
