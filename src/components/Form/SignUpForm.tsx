@@ -9,13 +9,14 @@ import {
 } from 'react-native'
 import { tailwind } from 'lib/styles'
 import { Form } from '@unform/mobile'
-import { Scope, FormHandles, SubmitHandler } from '@unform/core'
+import { FormHandles, SubmitHandler } from '@unform/core'
 import Input from './Input'
+import { SignUpFormData } from 'types/app'
 
 interface SignUpFormProps {
   readonly style?: StyleProp<ViewStyle>
   readonly formRef: RefObject<FormHandles>
-  handleSubmit: SubmitHandler<FormData>
+  handleSubmit: SubmitHandler<SignUpFormData>
 }
 
 const SignUpForm: React.FC<SignUpFormProps> = ({
@@ -59,7 +60,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
           <Input
             ref={lastNameInputRef}
             autoCapitalize="words"
-            name="LastName"
+            name="lastName"
             label="Ultimo nome"
             placeholder="Digite seu último nome"
             returnKeyType="next"
@@ -68,30 +69,28 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
             }}
           />
 
-          <Scope path="password">
-            <Input
-              ref={password1InputRef}
-              secureTextEntry
-              name="password1"
-              label="Senha"
-              placeholder="Digite sua senha"
-              returnKeyType="next"
-              textContentType="newPassword"
-              onSubmitEditing={() => {
-                password2InputRef.current?.focus()
-              }}
-            />
-            <Input
-              ref={password2InputRef}
-              secureTextEntry
-              name="password2"
-              label="Repita sua senha"
-              placeholder="Digite novamente sua senha"
-              returnKeyType="send"
-              textContentType="newPassword"
-              onSubmitEditing={() => formRef.current?.submitForm()}
-            />
-          </Scope>
+          <Input
+            ref={password1InputRef}
+            secureTextEntry
+            name="password"
+            label="Senha"
+            placeholder="Digite sua senha"
+            returnKeyType="next"
+            textContentType="newPassword"
+            onSubmitEditing={() => {
+              password2InputRef.current?.focus()
+            }}
+          />
+          <Input
+            ref={password2InputRef}
+            secureTextEntry
+            name="confirmPassword"
+            label="Repita sua senha"
+            placeholder="Digite novamente sua senha"
+            returnKeyType="send"
+            textContentType="newPassword"
+            onSubmitEditing={() => formRef.current?.submitForm()}
+          />
         </Form>
       </View>
     </KeyboardAvoidingView>

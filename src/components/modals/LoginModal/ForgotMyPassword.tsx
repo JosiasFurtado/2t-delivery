@@ -27,7 +27,7 @@ const ForgotMyPassword: React.FC<ForgotMyPasswordProps> = ({
   const formRef = useRef<FormHandles>(null)
   const [message, setMessage] = useState<string | null>(null)
 
-  const handleSubmit: SubmitHandler<FormData> = useCallback(
+  const handleSubmitForgotMyPassword: SubmitHandler<FormData> = useCallback(
     (data, { reset }) => {
       console.warn(data)
 
@@ -66,7 +66,7 @@ const ForgotMyPassword: React.FC<ForgotMyPasswordProps> = ({
         )}
         <ForgotMyPasswordForm
           formRef={formRef}
-          handleSubmit={handleSubmit}
+          handleSubmit={handleSubmitForgotMyPassword}
           style={tailwind('mb-4')}
         />
         <PrimaryButton

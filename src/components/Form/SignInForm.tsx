@@ -29,7 +29,7 @@ const SignInForm: React.FC<SignInFormProps> = ({
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <View style={[tailwind(''), style]}>
+      <View style={style}>
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input
             style={tailwind('mb-6')}
@@ -47,7 +47,7 @@ const SignInForm: React.FC<SignInFormProps> = ({
           <Input
             ref={passwordInputRef}
             secureTextEntry
-            name="password1"
+            name="password"
             label="Senha"
             placeholder="Digite sua senha"
             returnKeyType="send"

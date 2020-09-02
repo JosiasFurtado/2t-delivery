@@ -60,12 +60,19 @@ const Input: React.RefForwardingComponent<InputRefProps, InputProps> = (
       },
     })
   }, [fieldName, registerField])
+
+  const passwordInput = label?.includes('senha') || label?.includes('Senha')
+
   return (
     <View>
-      {label && (
-        <Text style={tailwind(`${error ? 'text-red-500' : ''}`)}>{label}</Text>
-      )}
-
+      <View style={tailwind('flex-row')}>
+        {label && <Text style={tailwind('mr-1')}>{label}</Text>}
+        {passwordInput && error ? (
+          <Text style={tailwind('text-red-500')}>
+            Precisa ter no mínimo 8 dígitos
+          </Text>
+        ) : null}
+      </View>
       <TextInput
         ref={inputElementRef}
         onFocus={() => setIsFocused(true)}

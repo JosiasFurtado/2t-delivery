@@ -23,5 +23,13 @@ export type ProfileModals = 'address' | 'help' | 'config'
 
 export interface SignInFormData {
   email: string
-  password1: string
+  password: string
+}
+
+export interface SignUpFormData {
+  email: string
+  firstName: string
+  lastName: string
+  password: string
+  confirmPassword: string
 }

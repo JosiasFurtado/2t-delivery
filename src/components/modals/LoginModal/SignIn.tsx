@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, useRef, useCallback } from 'react'
+import React, {
+  Dispatch,
+  SetStateAction,
+  useRef,
+  useCallback,
+  useState,
+} from 'react'
 import { View, TouchableOpacity, Text, ScrollView } from 'react-native'
 import { tailwind } from 'lib/styles'
 import { LoginModals, SignInFormData } from 'types/app'
@@ -9,6 +15,7 @@ import { useNavigation } from '@react-navigation/native'
 import LayoutModal from '../LayoutModal'
 import * as Yup from 'yup'
 import getValidationsErrors from 'utils/getValidationsErrors'
+import api from 'services/api'
 
 interface SignInProps {
   readonly open: boolean
@@ -23,32 +30,42 @@ const SignIn: React.FC<SignInProps> = ({
 }) => {
   const formRef = useRef<FormHandles>(null)
   const { navigate } = useNavigation()
+  const [loginError, setLoginError] = useState<string | null>()
 
-  const handleSubmit = useCallback(async (data: SignInFormData, { reset }) => {
-    try {
-      formRef.current?.setErrors({})
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('E-mail obrigatório')
-          .email('Digite um e-mail válido'),
-        password: Yup.string().required('Senha obrigatória'),
-      })
+  const handleSubmitSignIn = useCallback(
+    async (data: SignInFormData, { reset }) => {
+      try {
+        setLoginError(null)
+        formRef.current?.setErrors({})
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('E-mail obrigatório')
+            .email('Digite um e-mail válido'),
+          password: Yup.string().required('Senha obrigatória'),
+        })
+        await schema.validate(data, {
+          abortEarly: false,
+        })
+        const signInResponse = await api.post('/auth', data)
+        if (signInResponse.data.user.email) {
+          // salvar token e user
+        }
+        setOpenModal(false)
+        navigate('Home')
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          const errors = getValidationsErrors(error)
 
-      await schema.validate(data, {
-        abortEarly: false,
-      })
-      // fazer login na api
-    } catch (error) {
-      if (error instanceof Yup.ValidationError) {
-        console.warn('entrou no erro')
-        const errors = getValidationsErrors(error)
-
-        formRef.current?.setErrors(errors)
-        return
+          formRef.current?.setErrors(errors)
+          return
+        } else {
+          setLoginError('E-mail e/ou senha inválidos')
+        }
       }
-    }
-    reset()
-  }, [])
+      // reset()
+    },
+    [],
+  )
 
   const handleChangeToSignUp = () => {
     setOpenModal(false)
@@ -62,16 +79,6 @@ const SignIn: React.FC<SignInProps> = ({
     setOpenModal(true)
   }
 
-  const handleSubmitFormAndRedirectToHome = () => {
-    try {
-      formRef.current?.submitForm()
-    } catch (error) {
-      console.warn(error)
-    }
-    setOpenModal(false)
-    navigate('Home')
-  }
-
   return (
     <LayoutModal title="Entrar" open={open} setOpenModal={setOpenModal}>
       <View style={tailwind('rounded-t-lg bg-white px-5 py-3')}>
@@ -82,9 +89,14 @@ const SignIn: React.FC<SignInProps> = ({
           <Text style={tailwind('text-gray-500 text-lg mb-16')}>
             Faça o log-in para continuar
           </Text>
+          {loginError && (
+            <Text style={tailwind('text-red-400 text-lg mb-2')}>
+              {loginError}
+            </Text>
+          )}
           <SignInForm
             formRef={formRef}
-            handleSubmit={handleSubmit}
+            handleSubmit={handleSubmitSignIn}
             style={tailwind('mb-4')}
           />
           <TouchableOpacity
@@ -96,7 +108,7 @@ const SignIn: React.FC<SignInProps> = ({
             </Text>
           </TouchableOpacity>
           <PrimaryButton
-            onPress={handleSubmitFormAndRedirectToHome}
+            onPress={() => formRef.current?.submitForm()}
             style={tailwind('mb-20')}
           >
             <Text style={tailwind('text-xl text-white')}>Entrar</Text>

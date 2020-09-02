@@ -1,11 +1,27 @@
-import React, { Dispatch, SetStateAction, useRef, useCallback } from 'react'
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
+import React, {
+  Dispatch,
+  SetStateAction,
+  useRef,
+  useCallback,
+  useState,
+} from 'react'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native'
 import { tailwind } from 'lib/styles'
-import { LoginModals } from 'types/app'
+import { LoginModals, SignUpFormData } from 'types/app'
 import PrimaryButton from 'components/styledComponents/PrimaryButton'
 import SignUpForm from 'components/Form'
-import { FormHandles, SubmitHandler } from '@unform/core'
+import { FormHandles } from '@unform/core'
 import LayoutModal from '../LayoutModal'
+import * as Yup from 'yup'
+import getValidationsErrors from 'utils/getValidationsErrors'
+import api from 'services/api'
+import { useNavigation } from '@react-navigation/native'
 
 interface SignUpProps {
   readonly open: boolean
@@ -19,12 +35,56 @@ const SignUp: React.FC<SignUpProps> = ({
   setTypeModal,
 }) => {
   const formRef = useRef<FormHandles>(null)
+  const [loading, setLoading] = useState(false)
+  const [apiError, setApiError] = useState<string | null>()
+  const { navigate } = useNavigation()
 
-  const handleSubmit: SubmitHandler<FormData> = useCallback(
-    (data, { reset }) => {
-      console.warn(data)
+  const handleSubmitSignUp = useCallback(
+    async (data: SignUpFormData, { reset }) => {
+      try {
+        setApiError(null)
+        setLoading(true)
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('E-mail é obrigatório')
+            .email('Digite um e-mail válido'),
+          firstName: Yup.string().required('Nome é obrigatório'),
+          lastName: Yup.string().required('Nome é obrigatório'),
+          password: Yup.string().min(8, 'No mínimo 8 dígitos'),
+          confirmPassword: Yup.string().min(8, 'No mínimo 8 dígitos'),
+        })
+        await schema.validate(data, {
+          abortEarly: false,
+        })
+        const dataToSubmit = { ...data, type: 'BUYER', gender: 'M' }
+        const response = await api.post('/user', dataToSubmit)
+        if (response.data.user.email) {
+          const dataToSignIn = {
+            email: data.email,
+            password: data.password,
+          }
+          const signInResponse = await api.post('/auth', dataToSignIn)
+          console.warn('token', signInResponse.data.token)
+          console.warn('user', signInResponse.data.user)
+          setOpenModal(false)
+          navigate('Home')
+        }
+        setLoading(false)
+      } catch (error) {
+        setLoading(false)
+        if (error instanceof Yup.ValidationError) {
+          const errors = getValidationsErrors(error)
+          formRef.current?.setErrors(errors)
+          return
+        } else {
+          if (data.password !== data.confirmPassword) {
+            return setApiError('Senha e confirmação de senha estão diferentes')
+          }
+          setApiError('O e-mail já está em uso')
+        }
+      }
 
-      reset()
+      // reset()
     },
     [],
   )
@@ -33,6 +93,7 @@ const SignUp: React.FC<SignUpProps> = ({
     setTypeModal('signin')
     setOpenModal(true)
   }
+
   return (
     <LayoutModal title="Registrar" open={open} setOpenModal={setOpenModal}>
       <View style={tailwind('rounded-t-lg bg-white px-5 py-3')}>
@@ -43,9 +104,12 @@ const SignUp: React.FC<SignUpProps> = ({
           <Text style={tailwind('text-gray-500 text-lg mb-8')}>
             Preencha os dados para continuar
           </Text>
+          {apiError ? (
+            <Text style={tailwind('mb-1 text-red-500')}>{apiError}</Text>
+          ) : null}
           <SignUpForm
             formRef={formRef}
-            handleSubmit={handleSubmit}
+            handleSubmit={handleSubmitSignUp}
             style={tailwind('mb-2')}
           />
           <TouchableOpacity
@@ -64,7 +128,11 @@ const SignUp: React.FC<SignUpProps> = ({
             onPress={() => formRef.current?.submitForm()}
             style={tailwind('mb-3')}
           >
-            <Text style={tailwind('text-xl text-white')}>Registrar</Text>
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={tailwind('text-xl text-white')}>Registrar</Text>
+            )}
           </PrimaryButton>
           <View style={tailwind('mb-2 flex flex-row justify-center')}>
             <Text style={tailwind('text-lg')}>Já tem uma conta?</Text>
