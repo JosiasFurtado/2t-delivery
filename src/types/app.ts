@@ -1,4 +1,16 @@
 export interface API {}
+export interface Product {
+  id: string
+  name: string
+  img: string
+  price: number
+}
+
+export interface ProductInCart extends Product {
+  amount: number
+  priceFormatted: string
+  commit: string
+}
 
 export type AdvertisingCarouselItemType = {
   id: string

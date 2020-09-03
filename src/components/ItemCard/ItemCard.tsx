@@ -12,14 +12,23 @@ import { tailwind } from 'lib/styles'
 import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 import AddAndRemoveBtns from 'components/styledComponents/AddAndRemoveBtns'
+import { useSelector } from 'react-redux'
+import { ProductInCart, Product } from 'types/app'
+import { RootState } from 'store/modules/rootReducer'
 
 interface ItemCardProps {
   readonly style?: StyleProp<ViewStyle>
+  readonly product: Product
+  onPress(): void
 }
 
-const ItemCard: React.FC<ItemCardProps> = ({ style }) => {
+const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product }) => {
   const { navigate } = useNavigation()
-  const [addItemToCartStat, setAddItemToCartStat] = useState(false)
+  const productAlreadyInCart = useSelector((state: RootState) =>
+    state.cart.find(
+      (productInCart: ProductInCart) => productInCart.id === product.id,
+    ),
+  )
 
   return (
     <View
@@ -65,9 +74,9 @@ const ItemCard: React.FC<ItemCardProps> = ({ style }) => {
           </Text>
         </View>
       </TouchableHighlight>
-      {!addItemToCartStat ? (
+      {!productAlreadyInCart ? (
         <TouchableOpacity
-          onPress={() => setAddItemToCartStat(true)}
+          onPress={() => onPress()}
           style={tailwind('bg-primary-500 py-1 rounded')}
         >
           <View style={tailwind('flex-row items-center justify-center')}>
@@ -78,7 +87,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ style }) => {
       ) : (
         <View style={tailwind('items-center')}>
           <AddAndRemoveBtns
-            quantity={1}
+            quantity={productAlreadyInCart.amount}
             handleDecreasesItemQuantity={() => {}}
             handleIncreasesItemQuantity={() => {}}
           />

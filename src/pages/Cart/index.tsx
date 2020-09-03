@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
 import { tailwind, getColor } from 'lib/styles'
 import logo from '../../../assets/png/logo-without-text.png'
@@ -7,15 +7,26 @@ import PrimaryButton from 'components/styledComponents/PrimaryButton'
 import ItemCart from 'components/ItemCart'
 import CartModal from 'components/modals/Cart'
 import { useNavigation } from '@react-navigation/native'
+import { ProductInCart } from 'types/app'
+import { useSelector } from 'react-redux'
+
+const productMock: ProductInCart = {
+  amount: 1,
+  commit: '',
+  priceFormatted: 'R$ 11,99',
+  id: 'uifisd',
+  name: 'Tomates 1kg',
+  price: 11.99,
+  img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+}
 
 const Cart: React.FC = () => {
+  const cartStore = useSelector((state: any) => state.cart)
   const { navigate } = useNavigation()
   const [openModal, setOpenModal] = useState(false)
-  const [quantityMock, setQuantityMock] = useState(1)
-
-  const itemPrice = 11.99
+  console.warn(cartStore)
   const itemPriceMultipliedByQuantity = parseFloat(
-    (itemPrice * quantityMock).toFixed(2),
+    (productMock.price * productMock.amount).toFixed(2),
   )
 
   const totalmock = itemPriceMultipliedByQuantity + 4
@@ -24,10 +35,13 @@ const Cart: React.FC = () => {
   const openCommitModal = () => {
     setOpenModal(true)
   }
+
   return (
     <SafeAreaView style={tailwind('flex-1 relative bg-white')}>
       <ScrollView>
-        <View style={tailwind('relative bg-primary-500 h-20 px-4 py-2')}>
+        <View
+          style={tailwind('relative bg-primary-500 items-end h-20 px-4 py-2')}
+        >
           <Image
             source={logo}
             resizeMode="contain"
@@ -44,12 +58,13 @@ const Cart: React.FC = () => {
             <Text style={tailwind('text-lg font-bold')}>Item</Text>
             <Text style={tailwind('text-lg font-bold')}>Subtotal</Text>
           </View>
-          <ItemCart
-            itemPrice={itemPrice}
-            quantityMock={quantityMock}
-            setQuantityMock={setQuantityMock}
-            openCommitModal={() => openCommitModal()}
-          />
+          {cartStore.map((item: ProductInCart) => (
+            <ItemCart
+              key={item.id}
+              product={item}
+              openCommitModal={() => openCommitModal()}
+            />
+          ))}
           <View style={tailwind('border-b pb-3 border-gray-500 mb-4')}>
             <View style={tailwind('flex-row justify-between mb-1')}>
               <Text style={tailwind('text-lg font-bold')}>Taxa de entrega</Text>

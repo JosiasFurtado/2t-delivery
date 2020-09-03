@@ -108,7 +108,7 @@ const SignIn: React.FC<SignInProps> = ({
             </Text>
           </TouchableOpacity>
           <PrimaryButton
-            onPress={() => formRef.current?.submitForm()}
+            onPress={() => navigate('Home')}
             style={tailwind('mb-20')}
           >
             <Text style={tailwind('text-xl text-white')}>Entrar</Text>

@@ -16,11 +16,36 @@ import StoreModal from 'components/modals/Store/WarnMinimumValues'
 import { useNavigation } from '@react-navigation/native'
 
 const storesMock = [
-  { id: '0' },
-  { id: '1' },
-  { id: '2' },
-  { id: '3' },
-  { id: '4' },
+  {
+    id: 'uifisd',
+    name: 'Tomates 1kg',
+    price: 11.99,
+    img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+  },
+  {
+    id: 'uiasdasdfisd',
+    name: 'Tomates 1kg',
+    price: 11.99,
+    img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+  },
+  {
+    id: 'uifissd',
+    name: 'Tomates 1kg',
+    price: 11.99,
+    img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+  },
+  {
+    id: 'uifi22sd',
+    name: 'Tomates 1kg',
+    price: 11.99,
+    img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+  },
+  {
+    id: 'uifiasdsd',
+    name: 'Tomates 1kg',
+    price: 11.99,
+    img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+  },
 ]
 
 interface StorePageProps {
@@ -52,7 +77,7 @@ const StorePage: React.FC<StorePageProps> = () => {
             <Text style={tailwind('text-lg text-primary-500 mb-2')}>
               Produtos em destaque
             </Text>
-            <ItemList data={storesMock} />
+            <ItemList products={storesMock} />
           </View>
         </View>
       </ScrollView>

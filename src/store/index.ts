@@ -6,7 +6,7 @@ import persistReducers from './persistReducers'
 import rootReducer from './modules/rootReducer'
 import rootSaga from './modules/rootSaga'
 
-// add middleware
+// if you want, add middleware
 const sagaMonitor = __DEV__ ? undefined : undefined
 
 const sagaMiddleware = createSagaMiddleware({ sagaMonitor })

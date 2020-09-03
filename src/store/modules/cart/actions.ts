@@ -1,32 +1,27 @@
-interface Product {
-  id: number
-  title: string
-  price: number
-  image: string
-}
+import { Product, ProductInCart } from 'types/app'
 
-export function addToCartRequest(id: number) {
+export function addToCartRequest(product: Product) {
   return {
     type: '@cart/ADD_REQUEST',
-    id,
+    product,
   }
 }
 
-export function addToCartSuccess(product: Product) {
+export function addToCartSuccess(product: ProductInCart) {
   return {
     type: '@cart/ADD_SUCCESS',
     product,
   }
 }
 
-export function removeFromCart(id: number) {
+export function removeFromCart(id: string) {
   return {
     type: '@cart/REMOVE',
     id,
   }
 }
 
-export function updateAmountRequest(id: number, amount: number) {
+export function updateAmountRequest(id: string, amount: number) {
   return {
     type: '@cart/UPDATE_AMOUNT_REQUEST',
     id,
@@ -34,7 +29,7 @@ export function updateAmountRequest(id: number, amount: number) {
   }
 }
 
-export function updateAmountSuccess(id: number, amount: number) {
+export function updateAmountSuccess(id: string, amount: number) {
   return {
     type: '@cart/UPDATE_AMOUNT_SUCCESS',
     id,

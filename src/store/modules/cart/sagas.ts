@@ -1,56 +1,41 @@
-import { call, select, put, all, takeLatest } from 'redux-saga/effects'
-
-import api from '../../../services/api'
+import { select, put, all } from 'redux-saga/effects'
+import * as Eff from 'redux-saga/effects'
 
 import { addToCartSuccess, updateAmountSuccess } from './actions'
-import { Alert } from 'react-native'
+import { Product, ProductInCart } from 'types/app'
 
-function* addToCart({ id }: any) {
+function* addToCart({ product }: { product: Product }) {
   const productExists = yield select(state =>
-    state.cart.find((product: any) => product.id === id),
+    state.cart.find(
+      (productInCart: ProductInCart) => productInCart.id === product.id,
+    ),
   )
 
-  const stock = yield call(api.get, `/stock/${id}`)
-
-  const stockAmount = stock.data.amount
   const currentAmount = productExists ? productExists.amount : 0
-
   const amount = currentAmount + 1
 
-  if (amount > stockAmount) {
-    Alert.alert('Produto fora do estoque!')
-    return
-  }
-
   if (productExists) {
-    yield put(updateAmountSuccess(id, amount))
+    yield put(updateAmountSuccess(product.id, amount))
   } else {
-    const response = yield call(api.get, `/products/${id}`)
-
+    const priceFormatted = String(product.price).replace('.', ',')
     const data = {
-      ...response.data,
+      ...product,
       amount: 1,
-      priceFormatted: response.data.price,
+      priceFormatted,
+      commit: '',
     }
 
     yield put(addToCartSuccess(data))
   }
 }
 
-function* updateAmount({ id, amount }: any) {
+function* updateAmount({ id, amount }: { id: string; amount: number }) {
   if (amount <= 0) return
-
-  const stock = yield call(api.get, `stock/${id}`)
-  const stockAmount = stock.data.amount
-
-  if (amount > stockAmount) {
-    Alert.alert('Produto fora do estoque!')
-    return
-  }
 
   yield put(updateAmountSuccess(id, amount))
 }
 
+const takeLatest: any = Eff.takeLatest
 export default all([
   takeLatest('@cart/ADD_REQUEST', addToCart),
   takeLatest('@cart/UPDATE_AMOUNT_REQUEST', updateAmount),

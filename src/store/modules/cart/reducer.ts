@@ -1,18 +1,17 @@
 import { Reducer, Action } from 'redux'
 import produce from 'immer'
+import { ProductInCart, Product } from 'types/app'
 
 interface ICartAction extends Action {
   id?: number
   amount: number
-  product: {
-    id: number
-    title: string
-    price: number
-    image: string
-  }
+  product: ProductInCart
 }
 
-const Cart: Reducer<any, ICartAction> = (state = [], action: ICartAction) => {
+const Cart: Reducer<any, ICartAction> = (
+  state: Product[] = [],
+  action: ICartAction,
+) => {
   switch (action.type) {
     case '@cart/ADD_SUCCESS':
       return produce(state, (draft: any[]) => {
