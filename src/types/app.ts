@@ -1,9 +1,9 @@
-export interface API {}
 export interface Product {
   id: string
   name: string
   img: string
   price: number
+  description: string
 }
 
 export interface ProductInCart extends Product {

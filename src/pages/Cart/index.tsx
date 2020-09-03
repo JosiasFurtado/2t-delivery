@@ -24,7 +24,7 @@ const Cart: React.FC = () => {
   const cartStore = useSelector((state: any) => state.cart)
   const { navigate } = useNavigation()
   const [openModal, setOpenModal] = useState(false)
-  console.warn(cartStore)
+
   const itemPriceMultipliedByQuantity = parseFloat(
     (productMock.price * productMock.amount).toFixed(2),
   )

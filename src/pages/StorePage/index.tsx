@@ -15,36 +15,46 @@ import ItemList from 'components/List/ItemList'
 import StoreModal from 'components/modals/Store/WarnMinimumValues'
 import { useNavigation } from '@react-navigation/native'
 
-const storesMock = [
+export const productsMock = [
   {
     id: 'uifisd',
     name: 'Tomates 1kg',
     price: 11.99,
     img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
   },
   {
     id: 'uiasdasdfisd',
     name: 'Tomates 1kg',
     price: 11.99,
     img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
   },
   {
     id: 'uifissd',
     name: 'Tomates 1kg',
     price: 11.99,
     img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
   },
   {
     id: 'uifi22sd',
     name: 'Tomates 1kg',
     price: 11.99,
     img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
   },
   {
     id: 'uifiasdsd',
     name: 'Tomates 1kg',
     price: 11.99,
     img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
   },
 ]
 
@@ -77,7 +87,7 @@ const StorePage: React.FC<StorePageProps> = () => {
             <Text style={tailwind('text-lg text-primary-500 mb-2')}>
               Produtos em destaque
             </Text>
-            <ItemList products={storesMock} />
+            <ItemList products={productsMock} />
           </View>
         </View>
       </ScrollView>

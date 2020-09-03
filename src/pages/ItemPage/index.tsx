@@ -14,22 +14,23 @@ import { useNavigation } from '@react-navigation/native'
 import ItemList from 'components/List/ItemList'
 import AddItemToCart from 'components/FooterAddItemToCart'
 import { TextInput } from 'react-native-gesture-handler'
+import { productsMock } from '../StorePage'
 
-const storesMock = [
-  { id: '0' },
-  { id: '1' },
-  { id: '2' },
-  { id: '3' },
-  { id: '4' },
-]
+const product = {
+  id: 'uifiasdsd',
+  name: 'Tomates 1kg',
+  price: 11.99,
+  img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+  description:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
+}
 
 const ItemPage: React.FC = () => {
   const { goBack } = useNavigation()
   const [openCommentArea, setOpenCommentArea] = useState(false)
-  const [commentValue, setCommentValue] = useState('')
+  const [commentValue, setCommentValue] = useState<string | undefined>()
 
-  const itemPrice = 12.99
-  const itemPriceWithComma = String(itemPrice).replace('.', ',')
+  const itemPriceWithComma = String(product.price).replace('.', ',')
 
   return (
     <SafeAreaView style={tailwind('flex-1 relative bg-gray-50')}>
@@ -59,7 +60,7 @@ const ItemPage: React.FC = () => {
                   numberOfLines={1}
                   style={tailwind('text-primary-500 text-3xl font-medium')}
                 >
-                  Tomates 1kg
+                  {product.name}
                 </Text>
                 <Text
                   lineBreakMode="tail"
@@ -80,12 +81,7 @@ const ItemPage: React.FC = () => {
                 'text-lg mb-8 text-gray-600 leading-6 text-justify',
               )}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut
-              orci feugiat, tempor elit vitae, malesuada neque. Orci varius
-              natoque penatibus et magnis dis parturient montes, nascetur
-              ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus
-              lacinia odio justo, molestie euismod elit accumsan a. Mauris
-              ultrices sapien at fringilla
+              {product.description}
             </Text>
             <TouchableHighlight
               underlayColor="#fff"
@@ -128,11 +124,11 @@ const ItemPage: React.FC = () => {
             <Text style={tailwind('text-lg text-primary-500 mb-2')}>
               Produtos relacionados
             </Text>
-            <ItemList data={storesMock} />
+            <ItemList products={productsMock} />
           </View>
         </View>
       </ScrollView>
-      <AddItemToCart itemPrice={itemPrice} />
+      <AddItemToCart itemPrice={product.price} />
     </SafeAreaView>
   )
 }

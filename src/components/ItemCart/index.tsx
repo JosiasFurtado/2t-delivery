@@ -33,11 +33,11 @@ const ItemCart: React.FC<ItemCartProps> = ({
     itemPriceMultipliedByQuantity,
   ).replace('.', ',')
 
-  const handleIncreasesItemQuantity = () => {
+  const handleIncreasesItemAmount = () => {
     dispatch(updateAmountRequest(product.id, product.amount + 1))
   }
 
-  const handleDecreasesItemQuantity = () => {
+  const handleDecreasesItemAmount = () => {
     if (product.amount === 1) {
       return
     }
@@ -106,9 +106,9 @@ const ItemCart: React.FC<ItemCartProps> = ({
           </View>
         </View>
         <AddAndRemoveBtns
-          quantity={product.amount}
-          handleIncreasesItemQuantity={handleIncreasesItemQuantity}
-          handleDecreasesItemQuantity={handleDecreasesItemQuantity}
+          amount={product.amount}
+          handleIncreasesItemAmount={handleIncreasesItemAmount}
+          handleDecreasesItemAmount={handleDecreasesItemAmount}
         />
         <View style={tailwind('justify-center')}>
           <Text style={tailwind('text-lg')}>

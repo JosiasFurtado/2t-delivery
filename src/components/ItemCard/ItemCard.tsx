@@ -12,9 +12,10 @@ import { tailwind } from 'lib/styles'
 import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 import AddAndRemoveBtns from 'components/styledComponents/AddAndRemoveBtns'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { ProductInCart, Product } from 'types/app'
 import { RootState } from 'store/modules/rootReducer'
+import { updateAmountRequest, removeFromCart } from 'store/modules/cart/actions'
 
 interface ItemCardProps {
   readonly style?: StyleProp<ViewStyle>
@@ -23,18 +24,36 @@ interface ItemCardProps {
 }
 
 const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product }) => {
+  const dispatch = useDispatch()
   const { navigate } = useNavigation()
   const productAlreadyInCart = useSelector((state: RootState) =>
     state.cart.find(
       (productInCart: ProductInCart) => productInCart.id === product.id,
     ),
   )
+  const priceFormated = String(product.price).replace('.', ',')
+  const handleIncreasesItemAmount = () => {
+    if (productAlreadyInCart) {
+      dispatch(updateAmountRequest(product.id, productAlreadyInCart.amount + 1))
+    }
+  }
+
+  const handleDecreasesItemAmount = () => {
+    if (productAlreadyInCart) {
+      if (productAlreadyInCart.amount === 1) {
+        return dispatch(removeFromCart(product.id))
+      }
+      dispatch(updateAmountRequest(product.id, productAlreadyInCart.amount - 1))
+    }
+  }
 
   return (
     <View
       style={[
         style,
-        tailwind('bg-white shadow-md rounded-lg w-48 px-2 py-2'),
+        tailwind(
+          'bg-white shadow-md justify-between rounded-lg w-48 px-2 py-2',
+        ),
         { borderColor: '#edf2f7', borderWidth: 1 },
       ]}
     >
@@ -50,19 +69,19 @@ const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product }) => {
             ]}
             resizeMode="cover"
             source={{
-              uri: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+              uri: product.img,
             }}
           />
-          <View style={tailwind('flex-row items-center justify-between')}>
+          <View style={tailwind('flex-row items-start justify-between')}>
             <Text
               numberOfLines={1}
               lineBreakMode="tail"
               style={tailwind('text-sm font-bold mb-1 w-1/2')}
             >
-              Tomates 1kg
+              {product.name}
             </Text>
             <Text style={tailwind('text-base font-bold text-primary-500')}>
-              R$ 12,99
+              R$ {priceFormated}
             </Text>
           </View>
           <Text
@@ -70,7 +89,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product }) => {
             lineBreakMode="tail"
             style={tailwind('text-base mb-2 text-gray-600 text-justify')}
           >
-            1Kg de tomates selecionados com variados tamanhos
+            {product.description}
           </Text>
         </View>
       </TouchableHighlight>
@@ -87,9 +106,9 @@ const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product }) => {
       ) : (
         <View style={tailwind('items-center')}>
           <AddAndRemoveBtns
-            quantity={productAlreadyInCart.amount}
-            handleDecreasesItemQuantity={() => {}}
-            handleIncreasesItemQuantity={() => {}}
+            amount={productAlreadyInCart.amount}
+            handleDecreasesItemAmount={handleDecreasesItemAmount}
+            handleIncreasesItemAmount={handleIncreasesItemAmount}
           />
         </View>
       )}

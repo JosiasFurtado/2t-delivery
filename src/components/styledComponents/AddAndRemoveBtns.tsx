@@ -1,51 +1,42 @@
 import React from 'react'
-import {
-  StyleProp,
-  Text,
-  View,
-  ViewStyle,
-  TouchableHighlight,
-} from 'react-native'
+import { Text, View, TouchableHighlight } from 'react-native'
 import { tailwind, getColor } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
 
 interface AddAndRemoveBtnsProps {
-  readonly style?: StyleProp<ViewStyle>
-  handleDecreasesItemQuantity(): void
-  handleIncreasesItemQuantity(): void
-  quantity: number
+  handleDecreasesItemAmount(): void
+  handleIncreasesItemAmount(): void
+  amount: number
 }
 
 const AddAndRemoveBtns: React.FC<AddAndRemoveBtnsProps> = ({
-  style,
-  quantity,
-  handleIncreasesItemQuantity,
-  handleDecreasesItemQuantity,
+  amount,
+  handleIncreasesItemAmount,
+  handleDecreasesItemAmount,
 }) => {
-  const quantityMock = quantity
   return (
     <View style={tailwind('flex-row items-center')}>
       <TouchableHighlight
         underlayColor={getColor('gray-200')}
-        onPress={handleDecreasesItemQuantity}
+        onPress={handleDecreasesItemAmount}
         style={tailwind(
           `bg-white border-2 w-8 h-8 justify-center items-center rounded ${
-            quantityMock > 1 ? 'border-primary-500' : 'border-gray-500'
+            amount > 1 ? 'border-primary-500' : 'border-gray-500'
           }`,
         )}
       >
         <Ionicons
           name="ios-remove"
           size={24}
-          color={getColor(`${quantityMock > 1 ? 'primary-500' : 'gray-500'}`)}
+          color={getColor(`${amount > 1 ? 'primary-500' : 'gray-500'}`)}
         />
       </TouchableHighlight>
       <Text style={tailwind('text-2xl bg-gray-200 font-medium px-2')}>
-        {quantityMock}
+        {amount}
       </Text>
       <TouchableHighlight
         underlayColor={getColor('gray-200')}
-        onPress={handleIncreasesItemQuantity}
+        onPress={handleIncreasesItemAmount}
         style={tailwind(
           'bg-white border-2 border-primary-500 w-8 h-8 justify-center items-center rounded',
         )}
