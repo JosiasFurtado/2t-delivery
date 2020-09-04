@@ -1,6 +1,6 @@
 import React, { SetStateAction, Dispatch } from 'react'
 import ItemComment from './ItemComment'
-import CartClear from './CartClear'
+import CleanCart from './CleanCart'
 import { CartModals } from 'types/app'
 
 interface CartModalProps {
@@ -13,7 +13,7 @@ const CartModal: React.FC<CartModalProps> = ({ type, open, setOpenModal }) => {
   if (type === 'comment') {
     return <ItemComment open={open} setOpenModal={setOpenModal} />
   }
-  return <CartClear open={open} setOpenModal={setOpenModal} />
+  return <CleanCart open={open} setOpenModal={setOpenModal} />
 }
 
 CartModal.displayName = 'CartModal'

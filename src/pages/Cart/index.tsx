@@ -7,44 +7,31 @@ import PrimaryButton from 'components/styledComponents/PrimaryButton'
 import ItemCart from 'components/ItemCart'
 import CartModal from 'components/modals/Cart'
 import { useNavigation } from '@react-navigation/native'
-import { ProductInCart, CartModals } from 'types/app'
-import { useSelector } from 'react-redux'
+import { CartModals, ProductWithSubtotal } from 'types/app'
+import { connect } from 'react-redux'
 import { RootState } from 'store/modules/rootReducer'
 import formatPrice from 'utils/formatPrice'
 
-const productMock: ProductInCart = {
-  amount: 1,
-  commit: '',
-  priceFormatted: 'R$ 11,99',
-  id: 'uifisd',
-  name: 'Tomates 1kg',
-  price: 11.99,
-  img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
-  description:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
+interface CartProps {
+  readonly cart: ProductWithSubtotal[]
+  readonly total: string
 }
 
-const Cart: React.FC = () => {
+const Cart: React.FC<CartProps> = ({ total, cart }) => {
   const { navigate } = useNavigation()
   const [typeModal, setTypeModal] = useState<CartModals>('comment')
-  const cartStore = useSelector((state: RootState) => state.cart)
   const [openModal, setOpenModal] = useState(false)
 
-  const cartIsEmpty = cartStore.length === 0
+  const cartIsEmpty = cart.length === 0
   const tax = 400
   const formatedTax = formatPrice(tax)
-  const total = formatPrice(
-    cartStore.reduce((total, product) => {
-      return total + tax + product.price * product.amount
-    }, 0),
-  )
 
   const openCommitModal = () => {
     setTypeModal('comment')
     setOpenModal(true)
   }
   const openCartClearModal = () => {
-    setTypeModal('cartClear')
+    setTypeModal('cleanCart')
     setOpenModal(true)
   }
 
@@ -77,7 +64,7 @@ const Cart: React.FC = () => {
                 <Text style={tailwind('text-lg font-bold')}>Item</Text>
                 <Text style={tailwind('text-lg font-bold')}>Subtotal</Text>
               </View>
-              {cartStore.map((item: ProductInCart) => (
+              {cart.map((item: ProductWithSubtotal) => (
                 <ItemCart
                   key={item.id}
                   product={item}
@@ -139,4 +126,15 @@ const Cart: React.FC = () => {
 
 Cart.displayName = 'Cart'
 
-export default Cart
+const mapStateToProps = (state: RootState) => ({
+  cart: state.cart.map(product => ({
+    ...product,
+    subtotal: formatPrice(product.price * product.amount),
+  })),
+  total: formatPrice(
+    state.cart.reduce((total, product) => {
+      return total + product.price * product.amount
+    }, 0),
+  ),
+})
+export default connect(mapStateToProps)(Cart)

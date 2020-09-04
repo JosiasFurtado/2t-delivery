@@ -12,12 +12,11 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import AddAndRemoveBtns from 'components/styledComponents/AddAndRemoveBtns'
 import { useDispatch } from 'react-redux'
 import { removeFromCart, updateAmountRequest } from 'store/modules/cart/actions'
-import { ProductInCart } from 'types/app'
-import formatPrice from 'utils/formatPrice'
+import { ProductWithSubtotal } from 'types/app'
 
 interface ItemCartProps {
   readonly style?: StyleProp<ViewStyle>
-  readonly product: ProductInCart
+  readonly product: ProductWithSubtotal
   openCommitModal(): void
 }
 
@@ -27,11 +26,6 @@ const ItemCart: React.FC<ItemCartProps> = ({
   product,
 }) => {
   const dispatch = useDispatch()
-
-  const itemPriceMultipliedAndFormated = formatPrice(
-    product.price * product.amount,
-  )
-
   const handleIncreasesItemAmount = () => {
     dispatch(updateAmountRequest(product.id, product.amount + 1))
   }
@@ -111,7 +105,7 @@ const ItemCart: React.FC<ItemCartProps> = ({
         />
         <View style={tailwind('justify-center')}>
           <Text style={tailwind('text-sm w-16 text-right')}>
-            {itemPriceMultipliedAndFormated}
+            {product.subtotal}
           </Text>
         </View>
       </View>

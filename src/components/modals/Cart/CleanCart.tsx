@@ -5,12 +5,12 @@ import { removeAllFromCart } from 'store/modules/cart/actions'
 import { useDispatch } from 'react-redux'
 import { tailwind } from 'lib/styles'
 
-interface CartClearProps {
+interface CleanCartProps {
   readonly open: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-const CartClear: React.FC<CartClearProps> = ({ open, setOpenModal }) => {
+const CleanCart: React.FC<CleanCartProps> = ({ open, setOpenModal }) => {
   const dispatch = useDispatch()
   const handleDeleteAllFromCart = () => {
     dispatch(removeAllFromCart())
@@ -55,6 +55,6 @@ const CartClear: React.FC<CartClearProps> = ({ open, setOpenModal }) => {
   )
 }
 
-CartClear.displayName = 'CartClear'
+CleanCart.displayName = 'CleanCart'
 
-export default CartClear
+export default CleanCart

@@ -12,6 +12,10 @@ export interface ProductInCart extends Product {
   commit: string
 }
 
+export interface ProductWithSubtotal extends ProductInCart {
+  subtotal: string
+}
+
 export type AdvertisingCarouselItemType = {
   id: string
   image_url?: string
@@ -33,7 +37,7 @@ export type LoginModals = 'signin' | 'signup' | 'forgotMyPassword'
 
 export type ProfileModals = 'address' | 'help' | 'config'
 
-export type CartModals = 'comment' | 'cartClear'
+export type CartModals = 'comment' | 'cleanCart'
 
 export interface SignInFormData {
   email: string
