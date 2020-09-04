@@ -3,6 +3,7 @@ import * as Eff from 'redux-saga/effects'
 
 import { addToCartSuccess, updateAmountSuccess } from './actions'
 import { Product, ProductInCart } from 'types/app'
+import formatPrice from 'utils/formatPrice'
 
 function* addToCart({ product }: { product: Product }) {
   const productExists = yield select(state =>
@@ -17,7 +18,7 @@ function* addToCart({ product }: { product: Product }) {
   if (productExists) {
     yield put(updateAmountSuccess(product.id, amount))
   } else {
-    const priceFormatted = String(product.price).replace('.', ',')
+    const priceFormatted = formatPrice(product.price)
     const data = {
       ...product,
       amount: 1,

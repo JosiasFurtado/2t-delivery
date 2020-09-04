@@ -13,6 +13,7 @@ import AddAndRemoveBtns from 'components/styledComponents/AddAndRemoveBtns'
 import { useDispatch } from 'react-redux'
 import { removeFromCart, updateAmountRequest } from 'store/modules/cart/actions'
 import { ProductInCart } from 'types/app'
+import formatPrice from 'utils/formatPrice'
 
 interface ItemCartProps {
   readonly style?: StyleProp<ViewStyle>
@@ -26,12 +27,10 @@ const ItemCart: React.FC<ItemCartProps> = ({
   product,
 }) => {
   const dispatch = useDispatch()
-  const itemPriceMultipliedByQuantity = parseFloat(
-    (product.price * product.amount).toFixed(2),
+
+  const itemPriceMultipliedAndFormated = formatPrice(
+    product.price * product.amount,
   )
-  const itemPriceMultipliedWithComma = String(
-    itemPriceMultipliedByQuantity,
-  ).replace('.', ',')
 
   const handleIncreasesItemAmount = () => {
     dispatch(updateAmountRequest(product.id, product.amount + 1))
@@ -82,7 +81,7 @@ const ItemCart: React.FC<ItemCartProps> = ({
             <Text
               lineBreakMode="tail"
               numberOfLines={1}
-              style={tailwind('text-base')}
+              style={tailwind('text-sm')}
             >
               {product.priceFormatted}
             </Text>
@@ -111,8 +110,8 @@ const ItemCart: React.FC<ItemCartProps> = ({
           handleDecreasesItemAmount={handleDecreasesItemAmount}
         />
         <View style={tailwind('justify-center')}>
-          <Text style={tailwind('text-lg')}>
-            {itemPriceMultipliedWithComma}
+          <Text style={tailwind('text-sm w-16 text-right')}>
+            {itemPriceMultipliedAndFormated}
           </Text>
         </View>
       </View>

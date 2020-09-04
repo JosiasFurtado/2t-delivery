@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
 import { tailwind, getColor } from 'lib/styles'
 import logo from '../../../assets/png/logo-without-text.png'
@@ -7,8 +7,10 @@ import PrimaryButton from 'components/styledComponents/PrimaryButton'
 import ItemCart from 'components/ItemCart'
 import CartModal from 'components/modals/Cart'
 import { useNavigation } from '@react-navigation/native'
-import { ProductInCart } from 'types/app'
+import { ProductInCart, CartModals } from 'types/app'
 import { useSelector } from 'react-redux'
+import { RootState } from 'store/modules/rootReducer'
+import formatPrice from 'utils/formatPrice'
 
 const productMock: ProductInCart = {
   amount: 1,
@@ -18,21 +20,26 @@ const productMock: ProductInCart = {
   name: 'Tomates 1kg',
   price: 11.99,
   img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+  description:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
 }
 
 const Cart: React.FC = () => {
-  const cartStore = useSelector((state: any) => state.cart)
   const { navigate } = useNavigation()
+  const [typeModal, setTypeModal] = useState<CartModals>('comment')
+  const cartStore = useSelector((state: RootState) => state.cart)
   const [openModal, setOpenModal] = useState(false)
 
-  const itemPriceMultipliedByQuantity = parseFloat(
-    (productMock.price * productMock.amount).toFixed(2),
-  )
+  const cartIsEmpty = cartStore.length === 0
 
-  const totalmock = itemPriceMultipliedByQuantity + 4
-  const totalmockstring = String(totalmock).replace('.', ',')
+  const totalmockstring = formatPrice(productMock.price)
 
   const openCommitModal = () => {
+    setTypeModal('comment')
+    setOpenModal(true)
+  }
+  const openCartClearModal = () => {
+    setTypeModal('cartClear')
     setOpenModal(true)
   }
 
@@ -52,54 +59,75 @@ const Cart: React.FC = () => {
           <Text
             style={tailwind('text-lg text-primary-500 mb-2 pt-4 font-bold')}
           >
-            Seu carrinho
+            {cartIsEmpty ? 'Seu carrinho está vazio' : 'Seu carrinho'}
           </Text>
-          <View style={tailwind('flex-row justify-between mb-4')}>
-            <Text style={tailwind('text-lg font-bold')}>Item</Text>
-            <Text style={tailwind('text-lg font-bold')}>Subtotal</Text>
-          </View>
-          {cartStore.map((item: ProductInCart) => (
-            <ItemCart
-              key={item.id}
-              product={item}
-              openCommitModal={() => openCommitModal()}
-            />
-          ))}
-          <View style={tailwind('border-b pb-3 border-gray-500 mb-4')}>
-            <View style={tailwind('flex-row justify-between mb-1')}>
-              <Text style={tailwind('text-lg font-bold')}>Taxa de entrega</Text>
-              <Text style={tailwind('text-lg font-bold text-primary-500')}>
-                Total
-              </Text>
-            </View>
-            <View style={tailwind('flex-row justify-between items-end')}>
-              <Text style={tailwind('text-lg')}>+ R$ 4,00</Text>
-              <Text style={tailwind('text-2xl')}>{totalmockstring}</Text>
-            </View>
-          </View>
-        </View>
-        <View style={tailwind('px-8 pb-4')}>
-          <PrimaryButton
-            onPress={() => {}}
-            style={tailwind('flex-row bg-gray-100 border-2 border-gray-300')}
-          >
-            <Text style={tailwind('mr-2 text-lg text-gray-600')}>
-              ESVAZIAR CARRINHO
+
+          {cartIsEmpty ? (
+            <Text style={tailwind('text-lg text-gray-700')}>
+              Não está precisando de nada?
             </Text>
-            <FontAwesome5 name="trash" size={18} color={getColor('gray-500')} />
-          </PrimaryButton>
+          ) : (
+            <>
+              <View style={tailwind('flex-row justify-between mb-4')}>
+                <Text style={tailwind('text-lg font-bold')}>Item</Text>
+                <Text style={tailwind('text-lg font-bold')}>Subtotal</Text>
+              </View>
+              {cartStore.map((item: ProductInCart) => (
+                <ItemCart
+                  key={item.id}
+                  product={item}
+                  openCommitModal={openCommitModal}
+                />
+              ))}
+              <View style={tailwind('border-b pb-3 border-gray-500 mb-4')}>
+                <View style={tailwind('flex-row justify-between mb-1')}>
+                  <Text style={tailwind('text-lg font-bold')}>
+                    Taxa de entrega
+                  </Text>
+                  <Text style={tailwind('text-lg font-bold text-primary-500')}>
+                    Total
+                  </Text>
+                </View>
+                <View style={tailwind('flex-row justify-between items-end')}>
+                  <Text style={tailwind('text-lg')}>+ R$ 4,00</Text>
+                  <Text style={tailwind('text-2xl')}>{totalmockstring}</Text>
+                </View>
+              </View>
+              <View style={tailwind('px-8 pb-4')}>
+                <PrimaryButton
+                  onPress={openCartClearModal}
+                  style={tailwind(
+                    'flex-row bg-gray-100 border-2 border-gray-300 mb-4',
+                  )}
+                >
+                  <Text style={tailwind('mr-2 text-lg text-gray-600')}>
+                    ESVAZIAR CARRINHO
+                  </Text>
+                  <FontAwesome5
+                    name="trash"
+                    size={18}
+                    color={getColor('gray-500')}
+                  />
+                </PrimaryButton>
+                <PrimaryButton
+                  onPress={() => navigate('Checkout')}
+                  style={tailwind('flex-row')}
+                >
+                  <Text style={tailwind('mr-2 text-lg text-white')}>
+                    CONFIRMAR
+                  </Text>
+                  <Ionicons name="md-checkmark" size={20} color="#fff" />
+                </PrimaryButton>
+              </View>
+            </>
+          )}
         </View>
       </ScrollView>
-      <View style={tailwind('px-8 pb-4')}>
-        <PrimaryButton
-          onPress={() => navigate('Checkout')}
-          style={tailwind('flex-row')}
-        >
-          <Text style={tailwind('mr-2 text-lg text-white')}>CONFIRMAR</Text>
-          <Ionicons name="md-checkmark" size={20} color="#fff" />
-        </PrimaryButton>
-      </View>
-      <CartModal open={openModal} setOpenModal={setOpenModal} />
+      <CartModal
+        type={typeModal}
+        open={openModal}
+        setOpenModal={setOpenModal}
+      />
     </SafeAreaView>
   )
 }

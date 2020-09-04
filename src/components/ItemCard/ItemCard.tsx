@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { ProductInCart, Product } from 'types/app'
 import { RootState } from 'store/modules/rootReducer'
 import { updateAmountRequest, removeFromCart } from 'store/modules/cart/actions'
+import formatPrice from 'utils/formatPrice'
 
 interface ItemCardProps {
   readonly style?: StyleProp<ViewStyle>
@@ -31,7 +32,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product }) => {
       (productInCart: ProductInCart) => productInCart.id === product.id,
     ),
   )
-  const priceFormated = String(product.price).replace('.', ',')
+  const priceFormated = formatPrice(product.price)
   const handleIncreasesItemAmount = () => {
     if (productAlreadyInCart) {
       dispatch(updateAmountRequest(product.id, productAlreadyInCart.amount + 1))
@@ -81,7 +82,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product }) => {
               {product.name}
             </Text>
             <Text style={tailwind('text-base font-bold text-primary-500')}>
-              R$ {priceFormated}
+              {priceFormated}
             </Text>
           </View>
           <Text

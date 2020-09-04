@@ -1,6 +1,6 @@
 import { Reducer, Action } from 'redux'
 import produce from 'immer'
-import { ProductInCart, Product } from 'types/app'
+import { ProductInCart } from 'types/app'
 
 interface ICartAction extends Action {
   id?: number
@@ -9,25 +9,15 @@ interface ICartAction extends Action {
 }
 
 const Cart: Reducer<any, ICartAction> = (
-  state: Product[] = [],
+  state: ProductInCart[] = [],
   action: ICartAction,
 ) => {
   switch (action.type) {
     case '@cart/ADD_SUCCESS':
-      return produce(state, (draft: any[]) => {
+      return produce(state, draft => {
         const { product } = action
 
         draft.push(product)
-      })
-    case '@cart/REMOVE':
-      return produce(state, (draft: any[]) => {
-        const productIndex = draft.findIndex(
-          product => product.id === action.id,
-        )
-
-        if (productIndex >= 0) {
-          draft.splice(productIndex, 1)
-        }
       })
     case '@cart/UPDATE_AMOUNT_SUCCESS': {
       return produce(state, (draft: any[]) => {
@@ -40,6 +30,20 @@ const Cart: Reducer<any, ICartAction> = (
         }
       })
     }
+    case '@cart/REMOVE':
+      return produce(state, (draft: any[]) => {
+        const productIndex = draft.findIndex(
+          product => product.id === action.id,
+        )
+
+        if (productIndex >= 0) {
+          draft.splice(productIndex, 1)
+        }
+      })
+    case '@cart/REMOVE_ALL':
+      return produce(state, (draft: any[]) => {
+        draft.splice(0, state.length)
+      })
 
     default:
       return state

@@ -19,40 +19,44 @@ export const productsMock = [
   {
     id: 'uifisd',
     name: 'Tomates 1kg',
-    price: 11.99,
+    price: 1199,
     img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
   },
   {
     id: 'uiasdasdfisd',
-    name: 'Tomates 1kg',
-    price: 11.99,
-    img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+    name: 'Manga',
+    price: 870,
+    img:
+      'https://s2.glbimg.com/QeQ9cqGo-kE-TyD1crH7jpUiDE4=/620x455/e.glbimg.com/og/ed/f/original/2020/01/21/gettyimages-463651383.jpg',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
   },
   {
     id: 'uifissd',
-    name: 'Tomates 1kg',
-    price: 11.99,
-    img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+    name: 'Uva',
+    price: 499,
+    img:
+      'https://alemdovinho.files.wordpress.com/2015/12/uva-tannat.jpg?w=862&h=689',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
   },
   {
     id: 'uifi22sd',
-    name: 'Tomates 1kg',
-    price: 11.99,
-    img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+    name: 'Maça',
+    price: 600,
+    img:
+      'https://media.gazetadopovo.com.br/2019/03/04330279e3c5551ef98b4e48c609d286-gpMedium.jpg',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
   },
   {
     id: 'uifiasdsd',
-    name: 'Tomates 1kg',
-    price: 11.99,
-    img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
+    name: 'Mamão',
+    price: 550,
+    img:
+      'https://www.sitiodamata.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/e/semente-mamao-papaya-hawaii-carica-papaya..jpg',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
   },

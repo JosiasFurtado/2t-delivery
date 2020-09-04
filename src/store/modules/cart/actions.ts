@@ -20,6 +20,11 @@ export function removeFromCart(id: string) {
     id,
   }
 }
+export function removeAllFromCart() {
+  return {
+    type: '@cart/REMOVE_ALL',
+  }
+}
 
 export function updateAmountRequest(id: string, amount: number) {
   return {

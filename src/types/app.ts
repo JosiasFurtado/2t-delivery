@@ -33,6 +33,8 @@ export type LoginModals = 'signin' | 'signup' | 'forgotMyPassword'
 
 export type ProfileModals = 'address' | 'help' | 'config'
 
+export type CartModals = 'comment' | 'cartClear'
+
 export interface SignInFormData {
   email: string
   password: string
