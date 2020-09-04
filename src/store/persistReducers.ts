@@ -6,7 +6,7 @@ export default (reducers: any) => {
     {
       key: '2tdelivery',
       storage: AsyncStorage,
-      whitelist: ['auth', 'user', 'cart'],
+      whitelist: ['user', 'cart'],
     },
     reducers,
   )

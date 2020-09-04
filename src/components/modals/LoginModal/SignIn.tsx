@@ -108,7 +108,10 @@ const SignIn: React.FC<SignInProps> = ({
             </Text>
           </TouchableOpacity>
           <PrimaryButton
-            onPress={() => navigate('Home')}
+            onPress={() => {
+              setOpenModal(false)
+              navigate('Home')
+            }}
             style={tailwind('mb-20')}
           >
             <Text style={tailwind('text-xl text-white')}>Entrar</Text>
