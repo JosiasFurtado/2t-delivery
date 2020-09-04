@@ -31,8 +31,13 @@ const Cart: React.FC = () => {
   const [openModal, setOpenModal] = useState(false)
 
   const cartIsEmpty = cartStore.length === 0
-
-  const totalmockstring = formatPrice(productMock.price)
+  const tax = 400
+  const formatedTax = formatPrice(tax)
+  const total = formatPrice(
+    cartStore.reduce((total, product) => {
+      return total + tax + product.price * product.amount
+    }, 0),
+  )
 
   const openCommitModal = () => {
     setTypeModal('comment')
@@ -89,8 +94,8 @@ const Cart: React.FC = () => {
                   </Text>
                 </View>
                 <View style={tailwind('flex-row justify-between items-end')}>
-                  <Text style={tailwind('text-lg')}>+ R$ 4,00</Text>
-                  <Text style={tailwind('text-2xl')}>{totalmockstring}</Text>
+                  <Text style={tailwind('text-lg')}>+ {formatedTax}</Text>
+                  <Text style={tailwind('text-2xl')}>{total}</Text>
                 </View>
               </View>
               <View style={tailwind('px-8 pb-4')}>
