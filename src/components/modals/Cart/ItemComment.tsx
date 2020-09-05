@@ -6,11 +6,17 @@ import { tailwind, getColor } from 'lib/styles'
 interface ItemCommentProps {
   readonly style?: StyleProp<ViewStyle>
   readonly open: boolean
+  readonly comment: string | undefined
   setOpenModal: Dispatch<SetStateAction<boolean>>
+  setComment: Dispatch<SetStateAction<string | undefined>>
 }
 
-const ItemComment: React.FC<ItemCommentProps> = ({ open, setOpenModal }) => {
-  const [commentValue, setCommentValue] = useState('')
+const ItemComment: React.FC<ItemCommentProps> = ({
+  open,
+  setOpenModal,
+  setComment,
+  comment,
+}) => {
   return (
     <LayoutModal title="Observação" open={open} setOpenModal={setOpenModal}>
       <View style={tailwind('rounded-t-lg bg-white px-5 py-3')}>
@@ -28,8 +34,8 @@ const ItemComment: React.FC<ItemCommentProps> = ({ open, setOpenModal }) => {
             numberOfLines={3}
             autoCorrect={false}
             autoCapitalize="none"
-            value={commentValue}
-            onChangeText={text => setCommentValue(text)}
+            value={comment}
+            onChangeText={text => setComment(text)}
             placeholderTextColor={getColor('gray-500')}
             style={tailwind('bg-gray-200 rounded-lg px-4 py-2 mb-4 text-lg')}
           />

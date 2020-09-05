@@ -5,7 +5,15 @@ import { addToCartSuccess, updateAmountSuccess } from './actions'
 import { Product, ProductInCart } from 'types/app'
 import formatPrice from 'utils/formatPrice'
 
-function* addToCart({ product }: { product: Product }) {
+function* addToCart({
+  product,
+  amount,
+  commit,
+}: {
+  product: Product
+  amount: number
+  commit: string
+}) {
   const productExists = yield select(state =>
     state.cart.find(
       (productInCart: ProductInCart) => productInCart.id === product.id,
@@ -13,17 +21,17 @@ function* addToCart({ product }: { product: Product }) {
   )
 
   const currentAmount = productExists ? productExists.amount : 0
-  const amount = currentAmount + 1
+  const amountReal = currentAmount + 1
 
   if (productExists) {
-    yield put(updateAmountSuccess(product.id, amount))
+    yield put(updateAmountSuccess(product.id, amountReal))
   } else {
     const priceFormatted = formatPrice(product.price)
     const data = {
       ...product,
-      amount: 1,
+      amount: amount || 1,
       priceFormatted,
-      commit: '',
+      commit: commit || '',
     }
 
     yield put(addToCartSuccess(data))

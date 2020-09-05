@@ -60,7 +60,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product }) => {
     >
       <TouchableHighlight
         underlayColor="#fff"
-        onPress={() => navigate('ItemPage')}
+        onPress={() => navigate('ItemPage', { product })}
       >
         <View>
           <Image

@@ -1,9 +1,15 @@
 import { Product, ProductInCart } from 'types/app'
 
-export function addToCartRequest(product: Product) {
+export function addToCartRequest(
+  product: Product,
+  amount?: number,
+  commit?: string | undefined,
+) {
   return {
     type: '@cart/ADD_REQUEST',
     product,
+    amount,
+    commit,
   }
 }
 

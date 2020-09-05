@@ -38,6 +38,7 @@ const Auth: Reducer<AuthState, IUserAction> = (
         const { error } = action
         draft.loading = false
         draft.error = error
+        break
       }
       default:
     }

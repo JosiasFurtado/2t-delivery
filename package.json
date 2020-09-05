@@ -28,11 +28,12 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.0",
-    "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/async-storage": "^1.11.0",
+    "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/material-top-tabs": "^5.2.16",
     "@react-navigation/native": "^5.5.0",
     "@react-navigation/stack": "^5.4.1",
+    "@rimiti/react-native-toastify": "^1.3.0",
     "@types/react-redux": "^7.1.9",
     "@unform/core": "^2.1.3",
     "@unform/mobile": "^2.1.3",
@@ -57,7 +58,6 @@
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
     "redux-saga": "^1.1.3",
-    "redux-thunk": "^2.3.0",
     "styled-components": "^5.1.1",
     "tailwind-rn": "^1.1.1",
     "yup": "^0.29.3"

@@ -15,22 +15,24 @@ import ItemList from 'components/List/ItemList'
 import AddItemToCart from 'components/FooterAddItemToCart'
 import { TextInput } from 'react-native-gesture-handler'
 import { productsMock } from '../StorePage'
+import { Product } from 'types/app'
+import formatPrice from 'utils/formatPrice'
 
-const product = {
-  id: 'uifiasdsd',
-  name: 'Tomates 1kg',
-  price: 11.99,
-  img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
-  description:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
+interface ItemPageProps {
+  route: {
+    params: {
+      product: Product
+    }
+  }
 }
 
-const ItemPage: React.FC = () => {
+const ItemPage: React.FC<ItemPageProps> = ({ route }) => {
+  const product = route.params.product
   const { goBack } = useNavigation()
   const [openCommentArea, setOpenCommentArea] = useState(false)
   const [commentValue, setCommentValue] = useState<string | undefined>()
 
-  const itemPriceWithComma = String(product.price).replace('.', ',')
+  const itemPriceWithComma = formatPrice(product.price)
 
   return (
     <SafeAreaView style={tailwind('flex-1 relative bg-gray-50')}>
@@ -39,7 +41,7 @@ const ItemPage: React.FC = () => {
           <Image
             style={tailwind('w-full h-56')}
             resizeMode="cover"
-            source={{ uri: 'https://belezaesaude.com/i/730/56/tomate.jpg' }}
+            source={{ uri: product.img }}
           />
           <View style={tailwind('bg-black opacity-25 absolute w-full h-56')} />
           <TouchableOpacity
@@ -71,7 +73,7 @@ const ItemPage: React.FC = () => {
                 </Text>
               </View>
               <Text style={tailwind('text-2xl font-medium text-primary-500')}>
-                {`R$ ${itemPriceWithComma}`}
+                {itemPriceWithComma}
               </Text>
             </View>
             <Text
@@ -111,7 +113,7 @@ const ItemPage: React.FC = () => {
                 autoCapitalize="none"
                 value={commentValue}
                 onChangeText={text => setCommentValue(text)}
-                placeholderTextColor={getColor('gray-500')}
+                placeholderTextColor={getColor('gray-600')}
                 style={tailwind(
                   'bg-gray-200 rounded-b-lg px-4 py-2 mb-4 text-lg',
                 )}
@@ -128,7 +130,7 @@ const ItemPage: React.FC = () => {
           </View>
         </View>
       </ScrollView>
-      <AddItemToCart itemPrice={product.price} />
+      <AddItemToCart product={product} comment={commentValue} />
     </SafeAreaView>
   )
 }

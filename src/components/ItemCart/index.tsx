@@ -17,7 +17,7 @@ import { ProductWithSubtotal } from 'types/app'
 interface ItemCartProps {
   readonly style?: StyleProp<ViewStyle>
   readonly product: ProductWithSubtotal
-  openCommitModal(): void
+  openCommitModal(x: string): void
 }
 
 const ItemCart: React.FC<ItemCartProps> = ({
@@ -80,7 +80,7 @@ const ItemCart: React.FC<ItemCartProps> = ({
               {product.priceFormatted}
             </Text>
             <TouchableOpacity
-              onPress={openCommitModal}
+              onPress={() => openCommitModal(product.commit)}
               style={tailwind('flex-row items-center')}
             >
               <FontAwesome5

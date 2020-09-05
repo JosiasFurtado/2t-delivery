@@ -21,12 +21,14 @@ const Cart: React.FC<CartProps> = ({ total, cart }) => {
   const { navigate } = useNavigation()
   const [typeModal, setTypeModal] = useState<CartModals>('comment')
   const [openModal, setOpenModal] = useState(false)
+  const [comment, setComment] = useState<string | undefined>()
 
   const cartIsEmpty = cart.length === 0
   const tax = 400
   const formatedTax = formatPrice(tax)
 
-  const openCommitModal = () => {
+  const openCommitModal = (productComment: string) => {
+    setComment(productComment)
     setTypeModal('comment')
     setOpenModal(true)
   }
@@ -118,6 +120,8 @@ const Cart: React.FC<CartProps> = ({ total, cart }) => {
       <CartModal
         type={typeModal}
         open={openModal}
+        comment={comment}
+        setComment={setComment}
         setOpenModal={setOpenModal}
       />
     </SafeAreaView>

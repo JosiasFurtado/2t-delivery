@@ -10,27 +10,33 @@ import {
 import { getColor, tailwind } from 'lib/styles'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import formatPrice from 'utils/formatPrice'
+import { Product } from 'types/app'
+import { useDispatch } from 'react-redux'
+import { addToCartRequest } from 'store/modules/cart/actions'
 
 interface FooterAddItemToCartProps {
   readonly style?: StyleProp<ViewStyle>
-  readonly itemPrice: number
+  readonly product: Product
+  readonly comment: string | undefined
 }
 
 const FooterAddItemToCart: React.FC<FooterAddItemToCartProps> = ({
   style,
-  itemPrice,
+  product,
+  comment,
 }) => {
+  const dispatch = useDispatch()
   const { navigate } = useNavigation()
   const [quantityMock, setQuantityMock] = useState(1)
 
-  const itemPriceMultipliedByQuantity = parseFloat(
-    (itemPrice * quantityMock).toFixed(2),
+  const itemPriceMultipliedByAmount = parseFloat(
+    (product.price * quantityMock).toFixed(2),
   )
-  const itemPriceMultipliedWithComma = String(
-    itemPriceMultipliedByQuantity,
-  ).replace('.', ',')
+  const itemPriceMultipliedWithComma = formatPrice(itemPriceMultipliedByAmount)
 
   const handleAddItemToCart = () => {
+    dispatch(addToCartRequest(product, quantityMock, comment))
     navigate('Carrinho')
   }
 
@@ -64,9 +70,9 @@ const FooterAddItemToCart: React.FC<FooterAddItemToCartProps> = ({
               <MaterialIcons name="add-shopping-cart" size={18} color="#fff" />
               <Text style={tailwind('text-white text-xl ml-1')}>Adicionar</Text>
             </View>
-            <Text
-              style={tailwind('text-white text-xl')}
-            >{`R$ ${itemPriceMultipliedWithComma}`}</Text>
+            <Text style={tailwind('text-white text-xl')}>
+              {itemPriceMultipliedWithComma}
+            </Text>
           </View>
         </TouchableOpacity>
         <View style={tailwind('flex-row items-center')}>

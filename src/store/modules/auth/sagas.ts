@@ -25,7 +25,7 @@ function* signUpUser({ data }: { data: SignUpFormData }) {
     // }
     // yield put(signInRequest(signInData))
   } catch (e) {
-    yield put(signFailure(['Falha no cadastro, verifique seus dados']))
+    put(signFailure(['Falha no cadastro, verifique seus dados']))
   }
 }
 
