@@ -21,10 +21,10 @@ function* addToCart({
   )
 
   const currentAmount = productExists ? productExists.amount : 0
-  const amountReal = currentAmount + 1
+  const amountIncrement = amount ? currentAmount + amount : currentAmount + 1
 
   if (productExists) {
-    yield put(updateAmountSuccess(product.id, amountReal))
+    yield put(updateAmountSuccess(product.id, amountIncrement))
   } else {
     const priceFormatted = formatPrice(product.price)
     const data = {

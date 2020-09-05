@@ -7,14 +7,19 @@ import { Ionicons, Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import ProfileModal from 'components/modals/Profile'
 import { ProfileModals } from 'types/app'
+import { useDispatch, useSelector } from 'react-redux'
+import { signOut } from 'store/modules/auth/actions'
+import { RootState } from 'store/modules/rootReducer'
 
 const Profile: React.FC = () => {
+  const dispatch = useDispatch()
+  const { user } = useSelector((state: RootState) => state.user)
   const { navigate } = useNavigation()
   const [openModal, setOpenModal] = useState(false)
   const [typeModal, setTypeModal] = useState<ProfileModals>('address')
 
-  const handleLogout = () => {
-    // remover usuario
+  const handleSignOut = () => {
+    dispatch(signOut())
     navigate('Login')
   }
 
@@ -46,7 +51,7 @@ const Profile: React.FC = () => {
             <Text style={tailwind('text-white text-6xl font-bold')}>J</Text>
           </View>
           <Text style={tailwind('text-gray-800 font-bold text-2xl mb-2')}>
-            Jota Furtado
+            {user?.firstName}
           </Text>
           <View style={tailwind('flex-row items-center mb-4')}>
             <Octicons name="location" size={18} color={getColor('gray-700')} />
@@ -115,7 +120,7 @@ const Profile: React.FC = () => {
       </ScrollView>
       <View style={tailwind('items-center mb-4')}>
         <TouchableOpacity
-          onPress={handleLogout}
+          onPress={handleSignOut}
           style={tailwind(
             'flex-row bg-primary-500 items-center justify-center py-1 w-32 rounded',
           )}

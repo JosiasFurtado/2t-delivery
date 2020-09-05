@@ -6,8 +6,6 @@ import Header from 'components/Header'
 import { ItemMock } from 'types/app'
 import StoreList from 'components/List/StoreList'
 import StoreCard from 'components/StoreCard'
-import { useSelector } from 'react-redux'
-import { RootState } from 'store/modules/rootReducer'
 
 export const storesMock: ItemMock[] = [
   { id: '0' },
@@ -18,8 +16,6 @@ export const storesMock: ItemMock[] = [
 ]
 
 const Home: React.FC = () => {
-  const { user } = useSelector((state: RootState) => state.user)
-  console.warn('home', user?.firstName)
   return (
     <SafeAreaView style={tailwind('flex-1 relative bg-gray-50')}>
       <Header hiddenAddress />

@@ -4,6 +4,7 @@ import React, {
   useRef,
   useCallback,
   useState,
+  useEffect,
 } from 'react'
 import {
   View,
@@ -22,12 +23,13 @@ import * as Yup from 'yup'
 import getValidationsErrors from 'utils/getValidationsErrors'
 import api from 'services/api'
 import { useNavigation } from '@react-navigation/native'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch, connect } from 'react-redux'
 import { RootState } from 'store/modules/rootReducer'
 import { signUpRequest } from 'store/modules/auth/actions'
 
 interface SignUpProps {
   readonly open: boolean
+  readonly error: string[] | null
   setOpenModal: Dispatch<SetStateAction<boolean>>
   setTypeModal: Dispatch<SetStateAction<LoginModals>>
 }
@@ -36,10 +38,11 @@ const SignUp: React.FC<SignUpProps> = ({
   open,
   setOpenModal,
   setTypeModal,
+  error,
 }) => {
   const dispatch = useDispatch()
   const formRef = useRef<FormHandles>(null)
-  const { loading, error } = useSelector((state: RootState) => state.auth)
+  const { loading } = useSelector((state: RootState) => state.auth)
   const [apiError, setApiError] = useState<string | null>()
   const { navigate, goBack } = useNavigation()
 
@@ -146,4 +149,8 @@ const SignUp: React.FC<SignUpProps> = ({
 
 SignUp.displayName = 'SignUp'
 
-export default SignUp
+const mapStateToProps = (state: RootState) => ({
+  error: state.auth.error,
+})
+
+export default connect(mapStateToProps)(SignUp)

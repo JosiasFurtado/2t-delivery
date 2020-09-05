@@ -31,13 +31,19 @@ const Auth: Reducer<AuthState, IUserAction> = (
         const { token } = action
         draft.loading = false
         draft.signed = true
-        AsyncStorage.setItem('sessionToken', token)
+        draft.token = token
         break
       }
       case '@auth/SIGN_FAILURE': {
         const { error } = action
-        draft.loading = false
+        console.warn('error no reducer', error)
         draft.error = error
+        draft.loading = false
+        break
+      }
+      case '@auth/SIGN_OUT': {
+        draft.token = null
+        draft.signed = false
         break
       }
       default:

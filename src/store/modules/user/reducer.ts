@@ -17,14 +17,23 @@ const Auth: Reducer<{ user: IUser | null }, IUserAction> = (
   state = INITIAL_STATE,
   action,
 ) => {
-  switch (action.type) {
-    case '@auth/SIGN_IN_SUCCESS':
-      return produce(state, draft => {
+  return produce(state, draft => {
+    switch (action.type) {
+      case '@auth/SIGN_IN_SUCCESS': {
         draft.user = action.user
-      })
-    default:
-      return state
-  }
+        break
+      }
+      case '@user/UPDATE_PROFILE_SUCCESS': {
+        draft.user = action.user
+        break
+      }
+      case '@auth/SIGN_OUT': {
+        draft.user = null
+        break
+      }
+      default:
+    }
+  })
 }
 
 export default Auth

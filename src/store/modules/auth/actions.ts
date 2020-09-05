@@ -29,9 +29,15 @@ export function signUpSuccess(data: SignUpFormData) {
   }
 }
 
-export function signFailure(error: string[]) {
+export function signFailure(error: string[] | null) {
   return {
     type: '@auth/SIGN_FAILURE',
     error,
+  }
+}
+
+export function signOut() {
+  return {
+    type: '@auth/SIGN_OUT',
   }
 }
