@@ -1,3 +1,15 @@
+export interface IUser {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  imageUrl: string | null
+  type: 'BUYER'
+  cpf: string | null
+  bornDate: string | null
+}
+
 export interface Product {
   id: string
   name: string
@@ -50,4 +62,11 @@ export interface SignUpFormData {
   lastName: string
   password: string
   confirmPassword: string
+}
+
+export interface AuthState {
+  signed: boolean
+  token: string | null
+  error: string[] | null
+  loading: boolean
 }

@@ -1,18 +1,30 @@
 import { Reducer, Action } from 'redux'
 import produce from 'immer'
+import { IUser } from 'types/app'
 
-interface IUserAction extends Action {}
+interface IUserAction extends Action {
+  user: IUser
+  token: string
+  error: string[] | null
+  loading: boolean
+}
 
-const User: Reducer<any, IUserAction> = (state = {}, action) => {
+const INITIAL_STATE = {
+  user: null,
+}
+
+const Auth: Reducer<{ user: IUser | null }, IUserAction> = (
+  state = INITIAL_STATE,
+  action,
+) => {
   switch (action.type) {
-    case '@user/SIGNIN_SUCCESS':
+    case '@auth/SIGN_IN_SUCCESS':
       return produce(state, draft => {
-        // const { product } = action
-        // draft.push(product)
+        draft.user = action.user
       })
     default:
       return state
   }
 }
 
-export default User
+export default Auth

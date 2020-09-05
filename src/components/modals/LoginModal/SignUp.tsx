@@ -22,6 +22,9 @@ import * as Yup from 'yup'
 import getValidationsErrors from 'utils/getValidationsErrors'
 import api from 'services/api'
 import { useNavigation } from '@react-navigation/native'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from 'store/modules/rootReducer'
+import { signUpRequest } from 'store/modules/auth/actions'
 
 interface SignUpProps {
   readonly open: boolean
@@ -34,16 +37,16 @@ const SignUp: React.FC<SignUpProps> = ({
   setOpenModal,
   setTypeModal,
 }) => {
+  const dispatch = useDispatch()
   const formRef = useRef<FormHandles>(null)
-  const [loading, setLoading] = useState(false)
+  const { loading, error } = useSelector((state: RootState) => state.auth)
   const [apiError, setApiError] = useState<string | null>()
-  const { navigate } = useNavigation()
+  const { navigate, goBack } = useNavigation()
 
   const handleSubmitSignUp = useCallback(
     async (data: SignUpFormData, { reset }) => {
       try {
         setApiError(null)
-        setLoading(true)
         const schema = Yup.object().shape({
           email: Yup.string()
             .required('E-mail é obrigatório')
@@ -57,21 +60,8 @@ const SignUp: React.FC<SignUpProps> = ({
           abortEarly: false,
         })
         const dataToSubmit = { ...data, type: 'BUYER', gender: 'M' }
-        const response = await api.post('/user', dataToSubmit)
-        if (response.data.user.email) {
-          const dataToSignIn = {
-            email: data.email,
-            password: data.password,
-          }
-          const signInResponse = await api.post('/auth', dataToSignIn)
-          console.warn('token', signInResponse.data.token)
-          console.warn('user', signInResponse.data.user)
-          setOpenModal(false)
-          navigate('Home')
-        }
-        setLoading(false)
+        dispatch(signUpRequest(dataToSubmit))
       } catch (error) {
-        setLoading(false)
         if (error instanceof Yup.ValidationError) {
           const errors = getValidationsErrors(error)
           formRef.current?.setErrors(errors)
@@ -83,7 +73,6 @@ const SignUp: React.FC<SignUpProps> = ({
           setApiError('O e-mail já está em uso')
         }
       }
-
       // reset()
     },
     [],
@@ -104,8 +93,15 @@ const SignUp: React.FC<SignUpProps> = ({
           <Text style={tailwind('text-gray-500 text-lg mb-8')}>
             Preencha os dados para continuar
           </Text>
+          {error?.map((item, index) => (
+            <Text key={index} style={tailwind('mb-1 text-base text-red-500')}>
+              {item}
+            </Text>
+          ))}
           {apiError ? (
-            <Text style={tailwind('mb-1 text-red-500')}>{apiError}</Text>
+            <Text style={tailwind('mb-1 text-base text-red-500')}>
+              {apiError}
+            </Text>
           ) : null}
           <SignUpForm
             formRef={formRef}

@@ -5,7 +5,13 @@ import React, {
   useCallback,
   useState,
 } from 'react'
-import { View, TouchableOpacity, Text, ScrollView } from 'react-native'
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native'
 import { tailwind } from 'lib/styles'
 import { LoginModals, SignInFormData } from 'types/app'
 import PrimaryButton from 'components/styledComponents/PrimaryButton'
@@ -16,6 +22,9 @@ import LayoutModal from '../LayoutModal'
 import * as Yup from 'yup'
 import getValidationsErrors from 'utils/getValidationsErrors'
 import api from 'services/api'
+import { useDispatch, useSelector } from 'react-redux'
+import { signInRequest } from 'store/modules/auth/actions'
+import { RootState } from 'store/modules/rootReducer'
 
 interface SignInProps {
   readonly open: boolean
@@ -28,6 +37,8 @@ const SignIn: React.FC<SignInProps> = ({
   setOpenModal,
   setTypeModal,
 }) => {
+  const dispatch = useDispatch()
+  const { loading, error } = useSelector((state: RootState) => state.auth)
   const formRef = useRef<FormHandles>(null)
   const { navigate } = useNavigation()
   const [loginError, setLoginError] = useState<string | null>()
@@ -41,17 +52,14 @@ const SignIn: React.FC<SignInProps> = ({
           email: Yup.string()
             .required('E-mail obrigatório')
             .email('Digite um e-mail válido'),
-          password: Yup.string().required('Senha obrigatória'),
+          password: Yup.string()
+            .required('Senha obrigatória')
+            .min(8, 'No mínimo 8 digitos na senha'),
         })
         await schema.validate(data, {
           abortEarly: false,
         })
-        const signInResponse = await api.post('/auth', data)
-        if (signInResponse.data.user.email) {
-          // salvar token e user
-        }
-        setOpenModal(false)
-        navigate('Home')
+        dispatch(signInRequest(data))
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           const errors = getValidationsErrors(error)
@@ -89,6 +97,11 @@ const SignIn: React.FC<SignInProps> = ({
           <Text style={tailwind('text-gray-500 text-lg mb-16')}>
             Faça o log-in para continuar
           </Text>
+          {error?.map((item, index) => (
+            <Text key={index} style={tailwind('mb-1 text-base text-red-500')}>
+              {item}
+            </Text>
+          ))}
           {loginError && (
             <Text style={tailwind('text-red-400 text-lg mb-2')}>
               {loginError}
@@ -114,7 +127,11 @@ const SignIn: React.FC<SignInProps> = ({
             }}
             style={tailwind('mb-20')}
           >
-            <Text style={tailwind('text-xl text-white')}>Entrar</Text>
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={tailwind('text-xl text-white')}>Entrar</Text>
+            )}
           </PrimaryButton>
           <View style={tailwind('mb-2 flex flex-row justify-center')}>
             <Text style={tailwind('text-lg')}>Não tem uma conta?</Text>
