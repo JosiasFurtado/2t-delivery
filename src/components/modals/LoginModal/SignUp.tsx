@@ -64,6 +64,8 @@ const SignUp: React.FC<SignUpProps> = ({
         })
         const dataToSubmit = { ...data, type: 'BUYER', gender: 'M' }
         dispatch(signUpRequest(dataToSubmit))
+
+        // navigate('InitialAddress')
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           const errors = getValidationsErrors(error)

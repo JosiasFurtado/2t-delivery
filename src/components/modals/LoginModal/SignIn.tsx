@@ -21,7 +21,6 @@ import { useNavigation } from '@react-navigation/native'
 import LayoutModal from '../LayoutModal'
 import * as Yup from 'yup'
 import getValidationsErrors from 'utils/getValidationsErrors'
-import api from 'services/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInRequest } from 'store/modules/auth/actions'
 import { RootState } from 'store/modules/rootReducer'
@@ -37,6 +36,7 @@ const SignIn: React.FC<SignInProps> = ({
   setOpenModal,
   setTypeModal,
 }) => {
+  const { user } = useSelector((state: RootState) => state.user)
   const dispatch = useDispatch()
   const { loading, error } = useSelector((state: RootState) => state.auth)
   const formRef = useRef<FormHandles>(null)
@@ -60,6 +60,12 @@ const SignIn: React.FC<SignInProps> = ({
           abortEarly: false,
         })
         dispatch(signInRequest(data))
+        // Se o usuario já tiver endereço cadastrado navegar para home, se não,
+        // tela de add endereço inicial
+        // if(user) {
+        //   return navigate('Home')
+        // }
+        // navigate('InitialAddress')
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           const errors = getValidationsErrors(error)

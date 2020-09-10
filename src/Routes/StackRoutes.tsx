@@ -11,6 +11,7 @@ import RequestDetail from '../pages/RequestDetail'
 import Checkout from '../pages/Checkout'
 import Help from '../pages/Help'
 import MyRequests from '../pages/MyRequests'
+import InitialAddress from '../pages/InitialAddress'
 import StackNavigator from './StackNavigator'
 
 const Stack = createStackNavigator()
@@ -20,6 +21,7 @@ export default function StackRoutes() {
     <StackNavigator>
       <Stack.Screen name="Tutorial" component={Tutorial} />
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="InitialAddress" component={InitialAddress} />
       <Stack.Screen name="Home" component={TabNavRoutes} />
       <Stack.Screen name="Help" component={Help} />
       <Stack.Screen name="ItemPage" component={ItemPage} />
