@@ -10,16 +10,17 @@ const delayToCleanErrors = 4000
 
 function* signInUser({ data }: { data: SignInFormData }) {
   try {
-    const signInResponse = yield api
+    let signInData: any
+    yield api
       .post('/auth', data)
       .then((response: AxiosResponse) => {
-        console.log('resposta', response)
+        signInData = response.data
       })
       .catch((reason: AxiosError) => {
         put(signFailure(reason.response?.data.errors))
       })
 
-    const { user, token } = signInResponse.data
+    const { user, token } = signInData
     yield put(signInSuccess(user, token))
   } catch (e) {
     yield put(signFailure(['Falha na autenticação, verifique seus dados']))
@@ -30,7 +31,7 @@ function* signInUser({ data }: { data: SignInFormData }) {
 
 function* signUpUser({ data }: { data: SignUpFormData }) {
   let errors
-  const signUpResponse = yield api
+  yield api
     .post('/user', data)
     .then((response: AxiosResponse) => {
       console.log('resposta', response)

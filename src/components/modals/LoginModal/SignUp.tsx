@@ -26,6 +26,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useSelector, useDispatch, connect } from 'react-redux'
 import { RootState } from 'store/modules/rootReducer'
 import { signUpRequest } from 'store/modules/auth/actions'
+import { signUpSchema } from 'utils/schemas'
 
 interface SignUpProps {
   readonly open: boolean
@@ -50,16 +51,7 @@ const SignUp: React.FC<SignUpProps> = ({
     async (data: SignUpFormData, { reset }) => {
       try {
         setApiError(null)
-        const schema = Yup.object().shape({
-          email: Yup.string()
-            .required('E-mail é obrigatório')
-            .email('Digite um e-mail válido'),
-          firstName: Yup.string().required('Nome é obrigatório'),
-          lastName: Yup.string().required('Nome é obrigatório'),
-          password: Yup.string().min(8, 'No mínimo 8 dígitos'),
-          confirmPassword: Yup.string().min(8, 'No mínimo 8 dígitos'),
-        })
-        await schema.validate(data, {
+        await signUpSchema.validate(data, {
           abortEarly: false,
         })
         const dataToSubmit = { ...data, type: 'BUYER', gender: 'M' }

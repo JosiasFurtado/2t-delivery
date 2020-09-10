@@ -16,6 +16,7 @@ import { FormHandles } from '@unform/core'
 import * as Yup from 'yup'
 import getValidationsErrors from 'utils/getValidationsErrors'
 import { useNavigation } from '@react-navigation/native'
+import { cepSchema } from 'utils/schemas'
 
 const InitialAddress: React.FC = () => {
   const { navigate } = useNavigation()
@@ -25,12 +26,7 @@ const InitialAddress: React.FC = () => {
   const handleSubmit = useCallback(async (data: { cep: string }, { reset }) => {
     try {
       formRef.current?.setErrors({})
-      const schema = Yup.object().shape({
-        cep: Yup.number()
-          .required('CEP obrigatório')
-          .min(8, 'No mínimo 8 digitos'),
-      })
-      await schema.validate(data, {
+      await cepSchema.validate(data, {
         abortEarly: false,
       })
       // dispatch action
@@ -46,13 +42,15 @@ const InitialAddress: React.FC = () => {
     }
   }, [])
 
-  const handleRedirectToLogin = () => {}
+  const handleRedirectToLogin = () => {
+    navigate('Login')
+  }
 
   return (
     <SafeAreaView style={tailwind('flex-1 relative bg-white')}>
       <View style={tailwind('h-32 bg-primary-500')}>
         <TouchableOpacity
-          onPress={() => handleRedirectToLogin}
+          onPress={handleRedirectToLogin}
           style={tailwind('p-4')}
         >
           <Ionicons name="md-arrow-back" size={35} color="#fff" />

@@ -24,6 +24,7 @@ import getValidationsErrors from 'utils/getValidationsErrors'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInRequest } from 'store/modules/auth/actions'
 import { RootState } from 'store/modules/rootReducer'
+import { signInSchema } from 'utils/schemas'
 
 interface SignInProps {
   readonly open: boolean
@@ -48,15 +49,7 @@ const SignIn: React.FC<SignInProps> = ({
       try {
         setLoginError(null)
         formRef.current?.setErrors({})
-        const schema = Yup.object().shape({
-          email: Yup.string()
-            .required('E-mail obrigatório')
-            .email('Digite um e-mail válido'),
-          password: Yup.string()
-            .required('Senha obrigatória')
-            .min(8, 'No mínimo 8 digitos na senha'),
-        })
-        await schema.validate(data, {
+        await signInSchema.validate(data, {
           abortEarly: false,
         })
         dispatch(signInRequest(data))
