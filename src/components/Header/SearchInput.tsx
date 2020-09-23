@@ -27,7 +27,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ style, searchProducts }) => {
       />
       <TextInput
         style={tailwind(
-          'rounded bg-white-transparent bg-opacity-25 py-2 px-10 text-white',
+          'rounded bg-white-transparent bg-opacity-25 py-3 text-base px-10 text-white',
         )}
         autoCorrect={false}
         autoCapitalize="none"

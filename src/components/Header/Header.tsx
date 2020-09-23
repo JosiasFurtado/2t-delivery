@@ -4,7 +4,8 @@ import {
   View,
   ViewStyle,
   Image,
-  TouchableOpacity,
+  Text,
+  TouchableOpacity
 } from 'react-native'
 import { tailwind } from 'lib/styles'
 import AddressChanger from './AddressChanger'
@@ -17,12 +18,14 @@ interface HeaderProps {
   readonly style?: StyleProp<ViewStyle>
   readonly hiddenAddress?: boolean
   readonly searchProducts?: boolean
+  readonly storeName?: string
 }
 
 const Header: React.FC<HeaderProps> = ({
   style,
   hiddenAddress,
   searchProducts,
+  storeName
 }) => {
   const { goBack } = useNavigation()
   return (
@@ -31,7 +34,7 @@ const Header: React.FC<HeaderProps> = ({
         {!hiddenAddress && (
           <TouchableOpacity
             onPress={() => goBack()}
-            style={tailwind('px-4 absolute py-2')}
+            style={tailwind('px-4 py-2 absolute')}
           >
             <Ionicons name="md-arrow-back" size={35} color="#fff" />
           </TouchableOpacity>
@@ -40,11 +43,18 @@ const Header: React.FC<HeaderProps> = ({
           <AddressChanger style={tailwind('absolute right-0 mr-4 mt-2')} />
         )}
         <View style={tailwind('items-center pt-1')}>
-          <Image
-            source={Logo}
-            resizeMode="contain"
-            style={tailwind(`h-20 mb-2 ${hiddenAddress ? '' : ''}`)}
-          />
+          {storeName ? (
+            <View style={tailwind('justify-center h-20')}>
+
+              <Text style={tailwind('text-white text-4xl')}>{storeName}</Text>
+            </View>
+          ) : (
+              <Image
+                source={Logo}
+                resizeMode="contain"
+                style={tailwind(`h-20 mb-2 ${hiddenAddress ? '' : ''}`)}
+              />
+            )}
         </View>
         <SearchInput searchProducts={searchProducts} />
       </View>

@@ -27,8 +27,8 @@ const TabNavRoutes: React.FC<TabNavRoutesProps> = ({ route }) => {
         showIcon: true,
         showLabel: false,
         labelStyle: { fontSize: 10 },
-        style: { backgroundColor: '#FBFBFB' },
-        indicatorStyle: { backgroundColor: '#019853' },
+        style: { backgroundColor: '#FBFBFB', paddingBottom: 5 },
+        indicatorStyle: { backgroundColor: '#00BF68' },
       }}
       tabBarPosition="bottom"
       initialRouteName={initialRoute ? initialRoute : 'Início'}

@@ -38,7 +38,7 @@ const Login: React.FC = () => {
   }
 
   return (
-    <SafeAreaView style={tailwind('flex-1 relative bg-white')}>
+    <SafeAreaView style={tailwind('flex-1 relative bg-primary-500')}>
       <ImageBackground source={bgImage} style={tailwind('flex-1 w-full')}>
         <View style={tailwind('flex flex-1 items-center justify-center')}>
           <Image

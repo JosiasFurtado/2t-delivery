@@ -25,7 +25,7 @@ const LayoutModal: React.FC<LayoutModalProps> = ({
   return (
     <Modal
       visible={open}
-      animationType="slide"
+      animationType="fade"
       transparent
       onRequestClose={() => setOpenModal(false)}
     >

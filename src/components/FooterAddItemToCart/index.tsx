@@ -54,14 +54,14 @@ const FooterAddItemToCart: React.FC<FooterAddItemToCartProps> = ({
   return (
     <View
       style={[
-        tailwind('bg-white px-4 w-full pb-5 pt-1 border border-gray-300'),
+        tailwind('bg-white px-4 w-full pb-8 -mb-10 pt-1 border border-gray-300'),
         style,
       ]}
     >
       <View style={tailwind('flex-row items-center')}>
         <TouchableOpacity
           onPress={handleAddItemToCart}
-          style={tailwind('bg-primary-500 rounded w-8/12 mr-2')}
+          style={tailwind('bg-primary-500 rounded w-8/12 mr-1')}
         >
           <View
             style={tailwind('flex-row px-2 justify-between py-2 items-center')}
@@ -80,8 +80,7 @@ const FooterAddItemToCart: React.FC<FooterAddItemToCartProps> = ({
             underlayColor={getColor('gray-200')}
             onPress={handleDecreasesItemQuantity}
             style={tailwind(
-              `bg-white border-2 px-3 py-1 rounded ${
-                quantityMock > 1 ? 'border-primary-500' : 'border-gray-500'
+              `bg-white border-2 px-3 py-1 rounded ${quantityMock > 1 ? 'border-primary-500' : 'border-gray-500'
               }`,
             )}
           >

@@ -37,8 +37,8 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <SafeAreaView style={tailwind('flex-1 relative justify-between bg-white')}>
-      <ScrollView>
+    <SafeAreaView style={tailwind('flex-1 relative justify-between bg-primary-500')}>
+      <ScrollView style={tailwind('bg-white')}>
         <View style={tailwind('items-center pt-8 bg-white mb-4')}>
           <Text style={tailwind('text-gray-800 font-bold text-2xl mb-4')}>
             Perfil

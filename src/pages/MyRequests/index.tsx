@@ -20,7 +20,7 @@ const MyRequests: React.FC = () => {
   }
 
   return (
-    <SafeAreaView style={tailwind('flex-1 relative bg-gray-50')}>
+    <SafeAreaView style={tailwind('flex-1 relative bg-primary-500')}>
       <View style={tailwind('bg-primary-500 h-24 px-4 justify-center')}>
         <Text style={tailwind('text-white text-2xl')}>Seus pedidos, Jota</Text>
       </View>

@@ -38,8 +38,8 @@ const Cart: React.FC<CartProps> = ({ total, cart }) => {
   }
 
   return (
-    <SafeAreaView style={tailwind('flex-1 relative bg-white')}>
-      <ScrollView>
+    <SafeAreaView style={tailwind('flex-1 relative bg-primary-500')}>
+      <ScrollView style={tailwind('bg-white')}>
         <View
           style={tailwind('relative bg-primary-500 items-end h-20 px-4 py-2')}
         >
@@ -61,60 +61,60 @@ const Cart: React.FC<CartProps> = ({ total, cart }) => {
               Não está precisando de nada?
             </Text>
           ) : (
-            <>
-              <View style={tailwind('flex-row justify-between mb-4')}>
-                <Text style={tailwind('text-lg font-bold')}>Item</Text>
-                <Text style={tailwind('text-lg font-bold')}>Subtotal</Text>
-              </View>
-              {cart.map((item: ProductWithSubtotal) => (
-                <ItemCart
-                  key={item.id}
-                  product={item}
-                  openCommitModal={openCommitModal}
-                />
-              ))}
-              <View style={tailwind('border-b pb-3 border-gray-500 mb-4')}>
-                <View style={tailwind('flex-row justify-between mb-1')}>
-                  <Text style={tailwind('text-lg font-bold')}>
-                    Taxa de entrega
-                  </Text>
-                  <Text style={tailwind('text-lg font-bold text-primary-500')}>
-                    Total
-                  </Text>
+              <>
+                <View style={tailwind('flex-row justify-between mb-4')}>
+                  <Text style={tailwind('text-lg font-bold')}>Item</Text>
+                  <Text style={tailwind('text-lg font-bold')}>Subtotal</Text>
                 </View>
-                <View style={tailwind('flex-row justify-between items-end')}>
-                  <Text style={tailwind('text-lg')}>+ {formatedTax}</Text>
-                  <Text style={tailwind('text-2xl')}>{total}</Text>
-                </View>
-              </View>
-              <View style={tailwind('px-8 pb-4')}>
-                <PrimaryButton
-                  onPress={openCartClearModal}
-                  style={tailwind(
-                    'flex-row bg-gray-100 border-2 border-gray-300 mb-4',
-                  )}
-                >
-                  <Text style={tailwind('mr-2 text-lg text-gray-600')}>
-                    ESVAZIAR CARRINHO
-                  </Text>
-                  <FontAwesome5
-                    name="trash"
-                    size={18}
-                    color={getColor('gray-500')}
+                {cart.map((item: ProductWithSubtotal) => (
+                  <ItemCart
+                    key={item.id}
+                    product={item}
+                    openCommitModal={openCommitModal}
                   />
-                </PrimaryButton>
-                <PrimaryButton
-                  onPress={() => navigate('Checkout')}
-                  style={tailwind('flex-row')}
-                >
-                  <Text style={tailwind('mr-2 text-lg text-white')}>
-                    CONFIRMAR
+                ))}
+                <View style={tailwind('border-b pb-3 border-gray-500 mb-4')}>
+                  <View style={tailwind('flex-row justify-between mb-1')}>
+                    <Text style={tailwind('text-lg font-bold')}>
+                      Taxa de entrega
                   </Text>
-                  <Ionicons name="md-checkmark" size={20} color="#fff" />
-                </PrimaryButton>
-              </View>
-            </>
-          )}
+                    <Text style={tailwind('text-lg font-bold text-primary-500')}>
+                      Total
+                  </Text>
+                  </View>
+                  <View style={tailwind('flex-row justify-between items-end')}>
+                    <Text style={tailwind('text-lg')}>+ {formatedTax}</Text>
+                    <Text style={tailwind('text-2xl')}>{total}</Text>
+                  </View>
+                </View>
+                <View style={tailwind('px-8 pb-4')}>
+                  <PrimaryButton
+                    onPress={openCartClearModal}
+                    style={tailwind(
+                      'flex-row bg-gray-100 border-2 border-gray-300 mb-4',
+                    )}
+                  >
+                    <Text style={tailwind('mr-2 text-lg text-gray-600')}>
+                      ESVAZIAR CARRINHO
+                  </Text>
+                    <FontAwesome5
+                      name="trash"
+                      size={18}
+                      color={getColor('gray-500')}
+                    />
+                  </PrimaryButton>
+                  <PrimaryButton
+                    onPress={() => navigate('Checkout')}
+                    style={tailwind('flex-row')}
+                  >
+                    <Text style={tailwind('mr-2 text-lg text-white')}>
+                      CONFIRMAR
+                  </Text>
+                    <Ionicons name="md-checkmark" size={20} color="#fff" />
+                  </PrimaryButton>
+                </View>
+              </>
+            )}
         </View>
       </ScrollView>
       <CartModal

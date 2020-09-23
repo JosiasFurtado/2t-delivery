@@ -17,7 +17,7 @@ export const storesMock: ItemMock[] = [
 
 const Home: React.FC = () => {
   return (
-    <SafeAreaView style={tailwind('flex-1 relative bg-gray-50')}>
+    <SafeAreaView style={tailwind('flex-1 relative bg-primary-500')}>
       <Header hiddenAddress />
       <ScrollView style={tailwind('-mt-4 rounded-t-xl bg-gray-50')}>
         <View style={tailwind('px-4')}>

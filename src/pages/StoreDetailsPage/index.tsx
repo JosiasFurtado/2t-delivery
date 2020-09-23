@@ -15,7 +15,7 @@ import BgStore from '../../../assets/png/bg-store.png'
 import DeliverymanGreenIcon from '../../../assets/png/deliveryman-icon-color.png'
 import DeliverymanRedIcon from '../../../assets/png/deliveryman-icon-red.png'
 
-interface StoreDetailsPageProps {}
+interface StoreDetailsPageProps { }
 
 const StoreDetailsPage: React.FC<StoreDetailsPageProps> = () => {
   const { goBack } = useNavigation()
@@ -23,8 +23,8 @@ const StoreDetailsPage: React.FC<StoreDetailsPageProps> = () => {
   const makesDeliveriesInTheArea = true
 
   return (
-    <SafeAreaView style={tailwind('flex-1 relative bg-gray-50')}>
-      <ScrollView>
+    <SafeAreaView style={tailwind('flex-1 relative bg-primary-500')}>
+      <ScrollView style={tailwind('bg-gray-50')}>
         <ImageBackground
           source={BgStore}
           resizeMode="cover"
@@ -81,8 +81,7 @@ const StoreDetailsPage: React.FC<StoreDetailsPageProps> = () => {
               />
               <Text
                 style={tailwind(
-                  `text-base ml-1 ${
-                    makesDeliveriesInTheArea ? 'text-gray-700' : 'text-red-600 '
+                  `text-base ml-1 ${makesDeliveriesInTheArea ? 'text-gray-700' : 'text-red-600 '
                   }`,
                 )}
               >

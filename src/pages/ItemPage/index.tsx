@@ -35,8 +35,8 @@ const ItemPage: React.FC<ItemPageProps> = ({ route }) => {
   const itemPriceWithComma = formatPrice(product.price)
 
   return (
-    <SafeAreaView style={tailwind('flex-1 relative bg-gray-50')}>
-      <ScrollView>
+    <SafeAreaView style={tailwind('flex-1 relative bg-primary-500')}>
+      <ScrollView style={tailwind('bg-gray-50')}>
         <View style={tailwind('relative bg-primary-500 h-56')}>
           <Image
             style={tailwind('w-full h-56')}
@@ -92,8 +92,7 @@ const ItemPage: React.FC<ItemPageProps> = ({ route }) => {
             >
               <View
                 style={tailwind(
-                  `flex-row bg-primary-500 items-center px-2 py-1 ${
-                    openCommentArea ? 'rounded-t-lg' : 'rounded-lg'
+                  `flex-row bg-primary-500 items-center px-2 py-1 ${openCommentArea ? 'rounded-t-lg' : 'rounded-lg'
                   }`,
                 )}
               >
