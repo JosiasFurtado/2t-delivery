@@ -30,10 +30,10 @@ const CleanCart: React.FC<CleanCartProps> = ({ open, setOpenModal }) => {
         <Text style={tailwind('text-gray-500 text-lg mb-12')}>
           Se esvaziar não tem mais volta
         </Text>
-        <View style={tailwind('flex-row w-full mb-12')}>
+        <View style={tailwind('flex-row w-full pb-12')}>
           <TouchableOpacity
             onPress={handleDeleteAllFromCart}
-            style={tailwind('bg-red-500 w-1/2 py-3 items-center rounded-lg')}
+            style={tailwind('bg-red-500 w-1/2 py-3 items-center justify-center rounded-lg')}
           >
             <Text style={tailwind('text-white font-bold text-base')}>
               ESVAZIAR CARRINHO
@@ -42,7 +42,7 @@ const CleanCart: React.FC<CleanCartProps> = ({ open, setOpenModal }) => {
           <TouchableOpacity
             onPress={() => setOpenModal(false)}
             style={tailwind(
-              'bg-primary-500 w-1/2 ml-1 items-center rounded-lg py-3',
+              'bg-primary-500 w-1/2 ml-1 items-center justify-center rounded-lg py-3',
             )}
           >
             <Text style={tailwind('text-white font-bold text-base')}>

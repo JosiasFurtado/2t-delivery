@@ -8,11 +8,9 @@ interface HelpProps {
 
 const Help: React.FC<HelpProps> = () => {
   return (
-    <SafeAreaView style={tailwind('flex-1 relative bg-white')}>
-      <View>
-        <Text>Ajuda</Text>
-      </View>
-    </SafeAreaView>
+    <View style={tailwind('flex-1 relative bg-primary-500')}>
+      <Text style={tailwind('text-white text-2xl')}>Ajuda</Text>
+    </View>
   )
 }
 

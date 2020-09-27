@@ -10,9 +10,9 @@ interface HelpProps {
 }
 
 const Help: React.FC<HelpProps> = ({ open, setOpenModal }) => {
-  const handleDirectToContact2T = () => {}
+  const handleDirectToContact2T = () => { }
 
-  const handleDirectToContactStore = () => {}
+  const handleDirectToContactStore = () => { }
 
   return (
     <LayoutModal title="Ajuda" open={open} setOpenModal={setOpenModal}>

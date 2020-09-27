@@ -21,12 +21,9 @@ const TabNavRoutes: React.FC<TabNavRoutesProps> = ({ route }) => {
   const initialRoute = route?.params && route.params.initialRouteName
   return (
     <Tab.Navigator
-      removeClippedSubviews={true}
       tabBarOptions={{
-        allowFontScaling: false,
         showIcon: true,
         showLabel: false,
-        labelStyle: { fontSize: 10 },
         style: { backgroundColor: '#FBFBFB', paddingBottom: 5 },
         indicatorStyle: { backgroundColor: '#00BF68' },
       }}

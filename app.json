@@ -2,7 +2,10 @@
   "expo": {
     "name": "2T Delivery",
     "slug": "2tdelivery",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,13 +17,15 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.umbe.carreteiro"
+      "bundleIdentifier": "com.2t.2tdelivery"
     },
     "android": {
-      "package": "com.umbe.carreteiro"
+      "package": "com.2t.2tdelivery"
     }
   }
 }

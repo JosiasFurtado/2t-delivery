@@ -13,7 +13,7 @@ import RequestsModal from 'components/modals/Requests'
 import RequestDetailItens from 'components/RequestDetailItens'
 import LocationOfRequestDetails from 'components/LocationOfRequestDetails'
 
-interface RequestDetailProps {}
+interface RequestDetailProps { }
 
 const RequestDetail: React.FC<RequestDetailProps> = () => {
   const { goBack } = useNavigation()
@@ -24,7 +24,7 @@ const RequestDetail: React.FC<RequestDetailProps> = () => {
   }
 
   return (
-    <SafeAreaView style={tailwind('flex-1 relative bg-white')}>
+    <SafeAreaView style={tailwind('flex-1 relative bg-primary-500')}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={tailwind(

@@ -118,7 +118,7 @@ const Profile: React.FC = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <View style={tailwind('items-center mb-4')}>
+      <View style={tailwind('items-center bg-white')}>
         <TouchableOpacity
           onPress={handleSignOut}
           style={tailwind(

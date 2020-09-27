@@ -73,7 +73,7 @@ const StorePage: React.FC<StorePageProps> = () => {
   return (
     <SafeAreaView style={tailwind('flex-1 bg-primary-500 relative')}>
       <ScrollView style={tailwind('bg-gray-50')}>
-        <Header storeName="FreshMarket" searchProducts hiddenAddress />
+        <Header storeName="FreshMarket" searchProducts />
         <View style={tailwind('-mt-4 rounded-t-xl bg-gray-50')}>
           <View style={tailwind('px-4 mt-4')}>
             <TouchableOpacity onPress={() => navigate('StoreDetailsPage')}>

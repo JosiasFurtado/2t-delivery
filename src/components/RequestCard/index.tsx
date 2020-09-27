@@ -45,7 +45,7 @@ const RequestCard: React.FC<RequestCardProps> = ({
             />
 
             <View style={tailwind('ml-2')}>
-              <Text style={tailwind('text-base font-bold text-gray-800')}>
+              <Text style={tailwind('text-sm font-bold text-gray-800')}>
                 FreshMarket - #00001
               </Text>
               <View style={tailwind('flex-row items-center mb-2')}>
@@ -83,7 +83,7 @@ const RequestCard: React.FC<RequestCardProps> = ({
             </View>
           </View>
           <View style={tailwind('items-end')}>
-            <Text style={tailwind('text-lg font-medium text-primary-500')}>
+            <Text style={tailwind('text-sm font-medium text-primary-500')}>
               R$ 89,99
             </Text>
           </View>

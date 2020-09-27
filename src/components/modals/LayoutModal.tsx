@@ -4,7 +4,7 @@ import { tailwind, getColor } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
 import styled from 'styled-components/native'
 
-const BgModal = styled.View`
+const BgModal = styled.SafeAreaView`
   background-color: rgba(0, 0, 0, 0.4);
   flex: 1;
   justify-content: flex-end;
@@ -33,10 +33,10 @@ const LayoutModal: React.FC<LayoutModalProps> = ({
         backgroundColor={getColor('primary-700')}
         barStyle="light-content"
       />
-      <BgModal>
+      <BgModal style={tailwind('-mb-8')}>
         <TouchableOpacity
           onPress={() => setOpenModal(!open)}
-          style={tailwind('px-5 mb-4')}
+          style={tailwind('px-5 mb-2')}
         >
           <Ionicons name="md-arrow-back" size={35} color="#fff" />
         </TouchableOpacity>
