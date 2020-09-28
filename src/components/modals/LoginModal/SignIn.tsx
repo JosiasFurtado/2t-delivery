@@ -120,17 +120,14 @@ const SignIn: React.FC<SignInProps> = ({
             </Text>
           </TouchableOpacity>
           <PrimaryButton
-            onPress={() => {
-              setOpenModal(false)
-              navigate('Home')
-            }}
+            onPress={() => formRef.current?.submitForm()}
             style={tailwind('mb-20')}
           >
             {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text style={tailwind('text-xl text-white')}>Entrar</Text>
-            )}
+                <Text style={tailwind('text-xl text-white')}>Entrar</Text>
+              )}
           </PrimaryButton>
           <View style={tailwind('mb-2 flex flex-row justify-center')}>
             <Text style={tailwind('text-lg')}>Não tem uma conta?</Text>

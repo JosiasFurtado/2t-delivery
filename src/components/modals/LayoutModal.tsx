@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import { Text, Modal, StatusBar, TouchableOpacity } from 'react-native'
+import { Text, Modal, StatusBar, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native'
 import { tailwind, getColor } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
 import styled from 'styled-components/native'
@@ -43,7 +43,12 @@ const LayoutModal: React.FC<LayoutModalProps> = ({
         {title && (
           <Text style={tailwind('px-5 mb-4 text-3xl text-white')}>{title}</Text>
         )}
-        {children}
+        <KeyboardAvoidingView
+          enabled
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        >
+          {children}
+        </KeyboardAvoidingView>
       </BgModal>
     </Modal>
   )

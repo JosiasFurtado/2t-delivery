@@ -69,7 +69,7 @@ const Input: React.RefForwardingComponent<InputRefProps, InputProps> = (
         {label && <Text style={tailwind('mr-1')}>{label}</Text>}
         {passwordInput && error ? (
           <Text style={tailwind('text-red-500')}>
-            Precisa ter no mínimo 8 dígitos
+            Precisa ter no mínimo 6 dígitos
           </Text>
         ) : null}
       </View>
@@ -79,10 +79,9 @@ const Input: React.RefForwardingComponent<InputRefProps, InputProps> = (
         onBlur={() => setIsFocused(false)}
         style={[
           tailwind(
-            `h-10 border-b-2 mb-2 ${
-              isFocused
-                ? 'border-primary-500'
-                : error
+            `h-10 border-b-2 mb-2 ${isFocused
+              ? 'border-primary-500'
+              : error
                 ? 'border-red-500'
                 : 'border-gray-500'
             }`,
