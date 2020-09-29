@@ -17,6 +17,7 @@ import * as Yup from 'yup'
 import getValidationsErrors from 'utils/getValidationsErrors'
 import { useNavigation } from '@react-navigation/native'
 import { cepSchema } from 'utils/schemas'
+import cep from 'cep-promise'
 
 const InitialAddress: React.FC = () => {
   const { navigate } = useNavigation()
@@ -29,8 +30,16 @@ const InitialAddress: React.FC = () => {
       await cepSchema.validate(data, {
         abortEarly: false,
       })
-      // dispatch action
-      navigate('Home')
+      await cep(data.cep).then(console.log)
+      // {
+      //   "cep": "01050000",
+      //   "city": "São Paulo",
+      //   "neighborhood": "Centro",
+      //   "service": "widenet",
+      //   "state": "SP",
+      //   "street": "Rua Martins Fontes",
+      // }
+      // navigate('Home')
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errors = getValidationsErrors(error)
