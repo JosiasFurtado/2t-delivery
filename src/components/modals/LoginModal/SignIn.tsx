@@ -4,6 +4,7 @@ import React, {
   useRef,
   useCallback,
   useState,
+  useEffect,
 } from 'react'
 import {
   View,
@@ -43,6 +44,12 @@ const SignIn: React.FC<SignInProps> = ({
   const formRef = useRef<FormHandles>(null)
   const { navigate } = useNavigation()
   const [loginError, setLoginError] = useState<string | null>()
+
+  useEffect(() => {
+    if (user) {
+      navigate('Home')
+    }
+  }, [])
 
   const handleSubmitSignIn = useCallback(
     async (data: SignInFormData, { reset }) => {
@@ -124,10 +131,10 @@ const SignIn: React.FC<SignInProps> = ({
             style={tailwind('mb-20')}
           >
             {loading ? (
-              <ActivityIndicator color="#fff" />
+              <ActivityIndicator color="#fff" size={28} />
             ) : (
-                <Text style={tailwind('text-xl text-white')}>Entrar</Text>
-              )}
+              <Text style={tailwind('text-xl text-white')}>Entrar</Text>
+            )}
           </PrimaryButton>
           <View style={tailwind('mb-2 flex flex-row justify-center')}>
             <Text style={tailwind('text-lg')}>Não tem uma conta?</Text>

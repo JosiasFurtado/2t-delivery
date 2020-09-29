@@ -72,14 +72,18 @@ const InitialAddress: React.FC = () => {
           {cepError && (
             <Text style={tailwind('text-red-600 text-base')}>{cepError}</Text>
           )}
-          <Form ref={formRef} onSubmit={handleSubmit} style={tailwind('mb-12')}>
+          <Form
+            ref={formRef}
+            onSubmit={handleSubmit}
+            style={tailwind('mb-12 w-1/3')}
+          >
             <Input
               name="cep"
               textContentType="postalCode"
               placeholder="xxxxx-xxx"
               keyboardType="number-pad"
               returnKeyType="done"
-              style={tailwind('text-lg px-2 mb-6')}
+              style={tailwind('text-lg mb-6 text-center')}
               maxLength={8}
               autoCompleteType="postal-code"
               onSubmitEditing={() => formRef.current?.submitForm()}

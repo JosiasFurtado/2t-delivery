@@ -37,7 +37,9 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <SafeAreaView style={tailwind('flex-1 relative justify-between bg-primary-500')}>
+    <SafeAreaView
+      style={tailwind('flex-1 relative justify-between bg-primary-500')}
+    >
       <ScrollView style={tailwind('bg-white')}>
         <View style={tailwind('items-center pt-8 bg-white mb-4')}>
           <Text style={tailwind('text-gray-800 font-bold text-2xl mb-4')}>
@@ -48,7 +50,9 @@ const Profile: React.FC = () => {
               'bg-primary-500 w-32 h-32 rounded-full items-center justify-center mb-4',
             )}
           >
-            <Text style={tailwind('text-white text-6xl font-bold')}>J</Text>
+            <Text style={tailwind('text-white text-6xl font-bold uppercase')}>
+              {user?.firstName.charAt(0)}
+            </Text>
           </View>
           <Text style={tailwind('text-gray-800 font-bold text-2xl mb-2')}>
             {user?.firstName}

@@ -122,7 +122,7 @@ const SignUp: React.FC<SignUpProps> = ({
             style={tailwind('mb-3')}
           >
             {loading ? (
-              <ActivityIndicator color="#fff" />
+              <ActivityIndicator color="#fff" size={28} />
             ) : (
               <Text style={tailwind('text-xl text-white')}>Registrar</Text>
             )}

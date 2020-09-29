@@ -35,9 +35,9 @@ const Login: React.FC = () => {
     setOpenModal(true)
   }
 
-  const handleSetVisitorAndNavigateToHome = () => {
+  const handleSetVisitorAndNavigateToAddress = () => {
     // add settings visitor
-    navigate('Home')
+    navigate('InitialAddress')
   }
 
   return (
@@ -70,20 +70,32 @@ const Login: React.FC = () => {
                 REGISTRAR
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={openForgotMyPasswordModal} style={tailwind('mb-6')}>
+            <TouchableOpacity
+              onPress={openForgotMyPasswordModal}
+              style={tailwind('mb-6')}
+            >
               <Text
                 style={tailwind('text-white opacity-75 text-sm font-medium')}
               >
                 Esqueci minha senha
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleSetVisitorAndNavigateToHome} style={tailwind('flex-row items-center')}>
+            <TouchableOpacity
+              onPress={handleSetVisitorAndNavigateToAddress}
+              style={tailwind('flex-row items-center')}
+            >
               <Text
-                style={tailwind('text-white opacity-75 text-sm font-medium mr-2')}
+                style={tailwind(
+                  'text-white opacity-75 text-sm font-medium mr-2',
+                )}
               >
                 Só quero olhar
               </Text>
-              <Image source={Eyes} style={tailwind('w-6 h-6 opacity-75')} resizeMethod="resize" />
+              <Image
+                source={Eyes}
+                style={tailwind('w-6 h-6 opacity-75')}
+                resizeMethod="resize"
+              />
             </TouchableOpacity>
           </View>
         </View>
