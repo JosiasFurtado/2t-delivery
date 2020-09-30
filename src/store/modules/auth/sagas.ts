@@ -2,7 +2,12 @@ import { put, all, delay } from 'redux-saga/effects'
 import * as Eff from 'redux-saga/effects'
 import { SignInFormData, SignUpFormData } from 'types/app'
 import api from 'services/api'
-import { signInSuccess, signFailure, signInRequest } from './actions'
+import {
+  signInSuccess,
+  signFailure,
+  signInRequest,
+  getUserAddressSuccess,
+} from './actions'
 import { RootState } from '../rootReducer'
 import { AxiosError, AxiosResponse } from 'axios'
 
@@ -11,6 +16,8 @@ const delayToCleanErrors = 4000
 function* signInUser({ data }: { data: SignInFormData }) {
   try {
     let signInData: any
+    let signInAddressData: any
+
     yield api
       .post('/auth', data)
       .then((response: AxiosResponse) => {
@@ -21,7 +28,17 @@ function* signInUser({ data }: { data: SignInFormData }) {
       })
 
     const { user, token } = signInData
+
+    yield api
+      .get(`/user/${user.id}/address`)
+      .then((response: AxiosResponse) => {
+        signInAddressData = response.data.addresses
+      })
+      .catch((reason: AxiosError) => {
+        put(signFailure(reason.response?.data.errors))
+      })
     yield put(signInSuccess(user, token))
+    yield put(getUserAddressSuccess(signInAddressData))
   } catch (e) {
     yield put(signFailure(['Falha na autenticação, verifique seus dados']))
     yield delay(delayToCleanErrors, true)
@@ -58,7 +75,7 @@ function setToken({ payload }: { payload: RootState }) {
     return
   }
   if (payload.auth.token) {
-    api.defaults.headers.Authorization = `Bearer ${payload.auth.token}`
+    api.defaults.headers.Authorization = payload.auth.token
   }
 }
 const takeLatest: any = Eff.takeLatest

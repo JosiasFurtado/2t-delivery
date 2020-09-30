@@ -1,9 +1,10 @@
 import { Reducer, Action } from 'redux'
 import produce from 'immer'
-import { IUser } from 'types/app'
+import { IUser, UserAddress } from 'types/app'
 
 interface IUserAction extends Action {
   user: IUser
+  address: UserAddress[]
   token: string
   error: string[] | null
   loading: boolean
@@ -11,16 +12,21 @@ interface IUserAction extends Action {
 
 const INITIAL_STATE = {
   user: null,
+  address: null,
 }
 
-const Auth: Reducer<{ user: IUser | null }, IUserAction> = (
-  state = INITIAL_STATE,
-  action,
-) => {
+const Auth: Reducer<
+  { user: IUser | null; address: UserAddress[] | null },
+  IUserAction
+> = (state = INITIAL_STATE, action) => {
   return produce(state, draft => {
     switch (action.type) {
       case '@auth/SIGN_IN_SUCCESS': {
         draft.user = action.user
+        break
+      }
+      case '@user/GET_USER_ADDRESS_SUCCESS': {
+        draft.address = action.address
         break
       }
       case '@user/UPDATE_PROFILE_SUCCESS': {

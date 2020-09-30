@@ -1,6 +1,6 @@
-import { IUser } from 'types/app'
+import { IUser, UpdateUserFormData } from 'types/app'
 
-export function updateUserRequest(data) {
+export function updateUserRequest(data: UpdateUserFormData) {
   return {
     type: '@user/UPDATE_USER_REQUEST',
     data,

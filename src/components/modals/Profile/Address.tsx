@@ -1,8 +1,12 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import { View, Text } from 'react-native'
-import { tailwind } from 'lib/styles'
+import { View, Text, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { getColor, tailwind } from 'lib/styles'
 import PrimaryButton from 'components/styledComponents/PrimaryButton'
 import LayoutModal from '../LayoutModal'
+import { useSelector } from 'react-redux'
+import { RootState } from 'store/modules/rootReducer'
+import { RadioButton } from 'react-native-paper'
+import AddressList from 'components/List/AddressList'
 
 interface AddressProps {
   readonly open: boolean
@@ -18,9 +22,10 @@ const Address: React.FC<AddressProps> = ({ open, setOpenModal }) => {
         <Text style={tailwind('text-primary-500 text-2xl font-medium pt-4')}>
           Quer alterar o seu endereço?
         </Text>
-        <Text style={tailwind('text-gray-500 text-lg mb-16')}>
+        <Text style={tailwind('text-gray-500 text-lg mb-6')}>
           Escolha um dos que já cadastrou ou cadastre um novo
         </Text>
+        <AddressList style={tailwind('mb-4')} />
         <PrimaryButton
           onPress={handleChangeUserAddress}
           style={tailwind('mb-8')}

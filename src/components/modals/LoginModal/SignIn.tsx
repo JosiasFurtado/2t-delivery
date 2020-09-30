@@ -47,9 +47,10 @@ const SignIn: React.FC<SignInProps> = ({
 
   useEffect(() => {
     if (user) {
-      navigate('Home')
+      setOpenModal(false)
+      return navigate('Home')
     }
-  }, [])
+  }, [user])
 
   const handleSubmitSignIn = useCallback(
     async (data: SignInFormData, { reset }) => {

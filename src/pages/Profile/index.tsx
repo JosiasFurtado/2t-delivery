@@ -13,7 +13,7 @@ import { RootState } from 'store/modules/rootReducer'
 
 const Profile: React.FC = () => {
   const dispatch = useDispatch()
-  const { user } = useSelector((state: RootState) => state.user)
+  const { user, address } = useSelector((state: RootState) => state.user)
   const { navigate } = useNavigation()
   const [openModal, setOpenModal] = useState(false)
   const [typeModal, setTypeModal] = useState<ProfileModals>('address')
@@ -64,7 +64,7 @@ const Profile: React.FC = () => {
               lineBreakMode="tail"
               style={tailwind('ml-1 text-gray-700 text-base font-medium pr-2')}
             >
-              São Paulo, SP
+              {address && `${address[0].city}, ${address[0].state}`}
             </Text>
           </View>
           <View style={tailwind('w-1/3 items-center bg-gray-50 rounded-lg')}>

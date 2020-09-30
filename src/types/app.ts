@@ -71,6 +71,11 @@ export interface AuthState {
   loading: boolean
 }
 
+export interface UserState {
+  user: IUser | null
+  address: UserAddress[] | null
+}
+
 export interface UpdateUserFormData {
   firstName: string
   lastName: string
@@ -79,4 +84,17 @@ export interface UpdateUserFormData {
   confirmPassword: string
   cpf: string
   bornDate: string
+}
+
+export interface UserAddress {
+  id: number
+  userId: number
+  name: string
+  number: number
+  aditionalInfo: string
+  zipcode: string
+  street: string
+  city: string
+  state: string
+  neighborhood: string
 }

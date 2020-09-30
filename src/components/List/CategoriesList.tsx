@@ -6,13 +6,16 @@ import {
   TouchableOpacity,
   Image,
   Text,
+  View,
+  TouchableHighlight,
 } from 'react-native'
-import { tailwind } from 'lib/styles'
+import { getColor, tailwind } from 'lib/styles'
 import food from '../../../assets/icons/food.jpg'
 import drinks from '../../../assets/icons/drinks.jpg'
 import vegetables from '../../../assets/icons/vegetables.jpg'
 import bakery from '../../../assets/icons/bakery.jpg'
 import candies from '../../../assets/icons/candies.jpg'
+import { useNavigation } from '@react-navigation/native'
 
 interface CategoriesListProps {
   readonly style?: StyleProp<ViewStyle>
@@ -27,15 +30,23 @@ const categoriesMock = [
 ]
 
 const CategoriesList: React.FC<CategoriesListProps> = ({ style }) => {
+  const { navigate } = useNavigation()
+
   const renderItem = ({ item }: any) => (
-    <TouchableOpacity style={tailwind('mr-5')}>
-      <Image
-        source={item.image}
-        resizeMode="cover"
-        style={tailwind('w-24 h-24 rounded-full mb-1')}
-      />
-      <Text style={tailwind('text-base text-center w-24')}>{item.name}</Text>
-    </TouchableOpacity>
+    <TouchableHighlight
+      underlayColor={getColor('gray-200')}
+      onPress={() => navigate('StoreFiltersPage', { filterActive: item })}
+      style={tailwind('mr-5')}
+    >
+      <View>
+        <Image
+          source={item.image}
+          resizeMode="cover"
+          style={tailwind('w-24 h-24 rounded-full mb-1')}
+        />
+        <Text style={tailwind('text-base text-center w-24')}>{item.name}</Text>
+      </View>
+    </TouchableHighlight>
   )
   const memoizedValue = useMemo(() => renderItem, [categoriesMock])
 

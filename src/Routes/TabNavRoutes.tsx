@@ -1,14 +1,13 @@
 import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import Cart from '../pages/Cart'
-import Profile from '../pages/Profile'
 import {
   MaterialIcons,
   FontAwesome,
   FontAwesome5,
   Ionicons,
 } from '@expo/vector-icons'
-import { HomeStack, RequestStack } from './StackRoutes'
+import { HomeStack, RequestStack, ProfileStack } from './StackRoutes'
 
 interface TabNavRoutesProps {
   readonly route?: {
@@ -88,7 +87,7 @@ const TabNavRoutes: React.FC<TabNavRoutesProps> = ({ route }) => {
           },
         }}
         name="Perfil"
-        component={Profile}
+        component={ProfileStack}
       />
     </Tab.Navigator>
   )

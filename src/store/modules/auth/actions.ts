@@ -1,4 +1,4 @@
-import { SignInFormData, SignUpFormData, IUser } from 'types/app'
+import { SignInFormData, SignUpFormData, IUser, UserAddress } from 'types/app'
 
 export function signInRequest(data: SignInFormData) {
   return {
@@ -39,5 +39,12 @@ export function signFailure(error: string[] | null) {
 export function signOut() {
   return {
     type: '@auth/SIGN_OUT',
+  }
+}
+
+export function getUserAddressSuccess(address: UserAddress[]) {
+  return {
+    type: '@user/GET_USER_ADDRESS_SUCCESS',
+    address,
   }
 }

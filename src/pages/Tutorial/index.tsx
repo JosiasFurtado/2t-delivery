@@ -13,10 +13,10 @@ interface TutorialProps {
 
 const Tutorial: React.FC<TutorialProps> = ({ route }) => {
   const fromProfile = route.params && route.params.fromProfile
-  const { navigate } = useNavigation()
+  const { navigate, goBack } = useNavigation()
   const handleNavigate = () => {
     if (fromProfile) {
-      return navigate('Profile')
+      return goBack()
     }
     return navigate('Login')
   }

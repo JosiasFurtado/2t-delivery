@@ -1,5 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
+import StackNavigator from './StackNavigator'
+
 import Login from '../pages/Login'
 import Home from '../pages/Home'
 import Tutorial from '../pages/Tutorial'
@@ -9,10 +11,10 @@ import StorePage from '../pages/StorePage'
 import StoreDetailsPage from '../pages/StoreDetailsPage'
 import RequestDetail from '../pages/RequestDetail'
 import Checkout from '../pages/Checkout'
-import Help from '../pages/Help'
+import StoreFiltersPage from '../pages/StoreFiltersPage'
 import MyRequests from '../pages/MyRequests'
 import InitialAddress from '../pages/InitialAddress'
-import StackNavigator from './StackNavigator'
+import Profile from '../pages/Profile'
 
 const Stack = createStackNavigator()
 
@@ -23,14 +25,8 @@ export default function StackRoutes() {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="InitialAddress" component={InitialAddress} />
       <Stack.Screen name="Home" component={TabNavRoutes} />
-      <Stack.Screen name="Help" component={Help} />
       <Stack.Screen name="ItemPage" component={ItemPage} />
       <Stack.Screen name="Checkout" component={Checkout} />
-      <Stack.Screen
-        name="Profile"
-        component={TabNavRoutes}
-        initialParams={{ initialRouteName: 'Perfil' }}
-      />
     </StackNavigator>
   )
 }
@@ -41,6 +37,7 @@ export function HomeStack() {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="StorePage" component={StorePage} />
       <Stack.Screen name="StoreDetailsPage" component={StoreDetailsPage} />
+      <Stack.Screen name="StoreFiltersPage" component={StoreFiltersPage} />
     </StackNavigator>
   )
 }
@@ -50,6 +47,15 @@ export function RequestStack() {
     <StackNavigator>
       <Stack.Screen name="MyRequests" component={MyRequests} />
       <Stack.Screen name="RequestDetail" component={RequestDetail} />
+    </StackNavigator>
+  )
+}
+
+export function ProfileStack() {
+  return (
+    <StackNavigator>
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Tutorial" component={Tutorial} />
     </StackNavigator>
   )
 }

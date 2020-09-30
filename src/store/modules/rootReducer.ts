@@ -2,12 +2,12 @@ import { combineReducers } from 'redux'
 import cart from './cart/reducer'
 import user from './user/reducer'
 import auth from './auth/reducer'
-import { ProductInCart, AuthState, IUser } from 'types/app'
+import { ProductInCart, AuthState, UserState } from 'types/app'
 
 export interface RootState {
   readonly cart: ProductInCart[]
   readonly auth: AuthState
-  readonly user: { user: IUser | null }
+  readonly user: UserState
 }
 const reducers = {
   cart,
