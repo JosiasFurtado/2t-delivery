@@ -7,7 +7,7 @@ export interface IUser {
   imageUrl: string | null
   type: 'BUYER'
   cpf: string | null
-  bornDate: string | null
+  boarnDate: string | null
 }
 
 export interface Product {
@@ -69,4 +69,14 @@ export interface AuthState {
   token: string | null
   error: string[] | null
   loading: boolean
+}
+
+export interface UpdateUserFormData {
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  confirmPassword: string
+  cpf: string
+  bornDate: string
 }

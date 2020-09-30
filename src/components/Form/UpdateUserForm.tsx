@@ -1,40 +1,56 @@
+import { FormHandles, SubmitHandler } from '@unform/core'
+import { Form } from '@unform/mobile'
+import { tailwind } from 'lib/styles'
 import React, { RefObject, useRef } from 'react'
 import {
-  StyleProp,
-  View,
-  ViewStyle,
   KeyboardAvoidingView,
   Platform,
+  StyleProp,
   TextInput,
+  View,
+  ViewStyle,
 } from 'react-native'
-import { tailwind } from 'lib/styles'
-import { Form } from '@unform/mobile'
-import { FormHandles, SubmitHandler } from '@unform/core'
+import { useSelector } from 'react-redux'
+import { RootState } from 'store/modules/rootReducer'
+import { UpdateUserFormData } from 'types/app'
 import Input from './Input'
-import { SignUpFormData } from 'types/app'
 
-interface SignUpFormProps {
+interface UpdateUserFormProps {
   readonly style?: StyleProp<ViewStyle>
   readonly formRef: RefObject<FormHandles>
-  handleSubmit: SubmitHandler<SignUpFormData>
+  handleSubmit: SubmitHandler<UpdateUserFormData>
 }
 
-const SignUpForm: React.FC<SignUpFormProps> = ({
+const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
   style,
   formRef,
   handleSubmit,
 }) => {
+  const { user } = useSelector((state: RootState) => state.user)
   const firstNameInputRef = useRef<TextInput>(null)
   const lastNameInputRef = useRef<TextInput>(null)
-  const password1InputRef = useRef<TextInput>(null)
-  const password2InputRef = useRef<TextInput>(null)
+  const cpfInputRef = useRef<TextInput>(null)
+  const bornDateInputRef = useRef<TextInput>(null)
+  const passwordInputRef = useRef<TextInput>(null)
+
+  const initialFormData = {
+    email: user?.email,
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    cpf: user?.cpf,
+    boarnDate: user?.boarnDate,
+  }
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <View style={[tailwind(''), style]}>
-        <Form ref={formRef} onSubmit={handleSubmit}>
+        <Form
+          ref={formRef}
+          onSubmit={handleSubmit}
+          initialData={initialFormData}
+        >
           <Input
             name="email"
             label="Email"
@@ -66,28 +82,39 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
             placeholder="Digite seu último nome"
             returnKeyType="next"
             onSubmitEditing={() => {
-              password1InputRef.current?.focus()
+              cpfInputRef.current?.focus()
             }}
           />
 
           <Input
-            ref={password1InputRef}
-            secureTextEntry
-            name="password"
-            label="Senha"
-            placeholder="Digite sua senha"
+            ref={cpfInputRef}
+            name="cpf"
+            label="CPF"
+            placeholder="Digite seu cpf"
             returnKeyType="next"
-            textContentType="newPassword"
+            keyboardType="number-pad"
+            maxLength={11}
             onSubmitEditing={() => {
-              password2InputRef.current?.focus()
+              bornDateInputRef.current?.focus()
             }}
           />
           <Input
-            ref={password2InputRef}
+            ref={bornDateInputRef}
+            name="boarnDate"
+            label="Data de nascimento"
+            placeholder="Digite sua data de nascimento"
+            returnKeyType="send"
+            maxLength={10}
+            onSubmitEditing={() => {
+              passwordInputRef.current?.focus()
+            }}
+          />
+          <Input
+            ref={passwordInputRef}
             secureTextEntry
-            name="confirmPassword"
-            label="Repita sua senha"
-            placeholder="Digite novamente sua senha"
+            name="password"
+            label="Nova senha"
+            placeholder="Se quiser, digite uma nova senha"
             returnKeyType="send"
             textContentType="newPassword"
             onSubmitEditing={() => formRef.current?.submitForm()}
@@ -97,6 +124,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
     </KeyboardAvoidingView>
   )
 }
-SignUpForm.displayName = 'SignUpForm'
 
-export default SignUpForm
+UpdateUserForm.displayName = 'UpdateUserForm'
+
+export default UpdateUserForm

@@ -7,13 +7,13 @@ import {
   ViewStyle,
   Text,
   TouchableOpacity,
+  Image,
 } from 'react-native'
 import { tailwind } from 'lib/styles'
 import Header from 'components/Header'
-import TaxWarn from 'components/styledComponents/TaxWarn'
 import ItemList from 'components/List/ItemList'
 import StoreModal from 'components/modals/Store/WarnMinimumValues'
-import { useNavigation } from '@react-navigation/native'
+import CategoriesList from 'components/List/CategoriesList'
 
 export const productsMock = [
   {
@@ -67,31 +67,26 @@ interface StorePageProps {
 }
 
 const StorePage: React.FC<StorePageProps> = () => {
-  const { navigate } = useNavigation()
   const [openModal, setOpenModal] = useState(false)
 
   return (
     <SafeAreaView style={tailwind('flex-1 bg-primary-500 relative')}>
       <ScrollView style={tailwind('bg-gray-50')}>
-        <Header storeName="FreshMarket" searchProducts />
+        <Header storeName="FreshMarket" searchProducts hiddenAddress />
         <View style={tailwind('-mt-4 rounded-t-xl bg-gray-50')}>
-          <View style={tailwind('px-4 mt-4')}>
-            <TouchableOpacity onPress={() => navigate('StoreDetailsPage')}>
-              <Text
-                style={tailwind(
-                  'text-primary-500 text-3xl mb-3 font-medium w-4/5',
-                )}
-              >
-                FreshMarket
-              </Text>
-            </TouchableOpacity>
-            <TaxWarn setOpenModal={setOpenModal} style={tailwind('mb-6')} />
+          <View style={tailwind('mt-4 px-4 flex-row')}>
+            <CategoriesList style={tailwind('px-4 py-2')} />
           </View>
           <View style={tailwind('px-4')}>
             <Text style={tailwind('text-lg text-primary-500 mb-2')}>
               Produtos em destaque
             </Text>
-            <ItemList products={productsMock} />
+            <ItemList
+              products={productsMock}
+              title="Frutas e Vegetais"
+              style={tailwind('mb-4')}
+            />
+            <ItemList products={productsMock} title="Alimentos básicos" />
           </View>
         </View>
       </ScrollView>

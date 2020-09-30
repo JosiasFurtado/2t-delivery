@@ -1,5 +1,12 @@
 import React, { useMemo } from 'react'
-import { StyleProp, ViewStyle, FlatList } from 'react-native'
+import {
+  StyleProp,
+  ViewStyle,
+  FlatList,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native'
 import { tailwind } from 'lib/styles'
 import { Product } from 'types/app'
 import ItemCard from 'components/ItemCard'
@@ -9,9 +16,10 @@ import { addToCartRequest } from 'store/modules/cart/actions'
 interface ItemListProps {
   readonly style?: StyleProp<ViewStyle>
   readonly products: Product[]
+  readonly title?: string
 }
 
-const ItemList: React.FC<ItemListProps> = ({ style, products }) => {
+const ItemList: React.FC<ItemListProps> = ({ style, products, title }) => {
   const dispatch = useDispatch()
   const handleAddProductInCart = (item: Product) => {
     dispatch(addToCartRequest(item))
@@ -27,16 +35,26 @@ const ItemList: React.FC<ItemListProps> = ({ style, products }) => {
   const memoizedValue = useMemo(() => renderItem, [products])
 
   return (
-    <FlatList
-      data={products}
-      horizontal
-      pagingEnabled
-      maxToRenderPerBatch={30}
-      keyExtractor={item => item.id.toString()}
-      style={[{ height: 280 }, tailwind('-ml-4 mb-2 -mr-4'), style]}
-      showsHorizontalScrollIndicator={false}
-      renderItem={memoizedValue}
-    />
+    <>
+      {title && (
+        <View style={tailwind('flex-row justify-between items-center mb-1')}>
+          <Text style={tailwind('text-lg')}>{title}</Text>
+          <TouchableOpacity>
+            <Text style={tailwind('text-lg text-primary-500')}>Ver mais</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      <FlatList
+        data={products}
+        horizontal
+        pagingEnabled
+        maxToRenderPerBatch={30}
+        keyExtractor={item => item.id.toString()}
+        style={[{ height: 280 }, tailwind('-ml-4 mb-2 -mr-4'), style]}
+        showsHorizontalScrollIndicator={false}
+        renderItem={memoizedValue}
+      />
+    </>
   )
 }
 ItemList.displayName = 'ItemList'

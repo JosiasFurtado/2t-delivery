@@ -50,8 +50,8 @@ const Input: React.RefForwardingComponent<InputRefProps, InputProps> = (
       name: fieldName,
       ref: inputValueRef.current,
       path: 'value',
-      setValue(ref: any, value) {
-        inputValueRef.current.value = value
+      setValue(_ref: any, value) {
+        inputValueRef.current.value = value + value
         inputElementRef.current.setNativeProps({ text: value })
       },
       clearValue() {
@@ -79,9 +79,10 @@ const Input: React.RefForwardingComponent<InputRefProps, InputProps> = (
         onBlur={() => setIsFocused(false)}
         style={[
           tailwind(
-            `h-10 border-b-2 mb-2 ${isFocused
-              ? 'border-primary-500'
-              : error
+            `h-10 border-b-2 mb-2 ${
+              isFocused
+                ? 'border-primary-500'
+                : error
                 ? 'border-red-500'
                 : 'border-gray-500'
             }`,

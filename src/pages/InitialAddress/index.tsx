@@ -30,15 +30,21 @@ const InitialAddress: React.FC = () => {
       await cepSchema.validate(data, {
         abortEarly: false,
       })
-      await cep(data.cep).then(console.log)
-      // {
-      //   "cep": "01050000",
-      //   "city": "São Paulo",
-      //   "neighborhood": "Centro",
-      //   "service": "widenet",
-      //   "state": "SP",
-      //   "street": "Rua Martins Fontes",
-      // }
+      const { cep: zipcode, street, city, state, neighborhood } = await cep(
+        data.cep,
+      )
+      const dataToSubmit = {
+        name: 'Primeiro acesso',
+        number: 0,
+        aditionalInfo: 'primeiro acesso',
+        zipcode,
+        street,
+        city,
+        state,
+        neighborhood,
+      }
+      console.warn(dataToSubmit)
+      console.warn('endereço:', `${street}, 175, ${neighborhood}, ${state}`)
       // navigate('Home')
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
