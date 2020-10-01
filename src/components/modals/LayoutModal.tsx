@@ -10,6 +10,7 @@ import {
 import { tailwind, getColor } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
 import styled from 'styled-components/native'
+import Toast from 'components/Toast'
 
 const BgModal = styled.SafeAreaView`
   background-color: rgba(0, 0, 0, 0.4);
@@ -40,7 +41,8 @@ const LayoutModal: React.FC<LayoutModalProps> = ({
         backgroundColor={getColor('primary-700')}
         barStyle="light-content"
       />
-      <BgModal style={tailwind('-mb-8')}>
+      <BgModal style={tailwind('-mb-8 relative')}>
+        <Toast />
         <TouchableOpacity
           onPress={() => setOpenModal(!open)}
           style={tailwind('px-5 mb-2')}

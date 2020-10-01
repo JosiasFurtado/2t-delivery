@@ -40,7 +40,7 @@ const SignIn: React.FC<SignInProps> = ({
 }) => {
   const { user } = useSelector((state: RootState) => state.user)
   const dispatch = useDispatch()
-  const { loading, error } = useSelector((state: RootState) => state.auth)
+  const { loading } = useSelector((state: RootState) => state.auth)
   const formRef = useRef<FormHandles>(null)
   const { navigate } = useNavigation()
   const [loginError, setLoginError] = useState<string | null>()
@@ -104,11 +104,6 @@ const SignIn: React.FC<SignInProps> = ({
           <Text style={tailwind('text-gray-500 text-lg mb-16')}>
             Faça o log-in para continuar
           </Text>
-          {error?.map((item, index) => (
-            <Text key={index} style={tailwind('mb-1 text-base text-red-500')}>
-              {item}
-            </Text>
-          ))}
           {loginError && (
             <Text style={tailwind('text-red-400 text-lg mb-2')}>
               {loginError}
