@@ -40,7 +40,7 @@ const SignIn: React.FC<SignInProps> = ({
 }) => {
   const { user } = useSelector((state: RootState) => state.user)
   const dispatch = useDispatch()
-  const { loading } = useSelector((state: RootState) => state.auth)
+  const { loading, error } = useSelector((state: RootState) => state.auth)
   const formRef = useRef<FormHandles>(null)
   const { navigate } = useNavigation()
   const [loginError, setLoginError] = useState<string | null>()
@@ -109,6 +109,11 @@ const SignIn: React.FC<SignInProps> = ({
               {loginError}
             </Text>
           )}
+          {error && error.map((item, index) => (
+            <Text key={String(index)} style={tailwind('text-red-400 text-lg mb-2')}>
+              {item}
+            </Text>
+          ))}
           <SignInForm
             formRef={formRef}
             handleSubmit={handleSubmitSignIn}
@@ -129,8 +134,8 @@ const SignIn: React.FC<SignInProps> = ({
             {loading ? (
               <ActivityIndicator color="#fff" size={28} />
             ) : (
-              <Text style={tailwind('text-xl text-white')}>Entrar</Text>
-            )}
+                <Text style={tailwind('text-xl text-white')}>Entrar</Text>
+              )}
           </PrimaryButton>
           <View style={tailwind('mb-2 flex flex-row justify-center')}>
             <Text style={tailwind('text-lg')}>Não tem uma conta?</Text>

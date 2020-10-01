@@ -1,6 +1,6 @@
 import { put, all, delay } from 'redux-saga/effects'
 import * as Eff from 'redux-saga/effects'
-import { SignInFormData, SignUpFormData } from 'types/app'
+import { IUser, SignInFormData, SignUpFormData } from 'types/app'
 import api from 'services/api'
 import {
   signInSuccess,
@@ -16,7 +16,6 @@ const delayToCleanErrors = 4000
 function* signInUser({ data }: { data: SignInFormData }) {
   try {
     let signInData: any
-    let signInAddressData: any
 
     yield api
       .post('/auth', data)
@@ -29,6 +28,19 @@ function* signInUser({ data }: { data: SignInFormData }) {
 
     const { user, token } = signInData
 
+    yield getUserAddress(user)
+    yield put(signInSuccess(user, token))
+  } catch (e) {
+    yield put(signFailure(['Falha na autenticação, verifique seus dados']))
+    yield delay(delayToCleanErrors, true)
+    yield put(signFailure(null))
+  }
+}
+
+function* getUserAddress(user: IUser) {
+  try {
+    console.warn("entrou no get address", user)
+    let signInAddressData: any
     yield api
       .get(`/user/${user.id}/address`)
       .then((response: AxiosResponse) => {
@@ -37,10 +49,9 @@ function* signInUser({ data }: { data: SignInFormData }) {
       .catch((reason: AxiosError) => {
         put(signFailure(reason.response?.data.errors))
       })
-    yield put(signInSuccess(user, token))
     yield put(getUserAddressSuccess(signInAddressData))
   } catch (e) {
-    yield put(signFailure(['Falha na autenticação, verifique seus dados']))
+    yield put(signFailure(['Erro na requisição de endereço do usuário']))
     yield delay(delayToCleanErrors, true)
     yield put(signFailure(null))
   }

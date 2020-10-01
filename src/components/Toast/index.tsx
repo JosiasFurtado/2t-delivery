@@ -10,7 +10,7 @@ interface ToastProps {
 
 const Toast: React.FC<ToastProps> = ({ style }) => {
   const { error } = useSelector((state: RootState) => state.auth)
-  const [animationValue, setAnimationValue] = useState(new Animated.Value(-500))
+  const [animationValue, setAnimationValue] = useState(new Animated.Value(-300))
   useEffect(() => startAnimation, [error])
 
   const startAnimation = () => {
@@ -19,7 +19,7 @@ const Toast: React.FC<ToastProps> = ({ style }) => {
       toValue: 40,
       duration: 500,
     }).start(() => {
-      setAnimationValue(new Animated.Value(-500))
+      setAnimationValue(new Animated.Value(-300))
     })
   }
 
@@ -31,28 +31,32 @@ const Toast: React.FC<ToastProps> = ({ style }) => {
     ],
   }
 
+
   return (
-    <Animated.View
-      style={[
-        tailwind(
-          'absolute top-0 bg-red-500 shadow-md z-50 w-5/6 flex self-center items-center justify-center rounded-full py-4 mt-8',
-        ),
-        style,
-        transformStyle,
-      ]}
-    >
-      {error?.map((error, index) => (
-        <Text
-          key={String(index)}
-          style={tailwind('text-white text-base font-bold text-center')}
-        >
-          - {error}
-        </Text>
-      ))}
-    </Animated.View>
+    error ? (
+      <Animated.View
+        style={[
+          tailwind(
+            'absolute top-0 bg-red-500 shadow-md z-50 w-5/6 flex self-center items-center justify-center rounded-full p-4 mt-8',
+          ),
+          style,
+          transformStyle,
+        ]}
+      >
+        {error?.map((error, index) => (
+          <Text
+            key={String(index)}
+            style={tailwind('text-white text-sm font-bold text-left')}
+          >
+            - {error}
+          </Text>
+        ))}
+      </Animated.View>
+    ) : null
   )
 }
 
 Toast.displayName = 'Toast'
 
 export default Toast
+

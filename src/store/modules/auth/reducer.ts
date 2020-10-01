@@ -36,6 +36,7 @@ const Auth: Reducer<AuthState, IUserAction> = (
       }
       case '@auth/SIGN_FAILURE': {
         const { error } = action
+        console.warn("error", error)
         draft.error = error
         draft.loading = false
         break
