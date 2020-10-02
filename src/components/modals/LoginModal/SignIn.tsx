@@ -96,7 +96,7 @@ const SignIn: React.FC<SignInProps> = ({
 
   return (
     <LayoutModal title="Entrar" open={open} setOpenModal={setOpenModal}>
-      <View style={tailwind('rounded-t-lg bg-white px-5 py-3')}>
+      <View style={tailwind('rounded-t-lg bg-white px-5 pt-3 pb-12')}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={tailwind('text-primary-500 text-2xl font-medium pt-4')}>
             Bem-vindo novamente

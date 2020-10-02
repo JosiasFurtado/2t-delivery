@@ -16,7 +16,7 @@ const Help: React.FC<HelpProps> = ({ open, setOpenModal }) => {
 
   return (
     <LayoutModal title="Ajuda" open={open} setOpenModal={setOpenModal}>
-      <ScrollView style={tailwind('rounded-t-lg bg-white px-5')}>
+      <ScrollView style={tailwind('rounded-t-lg bg-white px-5 pt-3 pb-6')}>
         <Text
           style={tailwind('text-primary-500 text-2xl font-medium pt-4 mb-2')}
         >

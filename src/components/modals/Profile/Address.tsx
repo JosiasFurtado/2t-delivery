@@ -14,11 +14,11 @@ interface AddressProps {
 }
 
 const Address: React.FC<AddressProps> = ({ open, setOpenModal }) => {
-  const handleChangeUserAddress = () => {}
+  const handleChangeUserAddress = () => { }
 
   return (
     <LayoutModal title="Endereço" open={open} setOpenModal={setOpenModal}>
-      <View style={tailwind('rounded-t-lg bg-white px-5 py-3')}>
+      <View style={tailwind('rounded-t-lg bg-white px-5 pt-3 pb-12')}>
         <Text style={tailwind('text-primary-500 text-2xl font-medium pt-4')}>
           Quer alterar o seu endereço?
         </Text>

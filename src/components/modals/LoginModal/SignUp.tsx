@@ -82,7 +82,7 @@ const SignUp: React.FC<SignUpProps> = ({
 
   return (
     <LayoutModal title="Registrar" open={open} setOpenModal={setOpenModal}>
-      <View style={tailwind('rounded-t-lg bg-white px-5 py-3')}>
+      <View style={tailwind('rounded-t-lg bg-white px-5 pt-3 pb-12')}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={tailwind('text-primary-500 text-2xl font-medium pt-4')}>
             Conte um pouco sobre você!
@@ -124,8 +124,8 @@ const SignUp: React.FC<SignUpProps> = ({
             {loading ? (
               <ActivityIndicator color="#fff" size={28} />
             ) : (
-              <Text style={tailwind('text-xl text-white')}>Registrar</Text>
-            )}
+                <Text style={tailwind('text-xl text-white')}>Registrar</Text>
+              )}
           </PrimaryButton>
           <View style={tailwind('mb-2 flex flex-row justify-center')}>
             <Text style={tailwind('text-lg')}>Já tem uma conta?</Text>

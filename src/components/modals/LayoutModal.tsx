@@ -55,7 +55,6 @@ const LayoutModal: React.FC<LayoutModalProps> = ({
         <KeyboardAvoidingView
           enabled
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          style={tailwind('mb-8')}
         >
           {children}
         </KeyboardAvoidingView>

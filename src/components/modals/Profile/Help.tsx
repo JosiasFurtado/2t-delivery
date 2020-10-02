@@ -10,11 +10,11 @@ interface HelpProps {
 }
 
 const Help: React.FC<HelpProps> = ({ open, setOpenModal }) => {
-  const handleDirectToContact2T = () => {}
+  const handleDirectToContact2T = () => { }
 
   return (
     <LayoutModal title="Ajuda" open={open} setOpenModal={setOpenModal}>
-      <View style={tailwind('rounded-t-lg bg-white px-5 py-3')}>
+      <View style={tailwind('rounded-t-lg bg-white px-5 pt-3 pb-12')}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text
             style={tailwind('text-primary-500 text-2xl font-medium pt-4 mb-2')}

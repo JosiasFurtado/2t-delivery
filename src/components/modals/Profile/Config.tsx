@@ -13,11 +13,11 @@ interface ConfigProps {
 
 const Config: React.FC<ConfigProps> = ({ open, setOpenModal }) => {
   const formRef = useRef<FormHandles>(null)
-  const handleSubmitUpdateUser = () => {}
+  const handleSubmitUpdateUser = () => { }
 
   return (
     <LayoutModal title="Configurações" open={open} setOpenModal={setOpenModal}>
-      <View style={tailwind('rounded-t-lg bg-white px-5 py-3')}>
+      <View style={tailwind('rounded-t-lg bg-white px-5 pt-3 pb-12')}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={tailwind('text-primary-500 text-2xl font-medium pt-4')}>
             Quer alterar algum dos seus dados?

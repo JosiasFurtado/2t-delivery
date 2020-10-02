@@ -62,7 +62,7 @@ const InitialAddress: React.FC = () => {
   }
 
   return (
-    <SafeAreaView style={tailwind('flex-1 relative bg-white')}>
+    <SafeAreaView style={tailwind('flex-1 relative bg-primary-500 -mb-10')}>
       <View style={tailwind('h-32 bg-primary-500')}>
         <TouchableOpacity
           onPress={handleRedirectToLogin}

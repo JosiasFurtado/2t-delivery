@@ -19,7 +19,7 @@ const ItemComment: React.FC<ItemCommentProps> = ({
 }) => {
   return (
     <LayoutModal title="Observação" open={open} setOpenModal={setOpenModal}>
-      <View style={tailwind('rounded-t-lg bg-white px-5 py-3')}>
+      <View style={tailwind('rounded-t-lg bg-white px-5 pt-3 pb-12')}>
         <Text style={tailwind('text-primary-500 text-2xl font-medium pt-4')}>
           Se necessário, adicione uma observação
         </Text>

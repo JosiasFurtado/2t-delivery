@@ -28,7 +28,7 @@ function* signInUser({ data }: { data: SignInFormData }) {
 
     const { user, token } = signInData
 
-    yield getUserAddress(user)
+    yield getUserAddress(user, token)
     yield put(signInSuccess(user, token))
   } catch (e) {
     yield put(signFailure(['Falha na autenticação, verifique seus dados']))
@@ -37,10 +37,11 @@ function* signInUser({ data }: { data: SignInFormData }) {
   }
 }
 
-function* getUserAddress(user: IUser) {
+function* getUserAddress(user: IUser, token: string) {
   try {
-    console.warn("entrou no get address", user)
     let signInAddressData: any
+
+    api.defaults.headers.Authorization = token
     yield api
       .get(`/user/${user.id}/address`)
       .then((response: AxiosResponse) => {
