@@ -1,5 +1,5 @@
 import { getColor, tailwind } from 'lib/styles'
-import React, { useMemo } from 'react'
+import React, { Dispatch, SetStateAction, useMemo } from 'react'
 import {
   FlatList,
   StyleProp,
@@ -8,18 +8,17 @@ import {
   View,
   ViewStyle,
 } from 'react-native'
-import { RadioButton } from 'react-native-paper'
-import { useSelector } from 'react-redux'
-import { RootState } from 'store/modules/rootReducer'
 import { Feather } from '@expo/vector-icons';
+import { UserAddress } from 'types/app'
 
 interface AddressListProps {
   readonly style?: StyleProp<ViewStyle>
+  readonly addresses: UserAddress[] | null
+  readonly checked: string
+  setChecked: Dispatch<SetStateAction<string>>
 }
 
-const AddressList: React.FC<AddressListProps> = ({ style }) => {
-  const { address } = useSelector((state: RootState) => state.user)
-  const [checked, setChecked] = React.useState('0')
+const AddressList: React.FC<AddressListProps> = ({ style, checked, setChecked, addresses }) => {
 
   const renderItem = ({ item }: { item: any }) => (
     <View style={tailwind(`border p-2 rounded-full mb-2 ${String(item.id) === checked ? "border-primary-500" : 'border-gray-500'}`)}>
@@ -45,11 +44,11 @@ const AddressList: React.FC<AddressListProps> = ({ style }) => {
       </TouchableHighlight>
     </View>
   )
-  const memoizedValue = useMemo(() => renderItem, [address, checked])
+  const memoizedValue = useMemo(() => renderItem, [addresses, checked])
 
   return (
     <FlatList
-      data={address}
+      data={addresses}
       maxToRenderPerBatch={30}
       keyExtractor={item => item.id.toString()}
       showsVerticalScrollIndicator={false}

@@ -1,7 +1,6 @@
 import { Reducer, Action } from 'redux'
 import produce from 'immer'
 import { IUser, AuthState } from 'types/app'
-import AsyncStorage from '@react-native-community/async-storage'
 
 interface IUserAction extends Action {
   user: IUser

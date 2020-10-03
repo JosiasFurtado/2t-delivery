@@ -33,14 +33,16 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <View style={[tailwind('relative bg-primary-500 h-40'), style]}>
-      <View style={tailwind('px-4')}>
+      <View style={tailwind('px-4 relative')}>
         {!hiddenBackArrow && (
-          <TouchableOpacity
-            onPress={() => goBack()}
-            style={tailwind('px-4 py-5 absolute')}
-          >
-            <Ionicons name="md-arrow-back" size={35} color="#fff" />
-          </TouchableOpacity>
+          <View style={tailwind('absolute')}>
+            <TouchableOpacity
+              onPress={() => goBack()}
+              style={tailwind('px-4 py-5')}
+            >
+              <Ionicons name="md-arrow-back" size={35} color="#fff" />
+            </TouchableOpacity>
+          </View>
         )}
         {!hiddenAddress && (
           <AddressChanger style={tailwind('absolute right-0 mr-4 mt-2')} />
@@ -54,12 +56,12 @@ const Header: React.FC<HeaderProps> = ({
               <Text style={tailwind('text-white text-4xl')}>{storeName}</Text>
             </TouchableOpacity>
           ) : (
-            <Image
-              source={Logo}
-              resizeMode="contain"
-              style={tailwind(`h-20 mb-2 ${hiddenAddress ? '' : ''}`)}
-            />
-          )}
+              <Image
+                source={Logo}
+                resizeMode="contain"
+                style={tailwind('h-20 mb-2')}
+              />
+            )}
         </View>
         <SearchInput searchProducts={searchProducts} />
       </View>

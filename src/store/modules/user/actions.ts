@@ -13,8 +13,16 @@ export function updateUserSuccess(viewer: IUser) {
     viewer,
   }
 }
+
 export function updateUserFailure() {
   return {
     type: '@user/UPDATE_USER_FAILURE',
+  }
+}
+
+export function updateUserAddressActive(addressId: number) {
+  return {
+    type: '@user/UPDATE_USER_ADDRESS_ACTIVE',
+    addressId,
   }
 }

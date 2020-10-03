@@ -13,16 +13,17 @@ import { RootState } from 'store/modules/rootReducer'
 
 const Profile: React.FC = () => {
   const dispatch = useDispatch()
-  const { user, address } = useSelector((state: RootState) => state.user)
+  const { user, addresses, activeAddressId } = useSelector((state: RootState) => state.user)
   const { navigate } = useNavigation()
   const [openModal, setOpenModal] = useState(false)
   const [typeModal, setTypeModal] = useState<ProfileModals>('address')
+
+  const activeAdress = addresses?.find(address => address.id === activeAddressId)
 
   const handleSignOut = () => {
     dispatch(signOut())
     navigate('Login')
   }
-
   const openAddressModal = () => {
     setTypeModal('address')
     setOpenModal(true)
@@ -64,7 +65,7 @@ const Profile: React.FC = () => {
               lineBreakMode="tail"
               style={tailwind('ml-1 text-gray-700 text-base font-medium pr-2')}
             >
-              {address && `${address[0].city}, ${address[0].state}`}
+              {activeAdress && `${activeAdress.city}, ${activeAdress.state}`}
             </Text>
           </View>
           <View style={tailwind('w-1/3 items-center bg-gray-50 rounded-lg')}>
@@ -141,6 +142,7 @@ const Profile: React.FC = () => {
       <ProfileModal
         open={openModal}
         setOpenModal={setOpenModal}
+        setTypeModal={setTypeModal}
         type={typeModal}
       />
     </SafeAreaView>

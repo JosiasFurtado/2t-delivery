@@ -47,7 +47,7 @@ export type ItemMock = {
 
 export type LoginModals = 'signin' | 'signup' | 'forgotMyPassword'
 
-export type ProfileModals = 'address' | 'help' | 'config'
+export type ProfileModals = 'address' | 'help' | 'config' | 'newAddress'
 
 export type CartModals = 'comment' | 'cleanCart'
 
@@ -73,7 +73,8 @@ export interface AuthState {
 
 export interface UserState {
   user: IUser | null
-  address: UserAddress[] | null
+  activeAddressId: number | null
+  addresses: UserAddress[] | null
 }
 
 export interface UpdateUserFormData {

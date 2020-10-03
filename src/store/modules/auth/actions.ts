@@ -42,9 +42,9 @@ export function signOut() {
   }
 }
 
-export function getUserAddressSuccess(address: UserAddress[]) {
+export function getUserAddressSuccess(addresses: UserAddress[]) {
   return {
     type: '@user/GET_USER_ADDRESS_SUCCESS',
-    address,
+    addresses,
   }
 }
