@@ -8,6 +8,7 @@ import {
   Ionicons,
 } from '@expo/vector-icons'
 import { HomeStack, RequestStack, ProfileStack } from './StackRoutes'
+import { Platform } from 'react-native'
 
 interface TabNavRoutesProps {
   readonly route?: {
@@ -23,7 +24,7 @@ const TabNavRoutes: React.FC<TabNavRoutesProps> = ({ route }) => {
       tabBarOptions={{
         showIcon: true,
         showLabel: false,
-        style: { backgroundColor: '#FBFBFB', paddingBottom: 5 },
+        style: { backgroundColor: '#FBFBFB', paddingBottom: Platform.OS === 'ios' ? 15 : 5 },
         indicatorStyle: { backgroundColor: '#00BF68' },
       }}
       tabBarPosition="bottom"

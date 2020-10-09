@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Animated, StyleProp, Text, ViewStyle } from 'react-native'
 import { tailwind } from 'lib/styles'
-import { useSelector } from 'react-redux'
-import { RootState } from 'store/modules/rootReducer'
 
 interface ToastProps {
   readonly style?: StyleProp<ViewStyle>
+  readonly error: string[] | null
 }
 
-const Toast: React.FC<ToastProps> = ({ style }) => {
-  const { error } = useSelector((state: RootState) => state.auth)
+const Toast: React.FC<ToastProps> = ({ style, error }) => {
   const [animationValue, setAnimationValue] = useState(new Animated.Value(-300))
   useEffect(() => startAnimation, [error])
 
@@ -17,10 +15,18 @@ const Toast: React.FC<ToastProps> = ({ style }) => {
     Animated.timing(animationValue, {
       useNativeDriver: true,
       toValue: 40,
-      duration: 500,
-    }).start(() => {
-      setAnimationValue(new Animated.Value(-300))
-    })
+      duration: 1500,
+    }).start(() => closeToast())
+  }
+
+  const closeToast = () => {
+    setTimeout(() => {
+      Animated.timing(animationValue, {
+        useNativeDriver: true,
+        toValue: -300,
+        duration: 300,
+      }).start()
+    }, 1000)
   }
 
   const transformStyle = {

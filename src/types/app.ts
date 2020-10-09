@@ -194,8 +194,6 @@ export interface Tag2 {
   updatedAt: string
 }
 
-
-////////
 export interface MarketWithCategories extends Market {
   categories: Category[]
 }

@@ -10,6 +10,9 @@ import {
 import { tailwind, getColor } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
 import styled from 'styled-components/native'
+import Toast from 'components/Toast'
+import { useSelector } from 'react-redux'
+import { RootState } from 'store/modules/rootReducer'
 
 const BgModal = styled.SafeAreaView`
   background-color: rgba(0, 0, 0, 0.4);
@@ -29,6 +32,7 @@ const LayoutModal: React.FC<LayoutModalProps> = ({
   open,
   setOpenModal,
 }) => {
+  const { error } = useSelector((state: RootState) => state.auth)
   return (
     <Modal
       visible={open}
@@ -36,6 +40,7 @@ const LayoutModal: React.FC<LayoutModalProps> = ({
       transparent
       onRequestClose={() => setOpenModal(false)}
     >
+      <Toast error={error} />
       <StatusBar
         backgroundColor={getColor('primary-700')}
         barStyle="light-content"
