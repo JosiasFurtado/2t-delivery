@@ -99,3 +99,143 @@ export interface UserAddress {
   state: string
   neighborhood: string
 }
+
+export interface Market {
+  id: number
+  imageUrl: string | null
+  name: string
+  color: string | null
+  bio: string | null
+  policy: string | null
+  minimalPrice: number
+  email: string
+  address: Address
+  schedule: Schedule
+  slogan: string | null
+  range: number
+  delivery: boolean
+  createdAt: string
+  updatedAt: string
+  tags: Tag[] | []
+  phones: Phone[]
+  windows: Window[] | []
+  deliveryRanges: DeliveryRange[] | []
+}
+
+export interface Phone {
+  id: number
+  type: string
+  number: string
+  createdAt: string
+  updatedAt: string
+  marketId: number
+}
+
+export interface Schedule {
+  sunday: Horary
+  monday: Horary
+  tuesday: Horary
+  wednesday: Horary
+  thursday: Horary
+  friday: Horary
+  saturday: Horary
+}
+
+export interface Horary {
+  startsAt: string
+  endsAt: string
+}
+
+export interface Address {
+  city: string
+  zipcode: string
+  neighborhood: string
+  aditionalInfo: string
+  number: string
+  state: string
+  street: string
+}
+
+export interface DeliveryRange {
+  id: number
+  price: number
+  startsAt: number
+  endsAt: number
+  createdAt: string
+  updatedAt: string
+  marketId: number
+}
+
+export type Weekday = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
+
+export interface Window {
+  id: number
+  weekDay: Weekday
+  startsAt: string
+  endsAt: string
+  createdAt: string
+  updatedAt: string
+  marketId: number
+}
+
+export interface Tag {
+  id: number
+  createdAt: string
+  updatedAt: string
+  marketId: number
+  tagId: number
+  tag: Tag2
+}
+
+export interface Tag2 {
+  id: number
+  content: string
+  createdAt: string
+  updatedAt: string
+}
+
+
+////////
+export interface MarketWithCategories extends Market {
+  categories: Category[]
+}
+
+interface Category {
+  id: number
+  name: string
+  createdAt: string
+  updatedAt: string
+  marketId: number
+  iconId: number
+  categories: Subcategory[]
+}
+
+interface Subcategory {
+  id: number
+  name: string
+  createdAt: string
+  updatedAt: string
+  categoryId: number
+  products: ProductReal[]
+}
+
+interface ProductReal {
+  id: number
+  name: string
+  imageUrl: string
+  description: string | null
+  nutritionalTable: NutritionalTable
+  weight: number | null
+  volume: number | null
+  price: number
+  promotionPrice: number | null
+  isPromoted: boolean
+  amount: number | null
+  adult: boolean
+  createdAt: string
+  updatedAt: string
+  subcategoryId: number
+}
+
+interface NutritionalTable {
+}
