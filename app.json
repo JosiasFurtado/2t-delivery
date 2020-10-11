@@ -23,7 +23,9 @@
       "package": "com.doist.delivery"
     },
     "extra": {
-      "EXPO_API_URL": "https://smerca-api-staging.herokuapp.com/api/v1"
+      "EXPO_API_URL": "https://smerca-api-staging.herokuapp.com/api/v1",
+      "EXPO_2T_CONTACT": "5514996037486",
+      "EXPO_MSG_TO_CONTACT": "Olá,%20atendente%20da%202T,%20preciso%20de%20ajuda."
     }
   }
 }

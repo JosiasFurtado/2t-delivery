@@ -106,7 +106,7 @@ const SignUp: React.FC<SignUpProps> = ({
             style={tailwind('mb-2')}
           />
           <TouchableOpacity
-            onPress={() => console.warn('click')}
+            onPress={() => console.warn('adicionar os termos 2t')}
             style={tailwind('mb-3')}
           >
             <Text style={tailwind('text-center')}>
@@ -124,8 +124,8 @@ const SignUp: React.FC<SignUpProps> = ({
             {loading ? (
               <ActivityIndicator color="#fff" size={28} />
             ) : (
-                <Text style={tailwind('text-xl text-white')}>Registrar</Text>
-              )}
+              <Text style={tailwind('text-xl text-white')}>Registrar</Text>
+            )}
           </PrimaryButton>
           <View style={tailwind('mb-2 flex flex-row justify-center')}>
             <Text style={tailwind('text-lg')}>Já tem uma conta?</Text>

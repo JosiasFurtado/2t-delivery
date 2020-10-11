@@ -15,9 +15,15 @@ interface AddressProps {
   setTypeModal: Dispatch<SetStateAction<ProfileModals>>
 }
 
-const Address: React.FC<AddressProps> = ({ open, setOpenModal, setTypeModal }) => {
+const Address: React.FC<AddressProps> = ({
+  open,
+  setOpenModal,
+  setTypeModal,
+}) => {
   const dispatch = useDispatch()
-  const { addresses, activeAddressId } = useSelector((state: RootState) => state.user)
+  const { addresses, activeAddressId } = useSelector(
+    (state: RootState) => state.user,
+  )
   const [checked, setChecked] = React.useState(String(activeAddressId))
 
   const handleChangeUserAddress = () => {
@@ -40,15 +46,25 @@ const Address: React.FC<AddressProps> = ({ open, setOpenModal, setTypeModal }) =
         <Text style={tailwind('text-gray-500 text-lg mb-6')}>
           Escolha um dos que já cadastrou ou cadastre um novo
         </Text>
-        <AddressList style={tailwind('mb-4')} addresses={addresses} checked={checked} setChecked={setChecked} />
+        <AddressList
+          style={tailwind('mb-4')}
+          addresses={addresses}
+          checked={checked}
+          setChecked={setChecked}
+        />
         <PrimaryButton
           onPress={handleChangeUserAddress}
           style={tailwind('mb-4')}
         >
-          <Text style={tailwind('text-xl text-white')}>Alterar</Text>
+          <Text style={tailwind('text-xl text-white')}>Confirmar</Text>
         </PrimaryButton>
-        <TouchableOpacity onPress={openNewAddressModal} style={tailwind('mb-2 items-center')}>
-          <Text style={tailwind('text-primary-500')}>Cadastre um novo endereço</Text>
+        <TouchableOpacity
+          onPress={openNewAddressModal}
+          style={tailwind('mb-2 items-center')}
+        >
+          <Text style={tailwind('text-primary-500')}>
+            Cadastre um novo endereço
+          </Text>
         </TouchableOpacity>
       </View>
     </LayoutModal>

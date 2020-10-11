@@ -3,6 +3,7 @@ import { Text, ScrollView, View } from 'react-native'
 import { tailwind } from 'lib/styles'
 import PrimaryButton from 'components/styledComponents/PrimaryButton'
 import LayoutModal from '../LayoutModal'
+import handleDirectToContact2T from 'utils/contact2t'
 
 interface HelpProps {
   readonly open: boolean
@@ -10,8 +11,6 @@ interface HelpProps {
 }
 
 const Help: React.FC<HelpProps> = ({ open, setOpenModal }) => {
-  const handleDirectToContact2T = () => { }
-
   return (
     <LayoutModal title="Ajuda" open={open} setOpenModal={setOpenModal}>
       <View style={tailwind('rounded-t-lg bg-white px-5 pt-3 pb-12')}>

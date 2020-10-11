@@ -61,10 +61,10 @@ const StoreCardHorizontal: React.FC<StoreCardHorizontalProps> = ({ style }) => {
             <View style={tailwind('flex-row items-center')}>
               <Image
                 resizeMode="contain"
-                style={tailwind('h-5 w-5')}
+                style={tailwind('h-4 w-4')}
                 source={DeliverymanIcon}
               />
-              <Text style={tailwind('text-sm ml-1')}>Hoje, 12:00 hrs</Text>
+              <Text style={tailwind('text-xs ml-1')}>Hoje, 12:00 hrs</Text>
             </View>
             <Text style={tailwind('text-xs text-gray-700')}>
               Valor mínimo: R$50,00
