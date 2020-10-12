@@ -6,6 +6,7 @@ import Header from 'components/Header'
 import { ItemMock } from 'types/app'
 import StoreList from 'components/List/StoreList'
 import StoreCard from 'components/StoreCard'
+import useMarkets from 'utils/useMarkets'
 
 export const storesMock: ItemMock[] = [
   { id: '0' },
@@ -16,6 +17,8 @@ export const storesMock: ItemMock[] = [
 ]
 
 const Home: React.FC = () => {
+ const [data] = useMarkets()
+
   return (
     <SafeAreaView style={tailwind('flex-1 relative bg-primary-500')}>
       <Header hiddenBackArrow />
@@ -25,12 +28,14 @@ const Home: React.FC = () => {
           <Text style={tailwind('text-lg text-primary-500 mb-2')}>
             Escolha entre os mais novos
           </Text>
-          <StoreList data={storesMock} type="vertical" />
+          {data && (
+          <StoreList data={data} type="vertical" />
+          )}
           <Text style={tailwind('text-lg text-primary-500 mb-2')}>
             Escolha entre os mais avaliados
           </Text>
-          {storesMock.map(store => (
-            <StoreCard key={store.id} type="horizontal" />
+          {data?.map(store => (
+            <StoreCard key={store.id} market={store} type="horizontal" />
           ))}
         </View>
       </ScrollView>

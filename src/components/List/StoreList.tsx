@@ -2,19 +2,20 @@ import React, { useMemo } from 'react'
 import { StyleProp, ViewStyle, FlatList } from 'react-native'
 import { tailwind } from 'lib/styles'
 import StoreCard from 'components/StoreCard'
-import { ItemMock } from 'types/app'
+import { Market } from 'types/app'
 
 interface StoreListProps {
   readonly style?: StyleProp<ViewStyle>
-  readonly data: ItemMock[]
+  readonly data: Market[]
   readonly type: 'vertical' | 'horizontal'
 }
 
 const StoreList: React.FC<StoreListProps> = ({ style, data, type }) => {
-  const renderItem = ({ item }: { item: ItemMock }) => (
+  const renderItem = ({ item }: { item: Market }) => (
     <StoreCard
       key={item.id}
       type={type}
+      market={item}
       style={
         type === 'vertical' ? [tailwind('ml-4 mt-1'), { height: 270 }] : null
       }
