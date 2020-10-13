@@ -6,14 +6,15 @@ import {
   SafeAreaView,
   ViewStyle,
   Text,
-  TouchableOpacity,
-  Image,
+  ActivityIndicator
 } from 'react-native'
 import { tailwind } from 'lib/styles'
 import Header from 'components/Header'
 import ItemList from 'components/List/ItemList'
 import StoreModal from 'components/modals/Store/WarnMinimumValues'
 import CategoriesList from 'components/List/CategoriesList'
+import { Market } from 'types/app'
+import useMarketDetails from 'utils/useMarketDetails'
 
 export const productsMock = [
   {
@@ -64,31 +65,48 @@ export const productsMock = [
 
 interface StorePageProps {
   readonly style?: StyleProp<ViewStyle>
+  readonly route: {
+    params: {
+      market: Market
+    }
+  }
 }
 
-const StorePage: React.FC<StorePageProps> = () => {
+const StorePage: React.FC<StorePageProps> = ({route}) => {
+  const marketInProps = route.params.market
   const [openModal, setOpenModal] = useState(false)
+  const [data] = useMarketDetails(marketInProps.id)
 
   return (
     <SafeAreaView style={tailwind('flex-1 bg-primary-500 relative')}>
       <ScrollView style={tailwind('bg-primary-500')}>
-        <Header storeName="FreshMarket" searchProducts hiddenAddress />
-        <View style={tailwind('-mt-4 rounded-t-xl bg-gray-50 pb-6')}>
+        <Header storeName={marketInProps.name} searchProducts hiddenAddress />
+            {data ? (
+        <View style={tailwind('-mt-4 h-full rounded-t-xl bg-gray-50 pb-6')}>
           <View style={tailwind('mt-4 px-4 flex-row')}>
-            <CategoriesList style={tailwind('px-4 py-2')} />
+              <CategoriesList style={tailwind('px-4 py-2')} market={data} />
           </View>
           <View style={tailwind('px-4')}>
             <Text style={tailwind('text-lg text-primary-500 mb-2')}>
               Produtos em destaque
             </Text>
-            <ItemList
-              products={productsMock}
-              title="Frutas e Vegetais"
-              style={tailwind('mb-4')}
-            />
-            <ItemList products={productsMock} title="Alimentos básicos" />
+            {data.categories.map(category => 
+              category.categories.map(subcategory => 
+                <ItemList 
+                  products={subcategory.products}
+                  title={subcategory.name}
+                  market={marketInProps}
+                  subcategoryList={subcategory.products}
+                  style={tailwind('mb-4')}
+                />)
+            )}
           </View>
         </View>
+                ) : (
+                  <View style={tailwind('py-24 items-center justify-center')}>
+                <ActivityIndicator color="#fff" size={40} />
+                </View>
+                )}
       </ScrollView>
       <StoreModal open={openModal} setOpenModal={setOpenModal} />
     </SafeAreaView>

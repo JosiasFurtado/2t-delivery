@@ -36,7 +36,7 @@ const ItemCart: React.FC<ItemCartProps> = ({
     }
     dispatch(updateAmountRequest(product.id, product.amount - 1))
   }
-  const handleDeleteItem = (id: string) => {
+  const handleDeleteItem = (id: number) => {
     dispatch(removeFromCart(id))
   }
 
@@ -61,7 +61,7 @@ const ItemCart: React.FC<ItemCartProps> = ({
               { borderColor: '#c4c4c4', borderWidth: 1 },
             ]}
             source={{
-              uri: `${product.img}`,
+              uri: `${product.imageUrl}`,
             }}
           />
           <View style={tailwind('ml-2 w-3/5')}>

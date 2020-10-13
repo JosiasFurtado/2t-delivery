@@ -14,25 +14,28 @@ import { useNavigation } from '@react-navigation/native'
 import ItemList from 'components/List/ItemList'
 import AddItemToCart from 'components/FooterAddItemToCart'
 import { TextInput } from 'react-native-gesture-handler'
-import { productsMock } from '../StorePage'
-import { Product } from 'types/app'
+import { Market, Product } from 'types/app'
 import formatPrice from 'utils/formatPrice'
 
 interface ItemPageProps {
   route: {
     params: {
       product: Product
+      market: Market
+      subcategoryList: Product[]
     }
   }
 }
 
 const ItemPage: React.FC<ItemPageProps> = ({ route }) => {
-  const product = route.params.product
+  const { product, market, subcategoryList } = route.params
   const { goBack } = useNavigation()
   const [openCommentArea, setOpenCommentArea] = useState(false)
   const [commentValue, setCommentValue] = useState<string | undefined>()
 
   const itemPriceWithComma = formatPrice(product.price)
+
+  const productsOfTheSameCategory = subcategoryList.filter(item => item.id !== product.id)
 
   return (
     <SafeAreaView style={tailwind('flex-1 relative bg-primary-500')}>
@@ -41,7 +44,7 @@ const ItemPage: React.FC<ItemPageProps> = ({ route }) => {
           <Image
             style={tailwind('w-full h-56')}
             resizeMode="cover"
-            source={{ uri: product.img }}
+            source={{ uri: product.imageUrl }}
           />
           <View style={tailwind('bg-black opacity-25 absolute w-full h-56')} />
           <TouchableOpacity
@@ -69,7 +72,7 @@ const ItemPage: React.FC<ItemPageProps> = ({ route }) => {
                   numberOfLines={1}
                   style={tailwind('text-gray-500 text-xl')}
                 >
-                  Lorem ipsum dolor
+                  {market.name}
                 </Text>
               </View>
               <Text style={tailwind('text-2xl font-medium text-primary-500')}>
@@ -125,7 +128,7 @@ const ItemPage: React.FC<ItemPageProps> = ({ route }) => {
             <Text style={tailwind('text-lg text-primary-500 mb-2')}>
               Produtos relacionados
             </Text>
-            <ItemList products={productsMock} />
+            <ItemList products={productsOfTheSameCategory} market={market} subcategoryList={productsOfTheSameCategory} />
           </View>
         </View>
       </ScrollView>

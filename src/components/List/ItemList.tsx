@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { tailwind } from 'lib/styles'
-import { Product } from 'types/app'
+import { Market, Product } from 'types/app'
 import ItemCard from 'components/ItemCard'
 import { useDispatch } from 'react-redux'
 import { addToCartRequest } from 'store/modules/cart/actions'
@@ -17,9 +17,11 @@ interface ItemListProps {
   readonly style?: StyleProp<ViewStyle>
   readonly products: Product[]
   readonly title?: string
+  readonly market: Market
+  readonly subcategoryList: Product[]
 }
 
-const ItemList: React.FC<ItemListProps> = ({ style, products, title }) => {
+const ItemList: React.FC<ItemListProps> = ({ style, products, title, market, subcategoryList }) => {
   const dispatch = useDispatch()
   const handleAddProductInCart = (item: Product) => {
     dispatch(addToCartRequest(item))
@@ -28,6 +30,8 @@ const ItemList: React.FC<ItemListProps> = ({ style, products, title }) => {
     <ItemCard
       key={item.id}
       product={item}
+      market={market}
+      subcategoryList={subcategoryList}
       onPress={() => handleAddProductInCart(item)}
       style={[tailwind('ml-4 mt-1'), { height: 270 }]}
     />
@@ -38,7 +42,7 @@ const ItemList: React.FC<ItemListProps> = ({ style, products, title }) => {
     <>
       {title && (
         <View style={tailwind('flex-row justify-between items-center mb-1')}>
-          <Text style={tailwind('text-lg')}>{title}</Text>
+          <Text style={tailwind('text-lg')}>{title.charAt(0).toUpperCase() + title.slice(1)}</Text>
           <TouchableOpacity>
             <Text style={tailwind('text-lg text-primary-500')}>Ver mais</Text>
           </TouchableOpacity>

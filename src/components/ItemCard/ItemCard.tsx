@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 import AddAndRemoveBtns from 'components/styledComponents/AddAndRemoveBtns'
 import { useSelector, useDispatch } from 'react-redux'
-import { ProductInCart, Product } from 'types/app'
+import { ProductInCart, Product, Market } from 'types/app'
 import { RootState } from 'store/modules/rootReducer'
 import { updateAmountRequest, removeFromCart } from 'store/modules/cart/actions'
 import formatPrice from 'utils/formatPrice'
@@ -21,10 +21,12 @@ import formatPrice from 'utils/formatPrice'
 interface ItemCardProps {
   readonly style?: StyleProp<ViewStyle>
   readonly product: Product
+  readonly market: Market
+  readonly subcategoryList: Product[]
   onPress(): void
 }
 
-const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product }) => {
+const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product, market, subcategoryList }) => {
   const dispatch = useDispatch()
   const { navigate } = useNavigation()
   const productAlreadyInCart = useSelector((state: RootState) =>
@@ -60,7 +62,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product }) => {
     >
       <TouchableHighlight
         underlayColor="#fff"
-        onPress={() => navigate('ItemPage', { product })}
+        onPress={() => navigate('ItemPage', { product, market, subcategoryList })}
       >
         <View>
           <Image
@@ -70,7 +72,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product }) => {
             ]}
             resizeMode="cover"
             source={{
-              uri: product.img,
+              uri: product.imageUrl,
             }}
           />
           <View style={tailwind('flex-row items-start justify-between')}>

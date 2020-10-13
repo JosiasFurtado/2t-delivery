@@ -8,9 +8,9 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import DeliverymanIcon from '../../../assets/png/deliveryman-icon.png'
-import Bg2t from '../../../assets/png/bg-image.png'
 import { tailwind } from 'lib/styles'
 import { Market } from 'types/app'
+import { getNextDeliveryTime } from 'utils/getNextDeliveryTime'
 
 interface StoreCardVerticalProps {
   readonly style?: StyleProp<ViewStyle>
@@ -53,14 +53,16 @@ const StoreCardVertical: React.FC<StoreCardVerticalProps> = ({ style, market }) 
       {market.bio || market.slogan}
     </Text>
     </View>
+      {market.windows[0] && (
     <View style={tailwind('flex-row items-center')}>
       <Image
         resizeMode="contain"
         style={tailwind('h-5 w-5')}
         source={DeliverymanIcon}
       />
-      <Text style={tailwind('text-sm ml-1')}>Hoje, 12:00 hrs</Text>
+      <Text style={tailwind('text-sm ml-1')}>{getNextDeliveryTime(market.windows)}</Text>
     </View>
+      )}
     </View>
   </TouchableOpacity>
 )

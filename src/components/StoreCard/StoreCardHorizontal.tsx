@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import {
   StyleProp,
   View,
@@ -12,7 +12,7 @@ import DeliverymanIcon from '../../../assets/png/deliveryman-icon.png'
 import { useNavigation } from '@react-navigation/native'
 import { Market } from 'types/app'
 import formatPrice from 'utils/formatPrice'
-import moment from 'moment'
+import { getNextDeliveryTime } from 'utils/getNextDeliveryTime'
 
 interface StoreCardHorizontalProps {
   readonly style?: StyleProp<ViewStyle>
@@ -20,25 +20,13 @@ interface StoreCardHorizontalProps {
 }
 
 const StoreCardHorizontal: React.FC<StoreCardHorizontalProps> = ({ style, market }) => {
-  moment.locale('en')
   const { navigate } = useNavigation()
-
-  const todayWeekDay = moment().format('dddd').toLowerCase()
-  const todayDeliveryTimesArr = useMemo(
-    () => market.windows.filter(item => item.weekDay === todayWeekDay).sort(),
-    [todayWeekDay, market],
-  )
-  const compareHour = todayDeliveryTimesArr.filter(item => moment().isBefore(`${moment().format().slice(0,11)}${item.startsAt}`, "hour"))
-  console.warn("teste", compareHour[0],todayDeliveryTimesArr)
-
-  // Faltou alterar dia para o proximo, caso ja tenha passado todos
-  // os horarios e externar a função.
   
   return (
     <TouchableHighlight
       underlayColor="#fff"
       style={tailwind('rounded-lg mb-2')}
-      onPress={() => navigate('StorePage')}
+      onPress={() => navigate('StorePage', {market})}
     >
       <View
         style={[
@@ -77,14 +65,14 @@ const StoreCardHorizontal: React.FC<StoreCardHorizontalProps> = ({ style, market
             {market.slogan || market.bio}
           </Text>
           <View style={tailwind('flex-row justify-between items-center')}>
-            {compareHour[0] && (
+            {market.windows[0] && (
             <View style={tailwind('flex-row items-center')}>
               <Image
                 resizeMode="contain"
                 style={tailwind('h-4 w-4')}
                 source={DeliverymanIcon}
               />
-              <Text style={tailwind('text-xs ml-1')}>Hoje, {compareHour[0].startsAt.slice(0, 5)} hrs</Text>
+              <Text style={tailwind('text-xs ml-1')}>{getNextDeliveryTime(market.windows)}</Text>
             </View>
             )}
             <Text style={tailwind('text-xs text-gray-700')}>

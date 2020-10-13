@@ -10,14 +10,6 @@ export interface IUser {
   boarnDate: string | null
 }
 
-export interface Product {
-  id: string
-  name: string
-  img: string
-  price: number
-  description: string
-}
-
 export interface ProductInCart extends Product {
   amount: number
   priceFormatted: string
@@ -198,7 +190,7 @@ export interface MarketWithCategories extends Market {
   categories: Category[]
 }
 
-interface Category {
+export interface Category {
   id: number
   name: string
   createdAt: string
@@ -208,16 +200,16 @@ interface Category {
   categories: Subcategory[]
 }
 
-interface Subcategory {
+export interface Subcategory {
   id: number
   name: string
   createdAt: string
   updatedAt: string
   categoryId: number
-  products: ProductReal[]
+  products: Product[]
 }
 
-interface ProductReal {
+export interface Product {
   id: number
   name: string
   imageUrl: string
@@ -235,5 +227,5 @@ interface ProductReal {
   subcategoryId: number
 }
 
-interface NutritionalTable {
+export interface NutritionalTable {
 }

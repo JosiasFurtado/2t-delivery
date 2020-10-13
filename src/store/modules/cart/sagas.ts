@@ -38,7 +38,7 @@ function* addToCart({
   }
 }
 
-function* updateAmount({ id, amount }: { id: string; amount: number }) {
+function* updateAmount({ id, amount }: { id: number; amount: number }) {
   if (amount <= 0) return
 
   yield put(updateAmountSuccess(id, amount))

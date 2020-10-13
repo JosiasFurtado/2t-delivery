@@ -16,9 +16,11 @@ import vegetables from '../../../assets/icons/vegetables.jpg'
 import bakery from '../../../assets/icons/bakery.jpg'
 import candies from '../../../assets/icons/candies.jpg'
 import { useNavigation } from '@react-navigation/native'
+import { MarketWithCategories } from 'types/app'
 
 interface CategoriesListProps {
   readonly style?: StyleProp<ViewStyle>
+  readonly market: MarketWithCategories
 }
 
 const categoriesMock = [
@@ -29,13 +31,13 @@ const categoriesMock = [
   { id: 'fifth', image: bakery, name: 'Padaria' },
 ]
 
-const CategoriesList: React.FC<CategoriesListProps> = ({ style }) => {
+const CategoriesList: React.FC<CategoriesListProps> = ({ style, market }) => {
   const { navigate } = useNavigation()
 
   const renderItem = ({ item }: any) => (
     <TouchableHighlight
-      underlayColor={getColor('gray-200')}
-      onPress={() => navigate('StoreFiltersPage', { filterActive: item })}
+      underlayColor={getColor('gray-50')}
+      onPress={() => navigate('StoreFiltersPage', { filterActive: item, market })}
       style={tailwind('mr-5')}
     >
       <View>
