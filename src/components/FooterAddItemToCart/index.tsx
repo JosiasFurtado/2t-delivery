@@ -30,9 +30,9 @@ const FooterAddItemToCart: React.FC<FooterAddItemToCartProps> = ({
   const { navigate } = useNavigation()
   const [quantityMock, setQuantityMock] = useState(1)
 
-  const itemPriceMultipliedByAmount = parseFloat(
-    (product.price * quantityMock).toFixed(2),
-  )
+  const itemPriceMultipliedByAmount = String(parseFloat(
+    (Number(product.price) * quantityMock).toFixed(2),
+  ))
   const itemPriceMultipliedWithComma = formatPrice(itemPriceMultipliedByAmount)
 
   const handleAddItemToCart = () => {

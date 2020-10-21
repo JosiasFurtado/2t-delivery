@@ -99,7 +99,7 @@ export interface Market {
   color: string | null
   bio: string | null
   policy: string | null
-  minimalPrice: number
+  minimalPrice: string
   email: string
   address: Address
   schedule: Schedule
@@ -217,8 +217,8 @@ export interface Product {
   nutritionalTable: NutritionalTable
   weight: number | null
   volume: number | null
-  price: number
-  promotionPrice: number | null
+  price: string
+  promotionPrice: string | null
   isPromoted: boolean
   amount: number | null
   adult: boolean

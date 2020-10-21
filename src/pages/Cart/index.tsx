@@ -24,7 +24,7 @@ const Cart: React.FC<CartProps> = ({ total, cart }) => {
   const [comment, setComment] = useState<string | undefined>()
 
   const cartIsEmpty = cart.length === 0
-  const tax = 400
+  const tax = "4.00"
   const formatedTax = formatPrice(tax)
 
   const openCommitModal = (productComment: string) => {
@@ -132,12 +132,12 @@ Cart.displayName = 'Cart'
 const mapStateToProps = (state: RootState) => ({
   cart: state.cart.map(product => ({
     ...product,
-    subtotal: formatPrice(product.price * product.amount),
+    subtotal: formatPrice(String(Number(product.price) * product.amount)),
   })),
-  total: formatPrice(
+  total: formatPrice(String(
     state.cart.reduce((total, product) => {
-      return total + product.price * product.amount
-    }, 0),
+      return total + Number(product.price) * product.amount
+    }, 0)),
   ),
 })
 export default connect(mapStateToProps)(Cart)
