@@ -48,6 +48,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product, market, su
       }
       dispatch(updateAmountRequest(product.id, productAlreadyInCart.amount - 1))
     }
+    return null
   }
 
   return (
@@ -107,14 +108,14 @@ const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product, market, su
           </View>
         </TouchableOpacity>
       ) : (
-        <View style={tailwind('items-center')}>
-          <AddAndRemoveBtns
-            amount={productAlreadyInCart.amount}
-            handleDecreasesItemAmount={handleDecreasesItemAmount}
-            handleIncreasesItemAmount={handleIncreasesItemAmount}
-          />
-        </View>
-      )}
+          <View style={tailwind('items-center')}>
+            <AddAndRemoveBtns
+              amount={productAlreadyInCart.amount}
+              handleDecreasesItemAmount={handleDecreasesItemAmount}
+              handleIncreasesItemAmount={handleIncreasesItemAmount}
+            />
+          </View>
+        )}
     </View>
   )
 }

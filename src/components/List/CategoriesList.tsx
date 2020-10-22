@@ -3,62 +3,61 @@ import {
   StyleProp,
   ViewStyle,
   FlatList,
-  TouchableOpacity,
   Image,
   Text,
   View,
   TouchableHighlight,
 } from 'react-native'
 import { getColor, tailwind } from 'lib/styles'
-import food from '../../../assets/icons/food.jpg'
-import drinks from '../../../assets/icons/drinks.jpg'
-import vegetables from '../../../assets/icons/vegetables.jpg'
-import bakery from '../../../assets/icons/bakery.jpg'
-import candies from '../../../assets/icons/candies.jpg'
 import { useNavigation } from '@react-navigation/native'
 import { MarketWithCategories } from 'types/app'
+import formatString from 'utils/formatString'
+import categoryImages from 'utils/categoryImages'
 
 interface CategoriesListProps {
   readonly style?: StyleProp<ViewStyle>
   readonly market: MarketWithCategories
+  readonly activeFilter?: string
 }
 
-const categoriesMock = [
-  { id: 'first', image: food, name: 'Alimentos básicos' },
-  { id: 'second', image: drinks, name: 'Bebidas' },
-  { id: 'third', image: vegetables, name: 'Frutas e Vegetais' },
-  { id: 'fourth', image: candies, name: 'Doces' },
-  { id: 'fifth', image: bakery, name: 'Padaria' },
-]
-
-const CategoriesList: React.FC<CategoriesListProps> = ({ style, market }) => {
+const CategoriesList: React.FC<CategoriesListProps> = ({ style, market, activeFilter }) => {
   const { navigate } = useNavigation()
 
-  const renderItem = ({ item }: any) => (
-    <TouchableHighlight
-      underlayColor={getColor('gray-50')}
-      onPress={() => navigate('StoreFiltersPage', { filterActive: item, market })}
-      style={tailwind('mr-5')}
-    >
-      <View>
-        <Image
-          source={item.image}
-          resizeMode="cover"
-          style={tailwind('w-24 h-24 rounded-full mb-1')}
-        />
-        <Text style={tailwind('text-base text-center w-24')}>{item.name}</Text>
-      </View>
-    </TouchableHighlight>
-  )
-  const memoizedValue = useMemo(() => renderItem, [categoriesMock])
+  const marketCategories = market.categories
+    .map(category => category.name)
+    .sort()
+
+  const renderItem = ({ item }: { item: string }) => {
+    const isActive = activeFilter === item
+    return (
+      <TouchableHighlight
+        underlayColor={getColor('gray-50')}
+        onPress={() =>
+          navigate('StoreFiltersPage', { activeFilter: item, activeSubFilter: "Todos", market })
+        }
+        style={tailwind('mr-5')}
+      >
+        <View>
+          <Image
+            source={categoryImages.find(cat => item.includes(cat.id))?.image}
+            resizeMode="cover"
+            style={[tailwind('w-24 h-24 rounded-full mb-1'), isActive ? { borderWidth: 2, borderColor: "#00BF68" } : null]}
+          />
+          <Text style={tailwind(`text-base text-center w-24 ${isActive ? 'text-primary-500 font-bold' : 'text-black'}`)}>
+            {formatString(item)}
+          </Text>
+        </View>
+      </TouchableHighlight>
+    )
+  }
+  const memoizedValue = useMemo(() => renderItem, [marketCategories])
 
   return (
     <FlatList
-      data={categoriesMock}
+      data={marketCategories}
       horizontal
-      pagingEnabled
       maxToRenderPerBatch={30}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item}
       style={[tailwind('-ml-4 mb-2 -mr-4'), style]}
       showsHorizontalScrollIndicator={false}
       renderItem={memoizedValue}

@@ -12,16 +12,25 @@ import { Market, Product } from 'types/app'
 import ItemCard from 'components/ItemCard'
 import { useDispatch } from 'react-redux'
 import { addToCartRequest } from 'store/modules/cart/actions'
+import formatString from 'utils/formatString'
 
 interface ItemListProps {
   readonly style?: StyleProp<ViewStyle>
   readonly products: Product[]
+  readonly categoryName?: string
   readonly title?: string
   readonly market: Market
   readonly subcategoryList: Product[]
 }
 
-const ItemList: React.FC<ItemListProps> = ({ style, products, title, market, subcategoryList }) => {
+const ItemList: React.FC<ItemListProps> = ({
+  style,
+  products,
+  title,
+  market,
+  subcategoryList,
+  categoryName,
+}) => {
   const dispatch = useDispatch()
   const handleAddProductInCart = (item: Product) => {
     dispatch(addToCartRequest(item))
@@ -42,7 +51,10 @@ const ItemList: React.FC<ItemListProps> = ({ style, products, title, market, sub
     <>
       {title && (
         <View style={tailwind('flex-row justify-between items-center mb-1')}>
-          <Text style={tailwind('text-lg')}>{title.charAt(0).toUpperCase() + title.slice(1)}</Text>
+          <Text style={tailwind('text-lg')}>
+            {categoryName && formatString(categoryName)} -{' '}
+            {title && formatString(title)}
+          </Text>
           <TouchableOpacity>
             <Text style={tailwind('text-lg text-primary-500')}>Ver mais</Text>
           </TouchableOpacity>
@@ -51,7 +63,6 @@ const ItemList: React.FC<ItemListProps> = ({ style, products, title, market, sub
       <FlatList
         data={products}
         horizontal
-        pagingEnabled
         maxToRenderPerBatch={30}
         keyExtractor={item => item.id.toString()}
         style={[{ height: 280 }, tailwind('-ml-4 mb-2 -mr-4'), style]}

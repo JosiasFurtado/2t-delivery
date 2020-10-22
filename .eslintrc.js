@@ -10,7 +10,6 @@ module.exports = {
     'plugin:react-native/all',
     'plugin:@typescript-eslint/recommended',
     'prettier',
-    'plugin:prettier/recommended',
     'prettier/react',
     'prettier/@typescript-eslint',
   ],
@@ -49,7 +48,7 @@ module.exports = {
     HeaderHeight: false,
   },
   rules: {
-    ignoreDestructuring: true,
+    // ignoreDestructuring: true,
     'global-require': 0,
     'prefer-const': 0,
     'import/extensions': 0,

@@ -27,8 +27,7 @@ const StoreList: React.FC<StoreListProps> = ({ style, data, type }) => {
     <FlatList
       data={data}
       maxToRenderPerBatch={30}
-      horizontal={type === 'vertical' ? true : false}
-      pagingEnabled
+      horizontal={type === 'vertical'}
       keyExtractor={item => item.id.toString()}
       style={[
         type === 'vertical' ? { height: 285 } : null,

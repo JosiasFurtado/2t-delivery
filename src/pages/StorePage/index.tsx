@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   ViewStyle,
   Text,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native'
 import { tailwind } from 'lib/styles'
 import Header from 'components/Header'
@@ -72,7 +72,7 @@ interface StorePageProps {
   }
 }
 
-const StorePage: React.FC<StorePageProps> = ({route}) => {
+const StorePage: React.FC<StorePageProps> = ({ route }) => {
   const marketInProps = route.params.market
   const [openModal, setOpenModal] = useState(false)
   const [data] = useMarketDetails(marketInProps.id)
@@ -81,32 +81,35 @@ const StorePage: React.FC<StorePageProps> = ({route}) => {
     <SafeAreaView style={tailwind('flex-1 bg-primary-500 relative')}>
       <ScrollView style={tailwind('bg-primary-500')}>
         <Header storeName={marketInProps.name} searchProducts hiddenAddress />
-            {data ? (
-        <View style={tailwind('-mt-4 h-full rounded-t-xl bg-gray-50 pb-6')}>
-          <View style={tailwind('mt-4 px-4 flex-row')}>
+        {data ? (
+          <View style={tailwind('-mt-4 h-full rounded-t-xl bg-gray-50 pb-6')}>
+            <View style={tailwind('mt-4 px-4 flex-row')}>
               <CategoriesList style={tailwind('px-4 py-2')} market={data} />
+            </View>
+            <View style={tailwind('px-4')}>
+              <Text style={tailwind('text-lg text-primary-500 mb-2')}>
+                Produtos em destaque
+              </Text>
+              {data.categories.map(category =>
+                category.categories.map(subcategory => (
+                  <ItemList
+                    key={String(subcategory.id)}
+                    products={subcategory.products}
+                    categoryName={category.name}
+                    title={subcategory.name}
+                    market={marketInProps}
+                    subcategoryList={subcategory.products}
+                    style={tailwind('mb-4')}
+                  />
+                )),
+              )}
+            </View>
           </View>
-          <View style={tailwind('px-4')}>
-            <Text style={tailwind('text-lg text-primary-500 mb-2')}>
-              Produtos em destaque
-            </Text>
-            {data.categories.map(category => 
-              category.categories.map(subcategory => 
-                <ItemList 
-                  products={subcategory.products}
-                  title={subcategory.name}
-                  market={marketInProps}
-                  subcategoryList={subcategory.products}
-                  style={tailwind('mb-4')}
-                />)
-            )}
-          </View>
-        </View>
-                ) : (
-                  <View style={tailwind('py-24 items-center justify-center')}>
-                <ActivityIndicator color="#fff" size={40} />
-                </View>
-                )}
+        ) : (
+            <View style={tailwind('py-24 items-center justify-center')}>
+              <ActivityIndicator color="#fff" size={40} />
+            </View>
+          )}
       </ScrollView>
       <StoreModal open={openModal} setOpenModal={setOpenModal} />
     </SafeAreaView>
