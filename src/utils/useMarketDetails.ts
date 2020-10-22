@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react"
 import api from "services/api"
 import { MarketWithCategories } from "types/app"
 
-type UseMarketDetailsResult = [data: MarketWithCategories | null]
+type UseMarketDetailsResult = [{ data: MarketWithCategories | null }]
 
 const useMarketDetails = (id: number) => {
   const [marketDetails, setMarketDetails] = useState<MarketWithCategories | null>(null)
@@ -13,12 +13,12 @@ const useMarketDetails = (id: number) => {
   }
 
   useEffect(() => {
-    if(!marketDetails) {
+    if (!marketDetails) {
       getMarketDetails()
     }
   }, [marketDetails, id])
 
-  const result: UseMarketDetailsResult = useMemo(() => [marketDetails], [marketDetails, id])
+  const result: UseMarketDetailsResult = useMemo(() => [{ data: marketDetails }], [marketDetails, id])
   return result
 }
 

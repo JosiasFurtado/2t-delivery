@@ -75,7 +75,7 @@ interface StorePageProps {
 const StorePage: React.FC<StorePageProps> = ({ route }) => {
   const marketInProps = route.params.market
   const [openModal, setOpenModal] = useState(false)
-  const [data] = useMarketDetails(marketInProps.id)
+  const [{ data }] = useMarketDetails(marketInProps.id)
 
   return (
     <SafeAreaView style={tailwind('flex-1 bg-primary-500 relative')}>

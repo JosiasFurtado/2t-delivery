@@ -90,7 +90,7 @@ function setToken({ payload }: { payload: RootState }) {
     api.defaults.headers.Authorization = payload.auth.token
   }
 }
-const takeLatest: any = Eff.takeLatest
+const { takeLatest } = Eff
 export default all([
   takeLatest('@auth/SIGN_IN_REQUEST', signInUser),
   takeLatest('@auth/SIGN_UP_REQUEST', signUpUser),

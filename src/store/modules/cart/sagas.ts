@@ -44,7 +44,7 @@ function* updateAmount({ id, amount }: { id: number; amount: number }) {
   yield put(updateAmountSuccess(id, amount))
 }
 
-const takeLatest: any = Eff.takeLatest
+const { takeLatest } = Eff
 export default all([
   takeLatest('@cart/ADD_REQUEST', addToCart),
   takeLatest('@cart/UPDATE_AMOUNT_REQUEST', updateAmount),

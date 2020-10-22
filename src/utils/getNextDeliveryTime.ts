@@ -19,7 +19,7 @@ export function getNextDeliveryTime(windows: Window[]) {
     () => windows.filter(item => item.weekDay === tomorrowWeekDay).sort(),
     [tomorrowWeekDay, windows],
   )
-  console.warn(tomorrowDeliveryTimesArr[0])
+
   const result = "" // todayCompareHour[0] ? `Hoje, ${todayCompareHour[0].startsAt.slice(0, 5)} hrs` : `Amanhã, ${tomorrowDeliveryTimesArr[0].startsAt.slice(0, 5)} hrs`
   return result
 }
