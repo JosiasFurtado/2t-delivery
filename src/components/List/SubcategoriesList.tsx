@@ -33,7 +33,7 @@ const SubcategoriesList: React.FC<SubcategoriesListProps> = ({ style, subcategor
         }
         style={tailwind(`ml-3 mr-1 shadow mb-2 mt-2 p-2 rounded-xl ${isActive ? "bg-primary-500" : "bg-white"}`)}
       >
-        <Text style={tailwind(`text-base text-center w-24 ${isActive ? 'text-white font-bold' : 'text-black'}`)}>
+        <Text style={[tailwind(`text-base text-center ${isActive ? 'text-white font-bold' : 'text-black'}`), { minWidth: 80 }]}>
           {formatString(item.name)}
         </Text>
       </TouchableHighlight>
