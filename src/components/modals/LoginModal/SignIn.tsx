@@ -48,7 +48,7 @@ const SignIn: React.FC<SignInProps> = ({
   useEffect(() => {
     if (user) {
       setOpenModal(false)
-      return navigate('Home')
+      navigate('Home')
     }
   }, [user])
 
@@ -73,9 +73,8 @@ const SignIn: React.FC<SignInProps> = ({
 
           formRef.current?.setErrors(errors)
           return
-        } else {
-          setLoginError('E-mail e/ou senha inválidos')
         }
+        return setLoginError('E-mail e/ou senha inválidos')
       }
       // reset()
     },

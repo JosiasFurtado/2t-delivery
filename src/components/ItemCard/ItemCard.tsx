@@ -76,25 +76,29 @@ const ItemCard: React.FC<ItemCardProps> = ({ style, onPress, product, market, su
               uri: product.imageUrl,
             }}
           />
-          <View style={tailwind('flex-row items-start justify-between')}>
+          <View style={tailwind('flex items-start')}>
             <Text
               numberOfLines={1}
               lineBreakMode="tail"
-              style={tailwind('text-sm font-bold mb-1 w-1/2')}
+              style={tailwind('text-base font-bold mb-1')}
             >
               {product.name}
             </Text>
-            <Text style={tailwind('text-base font-bold text-primary-500')}>
+          </View>
+          <View style={tailwind('flex flex-row justify-center items-center')}>
+
+            <Text style={tailwind('text-xl font-bold text-primary-500 mr-2')}>
               {priceFormated}
             </Text>
+            {product.promotionPrice && (
+              <View style={tailwind('flex items-center justify-center')}>
+                <Text style={tailwind('text-sm font-bold text-gray-500 relative')}>
+                  {formatPrice(product.promotionPrice)}
+                </Text>
+                <View style={tailwind('h-px w-12 bg-gray-500 absolute')} />
+              </View>
+            )}
           </View>
-          <Text
-            numberOfLines={3}
-            lineBreakMode="tail"
-            style={tailwind('text-base mb-2 text-gray-600 text-justify')}
-          >
-            {product.description}
-          </Text>
         </View>
       </TouchableHighlight>
       {!productAlreadyInCart ? (
