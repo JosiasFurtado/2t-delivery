@@ -17,9 +17,9 @@ const CarouselItem: React.FC<CarouselItemProps> = ({ style, item }) => (
       style,
     ]}
   >
-    {item.image_url && (
+    {item.image && (
       <Image
-        source={{ uri: item.image_url }}
+        source={item.image}
         style={tailwind('rounded-t-xl h-32 w-full')}
       />
     )}

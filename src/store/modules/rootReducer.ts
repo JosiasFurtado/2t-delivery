@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import cart from './cart/reducer'
 import user from './user/reducer'
 import auth from './auth/reducer'
-import { ProductInCart, AuthState, UserState } from 'types/app'
+import { AuthState, UserState, ProductInCart } from 'types/app'
 
 export interface RootState {
   readonly cart: ProductInCart[]

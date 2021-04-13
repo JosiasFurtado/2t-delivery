@@ -26,7 +26,7 @@ const StoreList: React.FC<StoreListProps> = ({ style, data, type }) => {
   return (
     <FlatList
       data={data}
-      maxToRenderPerBatch={30}
+      maxToRenderPerBatch={15}
       horizontal={type === 'vertical'}
       keyExtractor={item => item.id.toString()}
       style={[

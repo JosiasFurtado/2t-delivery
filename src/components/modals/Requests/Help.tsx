@@ -1,18 +1,29 @@
-import React, { Dispatch, SetStateAction } from 'react'
-import { Text, ScrollView } from 'react-native'
+import React, { Dispatch, SetStateAction, useState } from 'react'
+import { Text, ScrollView, View } from 'react-native'
 import { tailwind } from 'lib/styles'
 import PrimaryButton from 'components/styledComponents/PrimaryButton'
 import LayoutModal from '../LayoutModal'
 import handleDirectToContact2T from 'utils/contact2t'
+import { Order } from 'types/app'
 
 interface HelpProps {
   readonly open: boolean
+  readonly order: Order | undefined
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-const Help: React.FC<HelpProps> = ({ open, setOpenModal }) => {
-  const handleDirectToContactStore = () => {}
+const Help: React.FC<HelpProps> = ({ open, order, setOpenModal }) => {
+  const [openMarketContacts, setOpenMarketContacts] = useState(false)
 
+  const contactTypeFormat = (type: string) => {
+    if(type.includes('WHATS')) {
+      return 'Whatsapp'
+    }
+    if(type.includes('MOBILE')) {
+      return 'Celular'
+    }
+    return 'Telefone'
+  }
   return (
     <LayoutModal title="Ajuda" open={open} setOpenModal={setOpenModal}>
       <ScrollView style={tailwind('rounded-t-lg bg-white px-5 pt-3 pb-6')}>
@@ -29,12 +40,22 @@ const Help: React.FC<HelpProps> = ({ open, setOpenModal }) => {
           entre em contato conosco que estaremos prontos para te ajudar.
         </Text>
         <Text style={tailwind('text-2xl mb-4')}>Entrar em contato com:</Text>
+        {order?.market.phones[0] && (
+          <View style={tailwind('mb-6')}>
         <PrimaryButton
-          onPress={handleDirectToContactStore}
-          style={tailwind('mb-6')}
-        >
+          onPress={() => setOpenMarketContacts(!openMarketContacts)}
+          >
           <Text style={tailwind('text-xl text-white')}>Estabelecimento</Text>
         </PrimaryButton>
+        {openMarketContacts && (
+          <View style={tailwind('bg-gray-300 rounded p-2 items-center')}>
+            {order.market.phones.map(phone => (
+              <Text key={phone.id.toString()} style={tailwind('mb-2 text-base')}>{contactTypeFormat(phone.type)} - {phone.number}</Text>
+            ))}
+          </View>
+        )}
+          </View>
+        )}
         <PrimaryButton
           onPress={handleDirectToContact2T}
           style={tailwind('mb-8')}

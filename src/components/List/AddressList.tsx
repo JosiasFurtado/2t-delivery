@@ -51,7 +51,7 @@ const AddressList: React.FC<AddressListProps> = ({ style, checked, setChecked, a
       data={addresses}
       maxToRenderPerBatch={30}
       keyExtractor={item => item.id.toString()}
-      showsVerticalScrollIndicator={false}
+      showsVerticalScrollIndicator
       style={style}
       renderItem={memoizedValue}
     />

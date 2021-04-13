@@ -29,9 +29,16 @@ export function signUpSuccess(data: SignUpFormData) {
   }
 }
 
-export function signFailure(error: string[] | null) {
+export function requestError(error: string[] | null) {
   return {
-    type: '@auth/SIGN_FAILURE',
+    type: '@auth/ERROR_REQUEST',
+    error,
+  }
+}
+
+export function setError(error: string[] | null) {
+  return {
+    type: '@auth/SET_ERROR',
     error,
   }
 }

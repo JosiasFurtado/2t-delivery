@@ -1,10 +1,18 @@
-import React, { Dispatch, SetStateAction } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import React, { Dispatch, SetStateAction, useCallback, useRef } from 'react'
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { tailwind } from 'lib/styles'
 import PrimaryButton from 'components/styledComponents/PrimaryButton'
 import LayoutModal from '../LayoutModal'
-import { useDispatch } from 'react-redux'
-import { ProfileModals } from 'types/app'
+import { useDispatch, useSelector } from 'react-redux'
+import { AddressFormData, ProfileModals } from 'types/app'
+import AddressForm from 'components/Form/AddressForm'
+import { FormHandles } from '@unform/core'
+import * as Yup from 'yup'
+import getValidationsErrors from 'utils/getValidationsErrors'
+import { addressSchema } from 'utils/schemas'
+import cep from 'cep-promise'
+import { addUserAddressRequest } from 'store/modules/user/actions'
+import { RootState } from 'store/modules/rootReducer'
 
 interface NewAddressProps {
   readonly open: boolean
@@ -13,11 +21,48 @@ interface NewAddressProps {
 }
 
 const NewAddress: React.FC<NewAddressProps> = ({ open, setOpenModal, setTypeModal }) => {
+  const { loading } = useSelector((state: RootState) => state.user)
+  const formRef = useRef<FormHandles>(null)
   const dispatch = useDispatch()
 
-  const handleSubmitAddress = () => {
-    // address
-  }
+  const handleSubmitAddress = useCallback(
+    async (data: AddressFormData, { reset }) => {
+      try {
+        formRef.current?.setErrors({})
+        await addressSchema.validate(data, {
+          abortEarly: false,
+        })
+        const { cep: zip, street, city, state, neighborhood } = await cep(
+          data.zipcode,
+        )
+        const cepWithoutFormat = zip.split('')
+        cepWithoutFormat.splice(5, 0, '-')
+        const cepFormated = cepWithoutFormat.join("")
+
+        const dataToSubmit = {
+          name: data.name,
+          number: Number(data.number),
+          aditionalInfo: data.aditionalInfo,
+          zipcode: cepFormated,
+          street,
+          city,
+          state,
+          neighborhood,
+        }
+        dispatch(addUserAddressRequest(dataToSubmit))
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          const errors = getValidationsErrors(error)
+
+          formRef.current?.setErrors(errors)
+          return
+        }
+      }
+      setOpenModal(false)
+      // reset()
+    },
+    [],
+  )
 
   const openAddressModal = () => {
     setOpenModal(false)
@@ -35,13 +80,19 @@ const NewAddress: React.FC<NewAddressProps> = ({ open, setOpenModal, setTypeModa
           Pode ser na sua casa ou na da sua vó, você decide
         </Text>
         <View>
-          <Text>form de cadastro de endereço</Text>
+          <AddressForm formRef={formRef}
+            handleSubmit={handleSubmitAddress}
+            style={tailwind('mb-4')} />
         </View>
         <PrimaryButton
-          onPress={handleSubmitAddress}
+          onPress={() => formRef.current?.submitForm()}
           style={tailwind('mb-4')}
         >
-          <Text style={tailwind('text-xl text-white')}>Confirmar</Text>
+          {loading ? (
+            <ActivityIndicator color="#fff" size={28} />
+          ) : (
+              <Text style={tailwind('text-xl text-white')}>Confirmar</Text>
+            )}
         </PrimaryButton>
         <TouchableOpacity onPress={openAddressModal} style={tailwind('mb-2 items-center')}>
           <Text style={tailwind('text-primary-500')}>Escolher um endereço já cadastrado</Text>

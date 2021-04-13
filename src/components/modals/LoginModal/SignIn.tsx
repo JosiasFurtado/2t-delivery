@@ -3,8 +3,7 @@ import React, {
   SetStateAction,
   useRef,
   useCallback,
-  useState,
-  useEffect,
+  useState
 } from 'react'
 import {
   View,
@@ -18,7 +17,6 @@ import { LoginModals, SignInFormData } from 'types/app'
 import PrimaryButton from 'components/styledComponents/PrimaryButton'
 import SignInForm from 'components/Form/SignInForm'
 import { FormHandles } from '@unform/core'
-import { useNavigation } from '@react-navigation/native'
 import LayoutModal from '../LayoutModal'
 import * as Yup from 'yup'
 import getValidationsErrors from 'utils/getValidationsErrors'
@@ -38,19 +36,10 @@ const SignIn: React.FC<SignInProps> = ({
   setOpenModal,
   setTypeModal,
 }) => {
-  const { user } = useSelector((state: RootState) => state.user)
   const dispatch = useDispatch()
   const { loading } = useSelector((state: RootState) => state.auth)
   const formRef = useRef<FormHandles>(null)
-  const { navigate } = useNavigation()
   const [loginError, setLoginError] = useState<string | null>()
-
-  useEffect(() => {
-    if (user) {
-      setOpenModal(false)
-      navigate('Home')
-    }
-  }, [user])
 
   const handleSubmitSignIn = useCallback(
     async (data: SignInFormData, { reset }) => {
@@ -61,12 +50,6 @@ const SignIn: React.FC<SignInProps> = ({
           abortEarly: false,
         })
         dispatch(signInRequest(data))
-        // Se o usuario já tiver endereço cadastrado navegar para home, se não,
-        // tela de add endereço inicial
-        // if(user) {
-        //   return navigate('Home')
-        // }
-        // navigate('InitialAddress')
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           const errors = getValidationsErrors(error)
@@ -74,7 +57,7 @@ const SignIn: React.FC<SignInProps> = ({
           formRef.current?.setErrors(errors)
           return
         }
-        return setLoginError('E-mail e/ou senha inválidos')
+        setLoginError('E-mail e/ou senha inválidos')
       }
       // reset()
     },

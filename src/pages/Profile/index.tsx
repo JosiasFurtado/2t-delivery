@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { View, Text, SafeAreaView, ScrollView } from 'react-native'
 import { tailwind, getColor } from 'lib/styles'
-import { Octicons } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { Ionicons, Feather } from '@expo/vector-icons'
+import { Ionicons, Feather, Octicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import ProfileModal from 'components/modals/Profile'
 import { ProfileModals } from 'types/app'
@@ -13,12 +12,16 @@ import { RootState } from 'store/modules/rootReducer'
 
 const Profile: React.FC = () => {
   const dispatch = useDispatch()
-  const { user, addresses, activeAddressId } = useSelector((state: RootState) => state.user)
+  const { user, addresses, activeAddressId } = useSelector(
+    (state: RootState) => state.user,
+  )
   const { navigate } = useNavigation()
   const [openModal, setOpenModal] = useState(false)
   const [typeModal, setTypeModal] = useState<ProfileModals>('address')
 
-  const activeAdress = addresses?.find(address => address.id === activeAddressId)
+  const activeAdress = addresses?.find(
+    address => address.id === activeAddressId,
+  )
 
   const handleSignOut = () => {
     dispatch(signOut())
@@ -33,6 +36,9 @@ const Profile: React.FC = () => {
     setOpenModal(true)
   }
   const openConfigModal = () => {
+    if (user?.firstName === 'Visitante') {
+      return
+    }
     setTypeModal('config')
     setOpenModal(true)
   }

@@ -26,14 +26,9 @@ module.exports = {
   settings: {
     'import/resolver': {
       typescript: {},
-      'babel-plugin-root-import': {
-        rootPathSuffix: 'app',
-        rootPathPrefix: '~',
-      },
-      'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
-      node: {
-        extensions: ['.js', '.jsx', 'ts', '.tsx'],
-      },
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
     },
   },
   globals: {

@@ -4,36 +4,20 @@ import { IUser, SignInFormData, SignUpFormData } from 'types/app'
 import api from 'services/api'
 import {
   signInSuccess,
-  signFailure,
   signInRequest,
   getUserAddressSuccess,
+  setError,
 } from './actions'
 import { RootState } from '../rootReducer'
 import { AxiosError, AxiosResponse } from 'axios'
 
 const delayToCleanErrors = 4000
 
-function* signInUser({ data }: { data: SignInFormData }) {
-  try {
-    let signInData: any
-
-    yield api
-      .post('/auth', data)
-      .then((response: AxiosResponse) => {
-        signInData = response.data
-      })
-      .catch((reason: AxiosError) => {
-        put(signFailure(reason.response?.data.errors))
-      })
-
-    const { user, token } = signInData
-
-    yield getUserAddress(user, token)
-    yield put(signInSuccess(user, token))
-  } catch (e) {
-    yield put(signFailure(['Falha na autenticação, verifique seus dados']))
+export function* setAndCleanErros(error: string[] | null) {
+  if (error) {
+    yield put(setError(error))
     yield delay(delayToCleanErrors, true)
-    yield put(signFailure(null))
+    yield put(setError(null))
   }
 }
 
@@ -48,13 +32,32 @@ function* getUserAddress(user: IUser, token: string) {
         signInAddressData = response.data.addresses
       })
       .catch((reason: AxiosError) => {
-        put(signFailure(reason.response?.data.errors))
+        setAndCleanErros(reason.response?.data.errors)
       })
     yield put(getUserAddressSuccess(signInAddressData))
   } catch (e) {
-    yield put(signFailure(['Erro na requisição de endereço do usuário']))
-    yield delay(delayToCleanErrors, true)
-    yield put(signFailure(null))
+    // yield setAndCleanErros(['Erro na requisição de endereço do usuário'])
+  }
+}
+function* signInUser({ data }: { data: SignInFormData }) {
+  try {
+    let signInData: any
+
+    yield api
+      .post('/auth', data)
+      .then((response: AxiosResponse) => {
+        signInData = response.data
+      })
+      .catch((reason: AxiosError) => {
+        setAndCleanErros(reason.response?.data.errors)
+      })
+
+    const { user, token } = signInData
+
+    yield getUserAddress(user, token)
+    yield put(signInSuccess(user, token))
+  } catch (e) {
+    yield setAndCleanErros(['Falha na autenticação, verifique seus dados'])
   }
 }
 
@@ -69,9 +72,7 @@ function* signUpUser({ data }: { data: SignUpFormData }) {
       errors = reason.response?.data.errors
     })
   if (Array.isArray(errors)) {
-    yield put(signFailure(errors))
-    yield delay(delayToCleanErrors, true)
-    yield put(signFailure(null))
+    yield setAndCleanErros(errors)
   } else {
     const { email, password } = data
     const signInData = {
@@ -82,6 +83,10 @@ function* signUpUser({ data }: { data: SignUpFormData }) {
   }
 }
 
+function* errorRequest({ error }: { error: string[] | null }) {
+  yield setAndCleanErros(error)
+}
+
 function setToken({ payload }: { payload: RootState }) {
   if (!payload) {
     return
@@ -90,9 +95,11 @@ function setToken({ payload }: { payload: RootState }) {
     api.defaults.headers.Authorization = payload.auth.token
   }
 }
+
 const { takeLatest } = Eff
 export default all([
-  takeLatest('@auth/SIGN_IN_REQUEST', signInUser),
-  takeLatest('@auth/SIGN_UP_REQUEST', signUpUser),
-  takeLatest('persist/REHYDRATE', setToken),
+  takeLatest<any>('@auth/SIGN_IN_REQUEST', signInUser),
+  takeLatest<any>('@auth/SIGN_UP_REQUEST', signUpUser),
+  takeLatest<any>('@auth/ERROR_REQUEST', errorRequest),
+  takeLatest<any>('persist/REHYDRATE', setToken),
 ])

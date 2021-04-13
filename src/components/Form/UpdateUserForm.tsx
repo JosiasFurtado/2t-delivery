@@ -93,7 +93,6 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
             placeholder="Digite seu cpf"
             returnKeyType="next"
             keyboardType="number-pad"
-            maxLength={11}
             onSubmitEditing={() => {
               bornDateInputRef.current?.focus()
             }}

@@ -3,14 +3,19 @@ import { StyleProp, Text, View, ViewStyle, Image } from 'react-native'
 import { tailwind, getColor } from 'lib/styles'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import Deliveryman from '../../../assets/png/deliveryman-icon-color.png'
+import { Order } from 'types/app'
+import moment from 'moment'
 
 interface LocationOfRequestDetailsProps {
   readonly style?: StyleProp<ViewStyle>
+  readonly order: Order
 }
 
 const LocationOfRequestDetails: React.FC<LocationOfRequestDetailsProps> = ({
   style,
+  order
 }) => {
+  moment().locale('pt-br')
   return (
     <View
       style={[
@@ -65,23 +70,23 @@ const LocationOfRequestDetails: React.FC<LocationOfRequestDetailsProps> = ({
           </Text>
           <View style={tailwind('flex-row items-center')}>
             <MaterialCommunityIcons name="clock" size={18} color="black" />
-            <Text style={tailwind('ml-1 text-base font-bold')}>9:00</Text>
+            <Text style={tailwind('ml-1 text-base font-bold')}>{moment(order.createdAt).format('LT')}</Text>
           </View>
         </View>
         <View style={tailwind('mb-2')}>
           <Text style={tailwind('text-lg text-gray-700')}>Pedido aceito</Text>
           <View style={tailwind('flex-row items-center')}>
             <MaterialCommunityIcons name="clock" size={18} color="black" />
-            <Text style={tailwind('ml-1 text-base font-bold')}>9:05</Text>
+        <Text style={tailwind('ml-1 text-base font-bold')}>{order.seenAt ? moment(order.seenAt).format('LT') : 'Aguardando'}</Text>
           </View>
         </View>
         <View style={tailwind('mb-2')}>
           <Text style={tailwind('text-lg text-gray-700')}>
-            Saiu para entrega
+            {order.isTakeOut ? "Pronto para retirada" : "Pronto para entrega"}
           </Text>
           <View style={tailwind('flex-row items-center')}>
             <MaterialCommunityIcons name="clock" size={18} color="black" />
-            <Text style={tailwind('ml-1 text-base font-bold')}>10:00</Text>
+            <Text style={tailwind('ml-1 text-base font-bold')}>{order.readyAt ? moment(order.readyAt).format('LT') : 'Aguardando'}</Text>
           </View>
         </View>
       </View>

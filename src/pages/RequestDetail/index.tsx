@@ -4,7 +4,7 @@ import {
   Text,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView,
+  ScrollView
 } from 'react-native'
 import { tailwind } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
@@ -12,15 +12,27 @@ import { useNavigation } from '@react-navigation/native'
 import RequestsModal from 'components/modals/Requests'
 import RequestDetailItens from 'components/RequestDetailItens'
 import LocationOfRequestDetails from 'components/LocationOfRequestDetails'
+import { Order } from 'types/app'
 
-interface RequestDetailProps { }
+interface RequestDetailProps {
+  readonly route: {
+    params: {
+      order: Order
+    }
+  }
+}
 
-const RequestDetail: React.FC<RequestDetailProps> = () => {
+const RequestDetail: React.FC<RequestDetailProps> = ({route}) => {
+  const { order } = route.params
   const { goBack } = useNavigation()
   const [openModal, setOpenModal] = useState(false)
 
   const handleOpenHelpModal = () => {
     setOpenModal(true)
+  }
+
+  const handleCancelOrder = () => {
+    // Add feature
   }
 
   return (
@@ -44,18 +56,21 @@ const RequestDetail: React.FC<RequestDetailProps> = () => {
           </TouchableOpacity>
         </View>
         <View style={tailwind('-mt-4 rounded-t-xl bg-white px-4 pt-4')}>
-          <LocationOfRequestDetails style={tailwind('mb-4')} />
-          <RequestDetailItens />
+          <LocationOfRequestDetails order={order} style={tailwind('mb-4')} />
+          <RequestDetailItens order={order} />
+          {order.status !== 'CANCELED' && (
           <TouchableOpacity
+          onPress={handleCancelOrder}
             style={tailwind('mb-4 bg-gray-200 items-center rounded py-3')}
           >
             <Text style={tailwind('text-base text-gray-500')}>
               Cancelar pedido
             </Text>
           </TouchableOpacity>
+          )}
         </View>
       </ScrollView>
-      <RequestsModal open={openModal} setOpenModal={setOpenModal} />
+      <RequestsModal order={order} open={openModal} setOpenModal={setOpenModal} />
     </SafeAreaView>
   )
 }

@@ -1,18 +1,21 @@
 import { tailwind } from 'lib/styles'
-import moment from 'moment'
 import { IDeliveryOrPickup } from 'pages/Checkout'
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
+  ScrollView,
   StyleProp,
   Text,
   TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native'
+import { MarketWithCategories } from 'types/app'
+import translateWeekDay from 'utils/translateWeekDay'
 
 interface DaysProps {
   readonly style?: StyleProp<ViewStyle>
   readonly deliveryOrPickup: IDeliveryOrPickup | null
+  readonly market: MarketWithCategories | undefined
   setDeliveryOrPickup: React.Dispatch<
     React.SetStateAction<IDeliveryOrPickup | null>
   >
@@ -20,41 +23,49 @@ interface DaysProps {
 
 const Days: React.FC<DaysProps> = ({
   style,
+  market,
   deliveryOrPickup,
   setDeliveryOrPickup,
 }) => {
   const handleChangeDayOption = (day: string) => {
     setDeliveryOrPickup({
-      delivery: true,
+      delivery:
+        deliveryOrPickup?.delivery !== undefined
+          ? deliveryOrPickup?.delivery
+          : true,
       hour: deliveryOrPickup?.hour || null,
-      day: day,
+      day,
     })
   }
-  const today = Number(moment().format('D'))
-  const dates = [String(today), String(today + 1), String(today + 2)]
+
+  const dates = useMemo(() => {
+    let dat: any = []
+    market?.windows.map(window => {
+      const alreadyInArr = dat.find((item: string) => item === window.weekDay)
+      if (!alreadyInArr) {
+        return dat.push(window.weekDay)
+      }
+      return dat
+    })
+    return dat
+  }, [market])
 
   return (
-    <View style={[tailwind('flex-row justify-around px-8'), style]}>
-      {dates.map((date, index) => (
+    <ScrollView
+      bounces={false}
+      showsHorizontalScrollIndicator={false}
+      horizontal
+      style={[tailwind('flex-row'), style]}
+    >
+      {dates?.map((date: string) => (
         <TouchableOpacity
           key={date}
           onPress={() => handleChangeDayOption(date)}
-          style={tailwind('items-center')}
+          style={tailwind('items-center mr-2')}
         >
-          <Text
-            style={tailwind(
-              `mb-1 text-center ${
-                deliveryOrPickup?.day === date
-                  ? 'text-primary-500'
-                  : 'text-gray-500'
-              }`,
-            )}
-          >
-            {index === 0 ? 'Hoje' : index === 1 ? 'Amanhã' : 'Depois'}
-          </Text>
           <View
             style={tailwind(
-              `w-8 h-8 rounded-full items-center justify-center ${
+              `rounded items-center px-2 py-1 ${
                 deliveryOrPickup?.day === date
                   ? 'bg-primary-500'
                   : 'bg-gray-500'
@@ -62,12 +73,12 @@ const Days: React.FC<DaysProps> = ({
             )}
           >
             <Text style={tailwind('text-white font-bold text-base')}>
-              {date}
+              {translateWeekDay(date)}
             </Text>
           </View>
         </TouchableOpacity>
       ))}
-    </View>
+    </ScrollView>
   )
 }
 

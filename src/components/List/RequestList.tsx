@@ -1,23 +1,35 @@
-import React, { useMemo } from 'react'
+import React, { Dispatch, SetStateAction, useMemo } from 'react'
 import { StyleProp, ViewStyle, FlatList } from 'react-native'
 import { tailwind } from 'lib/styles'
-import { ItemMock } from 'types/app'
+import { Order } from 'types/app'
 import RequestCard from 'components/RequestCard'
 
 interface RequestListProps {
   readonly style?: StyleProp<ViewStyle>
-  readonly data: ItemMock[]
-  handleOpenHelpModal(): void
+  readonly data: Order[]
+  readonly refetch: boolean
+  handleOpenHelpModal(orderHelp: Order): void
+  setRefetch: Dispatch<SetStateAction<boolean>>
 }
 
 const RequestList: React.FC<RequestListProps> = ({
   style,
   data,
+  refetch,
+  setRefetch,
   handleOpenHelpModal,
 }) => {
-  const renderItem = ({ item }: { item: ItemMock }) => (
+  const handleRefresh = () => {
+    setRefetch(true)
+    setTimeout(() => {
+      setRefetch(false)
+    }, 2000);
+  }
+
+  const renderItem = ({ item }: { item: Order }) => (
     <RequestCard
       key={item.id}
+      order={item}
       handleOpenHelpModal={handleOpenHelpModal}
       style={[tailwind('ml-4 mb-4 mr-4'), { height: 135 }]}
     />
@@ -30,7 +42,9 @@ const RequestList: React.FC<RequestListProps> = ({
       maxToRenderPerBatch={30}
       keyExtractor={item => item.id.toString()}
       showsVerticalScrollIndicator={false}
-      style={[tailwind('-ml-4 mb-24 -mr-4 pt-4'), style]}
+      onRefresh={() => handleRefresh()}
+      refreshing={refetch}
+      style={[tailwind('-ml-4 -mr-4 pt-4'), style]}
       renderItem={memoizedValue}
     />
   )

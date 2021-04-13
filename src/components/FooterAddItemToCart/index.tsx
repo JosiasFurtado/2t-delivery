@@ -11,7 +11,7 @@ import { getColor, tailwind } from 'lib/styles'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import formatPrice from 'utils/formatPrice'
-import { Product } from 'types/app'
+import { MarketWithCategories, Product } from 'types/app'
 import { useDispatch } from 'react-redux'
 import { addToCartRequest } from 'store/modules/cart/actions'
 
@@ -19,12 +19,16 @@ interface FooterAddItemToCartProps {
   readonly style?: StyleProp<ViewStyle>
   readonly product: Product
   readonly comment: string | undefined
+  readonly market: MarketWithCategories
+  readonly blocked?: boolean
 }
 
 const FooterAddItemToCart: React.FC<FooterAddItemToCartProps> = ({
   style,
   product,
   comment,
+  market,
+  blocked
 }) => {
   const dispatch = useDispatch()
   const { navigate } = useNavigation()
@@ -36,7 +40,7 @@ const FooterAddItemToCart: React.FC<FooterAddItemToCartProps> = ({
   const itemPriceMultipliedWithComma = formatPrice(itemPriceMultipliedByAmount)
 
   const handleAddItemToCart = () => {
-    dispatch(addToCartRequest(product, quantityMock, comment))
+    dispatch(addToCartRequest(product, market, quantityMock, comment))
     navigate('Carrinho')
   }
 
@@ -58,6 +62,11 @@ const FooterAddItemToCart: React.FC<FooterAddItemToCartProps> = ({
         style,
       ]}
     >
+      {blocked ? (
+          <View style={tailwind('bg-red-500 py-2 px-2 rounded items-center')}>
+            <Text style={tailwind('text-white text-base text-center')}>Só produtos do mesmo mercado podem ser adicionados no carrinho</Text>
+          </View>
+        ) : (
       <View style={tailwind('flex-row items-center')}>
         <TouchableOpacity
           onPress={handleAddItemToCart}
@@ -110,6 +119,7 @@ const FooterAddItemToCart: React.FC<FooterAddItemToCartProps> = ({
           </TouchableHighlight>
         </View>
       </View>
+      )}
     </View>
   )
 }

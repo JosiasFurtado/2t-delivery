@@ -10,11 +10,12 @@ import { tailwind } from 'lib/styles'
 import Input from './Input'
 import { Form } from '@unform/mobile'
 import { SubmitHandler, FormHandles } from '@unform/core'
+import { ForgotPasswordFormData } from 'types/app'
 
 interface ForgotMyPasswordFormProps {
   readonly style?: StyleProp<ViewStyle>
   readonly formRef: RefObject<FormHandles>
-  handleSubmit: SubmitHandler<FormData>
+  handleSubmit: SubmitHandler<ForgotPasswordFormData>
 }
 
 const ForgotMyPasswordForm: React.FC<ForgotMyPasswordFormProps> = ({

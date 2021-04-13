@@ -6,12 +6,16 @@ import React, {
   useCallback,
 } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
-import { SubmitHandler, FormHandles } from '@unform/core'
-import { LoginModals } from 'types/app'
+import { FormHandles } from '@unform/core'
+import { LoginModals, ForgotPasswordFormData } from 'types/app'
 import { tailwind } from 'lib/styles'
 import ForgotMyPasswordForm from 'components/Form/ForgotMyPasswordForm'
 import PrimaryButton from 'components/styledComponents/PrimaryButton'
 import LayoutModal from '../LayoutModal'
+import { forgotPasswordSchema } from 'utils/schemas'
+import getValidationsErrors from 'utils/getValidationsErrors'
+import * as Yup from 'yup'
+import api from 'services/api'
 
 interface ForgotMyPasswordProps {
   readonly open: boolean
@@ -27,11 +31,22 @@ const ForgotMyPassword: React.FC<ForgotMyPasswordProps> = ({
   const formRef = useRef<FormHandles>(null)
   const [message, setMessage] = useState<string | null>(null)
 
-  const handleSubmitForgotMyPassword: SubmitHandler<FormData> = useCallback(
-    (data, { reset }) => {
-      console.warn(data)
+  const handleSubmitForgotMyPassword = useCallback(
+    async (data: ForgotPasswordFormData, { reset }) => {
+      try {
+        formRef.current?.setErrors({})
+        await forgotPasswordSchema.validate(data, {
+          abortEarly: false,
+        })
+        await api.post('/user/forgot', { email: data.email })
+        reset()
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          const errors = getValidationsErrors(error)
 
-      reset()
+          formRef.current?.setErrors(errors)
+        }
+      }
     },
     [],
   )

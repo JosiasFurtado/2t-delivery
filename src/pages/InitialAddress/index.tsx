@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from 'react'
+import React, { useRef, useCallback, useEffect } from 'react'
 import {
   Text,
   View,
@@ -9,53 +9,69 @@ import {
 } from 'react-native'
 import { tailwind } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
-import { Form } from '@unform/mobile'
-import Input from 'components/Form/Input'
 import StoresLocation from '../../../assets/png/stores-location.png'
 import { FormHandles } from '@unform/core'
 import * as Yup from 'yup'
 import getValidationsErrors from 'utils/getValidationsErrors'
 import { useNavigation } from '@react-navigation/native'
-import { cepSchema } from 'utils/schemas'
+import { addressSchema } from 'utils/schemas'
 import cep from 'cep-promise'
+import AddressForm from 'components/Form/AddressForm'
+import { AddressFormData } from 'types/app'
+import { addUserAddressRequest } from 'store/modules/user/actions'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from 'store/modules/rootReducer'
 
 const InitialAddress: React.FC = () => {
   const { navigate } = useNavigation()
   const formRef = useRef<FormHandles>(null)
-  const [cepError, setCepError] = useState<string | undefined>()
+  const { activeAddressId } = useSelector(
+    (state: RootState) => state.user,
+  )
+  const dispatch = useDispatch()
 
-  const handleSubmit = useCallback(async (data: { cep: string }, { reset }) => {
-    try {
-      formRef.current?.setErrors({})
-      await cepSchema.validate(data, {
-        abortEarly: false,
-      })
-      const { cep: zipcode, street, city, state, neighborhood } = await cep(
-        data.cep,
-      )
-      const dataToSubmit = {
-        name: 'Primeiro acesso',
-        number: 0,
-        aditionalInfo: 'primeiro acesso',
-        zipcode,
-        street,
-        city,
-        state,
-        neighborhood,
-      }
-      console.warn(dataToSubmit)
-      console.warn('endereço:', `${street}, 175, ${neighborhood}, ${state}`)
-      // navigate('Home')
-    } catch (error) {
-      if (error instanceof Yup.ValidationError) {
-        const errors = getValidationsErrors(error)
-
-        formRef.current?.setErrors(errors)
-        setCepError('CEP inválido')
-        return
-      }
+  useEffect(() => {
+    if(activeAddressId) {
+      navigate('Home')
     }
-  }, [])
+  } , [activeAddressId])
+  
+  const handleSubmitAddress = useCallback(
+    async (data: AddressFormData, { reset }) => {
+      try {
+        formRef.current?.setErrors({})
+        await addressSchema.validate(data, {
+          abortEarly: false,
+        })
+        const { cep: zip, street, city, state, neighborhood } = await cep(
+          data.zipcode,
+        )
+        const cepWithoutFormat = zip.split('')
+        cepWithoutFormat.splice(5, 0, '-')
+        const cepFormated = cepWithoutFormat.join("")
+
+        const dataToSubmit = {
+          name: data.name,
+          number: Number(data.number),
+          aditionalInfo: data.aditionalInfo,
+          zipcode: cepFormated,
+          street,
+          city,
+          state,
+          neighborhood,
+        }
+        dispatch(addUserAddressRequest(dataToSubmit))
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          const errors = getValidationsErrors(error)
+
+          formRef.current?.setErrors(errors)
+        }
+      }
+      // reset()
+    },
+    [],
+  )
 
   const handleRedirectToLogin = () => {
     navigate('Login')
@@ -76,42 +92,22 @@ const InitialAddress: React.FC = () => {
       </View>
       <ScrollView style={tailwind('bg-white rounded-t-xl -mt-4 px-4')}>
         <Text
-          style={tailwind('pt-8 text-2xl text-primary-500 font-medium mb-10')}
+          style={tailwind('pt-8 text-2xl text-primary-500 font-medium mb-4')}
         >
           Conte-nos onde você está
         </Text>
         <View style={tailwind('items-center')}>
-          <Text style={tailwind('text-lg text-gray-700 mb-2')}>
-            Digite seu CEP
-          </Text>
-          {cepError && (
-            <Text style={tailwind('text-red-600 text-base')}>{cepError}</Text>
-          )}
-          <Form
-            ref={formRef}
-            onSubmit={handleSubmit}
-            style={tailwind('mb-12 w-1/3')}
-          >
-            <Input
-              name="cep"
-              textContentType="postalCode"
-              placeholder="xxxxx-xxx"
-              keyboardType="number-pad"
-              returnKeyType="done"
-              style={tailwind('text-lg mb-6 text-center')}
-              maxLength={8}
-              autoCompleteType="postal-code"
-              onSubmitEditing={() => formRef.current?.submitForm()}
-            />
+          <AddressForm formRef={formRef}
+            handleSubmit={handleSubmitAddress}
+          />
             <TouchableOpacity
               onPress={() => formRef.current?.submitForm()}
               style={tailwind(
-                'border border-primary-500 rounded-lg items-center py-2',
+                'border border-primary-500 rounded-lg items-center py-2 px-8 mb-2',
               )}
             >
               <Text style={tailwind('text-lg text-primary-500')}>Pronto</Text>
             </TouchableOpacity>
-          </Form>
           <Image
             source={StoresLocation}
             resizeMode="contain"

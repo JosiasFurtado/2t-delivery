@@ -24,9 +24,9 @@ const Toast: React.FC<ToastProps> = ({ style, error }) => {
       Animated.timing(animationValue, {
         useNativeDriver: true,
         toValue: -300,
-        duration: 300,
+        duration: 500,
       }).start()
-    }, 1000)
+    }, 3000)
   }
 
   const transformStyle = {
@@ -47,12 +47,12 @@ const Toast: React.FC<ToastProps> = ({ style, error }) => {
         transformStyle,
       ]}
     >
-      {error?.map((error, index) => (
+      {error?.map((err, index) => (
         <Text
           key={String(index)}
           style={tailwind('text-white text-sm font-bold text-left')}
         >
-          - {error}
+          - {err}
         </Text>
       ))}
     </Animated.View>

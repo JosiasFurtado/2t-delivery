@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, {
   Dispatch,
   SetStateAction,
   useRef,
   useCallback,
   useState,
-  useEffect,
 } from 'react'
 import {
   View,
@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  Linking,
 } from 'react-native'
 import { tailwind } from 'lib/styles'
 import { LoginModals, SignUpFormData } from 'types/app'
@@ -21,8 +22,6 @@ import { FormHandles } from '@unform/core'
 import LayoutModal from '../LayoutModal'
 import * as Yup from 'yup'
 import getValidationsErrors from 'utils/getValidationsErrors'
-import api from 'services/api'
-import { useNavigation } from '@react-navigation/native'
 import { useSelector, useDispatch, connect } from 'react-redux'
 import { RootState } from 'store/modules/rootReducer'
 import { signUpRequest } from 'store/modules/auth/actions'
@@ -45,7 +44,6 @@ const SignUp: React.FC<SignUpProps> = ({
   const formRef = useRef<FormHandles>(null)
   const { loading } = useSelector((state: RootState) => state.auth)
   const [apiError, setApiError] = useState<string | null>()
-  const { navigate, goBack } = useNavigation()
 
   const handleSubmitSignUp = useCallback(
     async (data: SignUpFormData, { reset }) => {
@@ -54,18 +52,22 @@ const SignUp: React.FC<SignUpProps> = ({
         await signUpSchema.validate(data, {
           abortEarly: false,
         })
-        const dataToSubmit = { ...data, type: 'BUYER', gender: 'M' }
-        dispatch(signUpRequest(dataToSubmit))
 
-        // navigate('InitialAddress')
-      } catch (error) {
-        if (error instanceof Yup.ValidationError) {
-          const errors = getValidationsErrors(error)
+        const dataToSubmit = {
+          ...data,
+          type: 'BUYER',
+          gender: 'M',
+          boarnDate: '1970-01-01',
+        }
+        dispatch(signUpRequest(dataToSubmit))
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationsErrors(err)
           formRef.current?.setErrors(errors)
-          return
         } else {
           if (data.password !== data.confirmPassword) {
-            return setApiError('Senha e confirmação de senha estão diferentes')
+            setApiError('Senha e confirmação de senha estão diferentes')
+            return
           }
           setApiError('O e-mail já está em uso')
         }
@@ -80,6 +82,12 @@ const SignUp: React.FC<SignUpProps> = ({
     setOpenModal(true)
   }
 
+  const handleOpenTerms = () => {
+    Linking.openURL(
+      `https://2tdelivery.com.br/static/termos_e_condicoes_de_uso_2t.pdf`,
+    )
+  }
+
   return (
     <LayoutModal title="Registrar" open={open} setOpenModal={setOpenModal}>
       <View style={tailwind('rounded-t-lg bg-white px-5 pt-3 pb-12')}>
@@ -91,7 +99,10 @@ const SignUp: React.FC<SignUpProps> = ({
             Preencha os dados para continuar
           </Text>
           {error?.map((item, index) => (
-            <Text key={index} style={tailwind('mb-1 text-base text-red-500')}>
+            <Text
+              key={index.toString()}
+              style={tailwind('mb-1 text-base text-red-500')}
+            >
               {item}
             </Text>
           ))}
@@ -105,14 +116,11 @@ const SignUp: React.FC<SignUpProps> = ({
             handleSubmit={handleSubmitSignUp}
             style={tailwind('mb-2')}
           />
-          <TouchableOpacity
-            onPress={() => console.warn('adicionar os termos 2t')}
-            style={tailwind('mb-3')}
-          >
+          <TouchableOpacity onPress={handleOpenTerms} style={tailwind('mb-3')}>
             <Text style={tailwind('text-center')}>
               Ao realizar o cadastro você aceita os{' '}
               <Text style={tailwind('text-primary-500 ml-2 mr-2')}>
-                termos de privacidade
+                termos de uso
               </Text>{' '}
               e o envio de promoções.
             </Text>

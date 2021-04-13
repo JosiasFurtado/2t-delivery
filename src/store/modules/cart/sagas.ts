@@ -1,25 +1,35 @@
-import { select, put, all } from 'redux-saga/effects'
+import { select, put, all, delay } from 'redux-saga/effects'
 import * as Eff from 'redux-saga/effects'
 
-import { addToCartSuccess, updateAmountSuccess } from './actions'
-import { Product, ProductInCart } from 'types/app'
+import { addToCartSuccess, updateAmountFailure, updateAmountSuccess } from './actions'
+import { MarketWithCategories, Product, ProductInCart } from 'types/app'
 import formatPrice from 'utils/formatPrice'
+import { RootState } from '../rootReducer'
+
+const delayToCleanErrors = 4000
 
 function* addToCart({
   product,
+  market,
   amount,
   commit,
 }: {
   product: Product
+  market: MarketWithCategories
   amount: number
   commit: string
 }) {
-  const productExists = yield select(state =>
-    state.cart.find(
-      (productInCart: ProductInCart) => productInCart.id === product.id,
-    ),
+  const cart = yield select((state: RootState) => state.cart)
+  const productExists: ProductInCart = cart.find(
+    (productInCart: ProductInCart) => productInCart.id === product.id,
   )
 
+  if(cart[0] && cart[0].marketId !== market.id) {
+    yield put(updateAmountFailure(['Só produtos do mesmo mercado podem ser adicionados no carrinho']))
+    yield delay(delayToCleanErrors, true)
+    yield put(updateAmountFailure(null))
+    return
+  }
   const currentAmount = productExists ? productExists.amount : 0
   const amountIncrement = amount ? currentAmount + amount : currentAmount + 1
 
@@ -32,6 +42,7 @@ function* addToCart({
       amount: amount || 1,
       priceFormatted,
       commit: commit || '',
+      marketId: market.id,
     }
 
     yield put(addToCartSuccess(data))
@@ -46,6 +57,6 @@ function* updateAmount({ id, amount }: { id: number; amount: number }) {
 
 const { takeLatest } = Eff
 export default all([
-  takeLatest('@cart/ADD_REQUEST', addToCart),
-  takeLatest('@cart/UPDATE_AMOUNT_REQUEST', updateAmount),
+  takeLatest<any>('@cart/ADD_REQUEST', addToCart),
+  takeLatest<any>('@cart/UPDATE_AMOUNT_REQUEST', updateAmount),
 ])

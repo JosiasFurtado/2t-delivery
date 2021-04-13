@@ -16,6 +16,10 @@ import AddItemToCart from 'components/FooterAddItemToCart'
 import { TextInput } from 'react-native-gesture-handler'
 import { Market, Product } from 'types/app'
 import formatPrice from 'utils/formatPrice'
+import useMarketDetails from 'utils/useMarketDetails'
+import { RootState } from 'store/modules/rootReducer'
+import { useSelector } from 'react-redux'
+import Toast from 'components/Toast'
 
 interface ItemPageProps {
   route: {
@@ -28,17 +32,24 @@ interface ItemPageProps {
 }
 
 const ItemPage: React.FC<ItemPageProps> = ({ route }) => {
+  const { error } = useSelector((state: RootState) => state.auth)
+  const cart = useSelector((state: RootState) => state.cart)
   const { product, market, subcategoryList } = route.params
   const { goBack } = useNavigation()
+  const [{ data }] = useMarketDetails(market.id)
   const [openCommentArea, setOpenCommentArea] = useState(false)
   const [commentValue, setCommentValue] = useState<string | undefined>()
 
-  const itemPriceWithComma = formatPrice(product.price)
+  const prodsInCartAnotherMarket =
+    cart[0] && data && cart[0].marketId !== data.id
 
-  const productsOfTheSameCategory = subcategoryList.filter(item => item.id !== product.id)
+  const productsOfTheSameCategory = subcategoryList.filter(
+    item => item.id !== product.id,
+  )
 
   return (
     <SafeAreaView style={tailwind('flex-1 relative bg-primary-500')}>
+      <Toast error={error} />
       <ScrollView style={tailwind('bg-gray-50')}>
         <View style={tailwind('relative bg-primary-500 h-56')}>
           <Image
@@ -61,9 +72,9 @@ const ItemPage: React.FC<ItemPageProps> = ({ route }) => {
             >
               <View style={tailwind('w-8/12')}>
                 <Text
-                  lineBreakMode="tail"
-                  numberOfLines={1}
-                  style={tailwind('text-primary-500 text-3xl font-medium')}
+                  style={tailwind(
+                    'text-primary-500 text-3xl font-medium -mt-1',
+                  )}
                 >
                   {product.name}
                 </Text>
@@ -72,11 +83,12 @@ const ItemPage: React.FC<ItemPageProps> = ({ route }) => {
                   numberOfLines={1}
                   style={tailwind('text-gray-500 text-xl')}
                 >
-                  {market.name}
+                  {product.volume && `${product.volume}ml`}
+                  {product.weight && `${product.weight}g`}
                 </Text>
               </View>
-              <Text style={tailwind('text-2xl font-medium text-primary-500')}>
-                {itemPriceWithComma}
+              <Text style={tailwind('text-2xl font-medium text-gray-600')}>
+                {formatPrice(product.price)}
               </Text>
             </View>
             <Text
@@ -95,7 +107,8 @@ const ItemPage: React.FC<ItemPageProps> = ({ route }) => {
             >
               <View
                 style={tailwind(
-                  `flex-row bg-primary-500 items-center px-2 py-1 ${openCommentArea ? 'rounded-t-lg' : 'rounded-lg'
+                  `flex-row bg-primary-500 items-center px-2 py-1 ${
+                    openCommentArea ? 'rounded-t-lg' : 'rounded-lg'
                   }`,
                 )}
               >
@@ -109,7 +122,7 @@ const ItemPage: React.FC<ItemPageProps> = ({ route }) => {
               <TextInput
                 placeholder="Caso precise, adicione aqui uma observação. Exemplo: Quero bananas mais verdes"
                 allowFontScaling={false}
-                multiline={true}
+                multiline
                 numberOfLines={3}
                 autoCorrect={false}
                 autoCapitalize="none"
@@ -128,11 +141,24 @@ const ItemPage: React.FC<ItemPageProps> = ({ route }) => {
             <Text style={tailwind('text-lg text-primary-500 mb-2')}>
               Produtos relacionados
             </Text>
-            <ItemList products={productsOfTheSameCategory} market={market} subcategoryList={productsOfTheSameCategory} />
+            {data && (
+              <ItemList
+                products={productsOfTheSameCategory}
+                market={data}
+                subcategoryList={productsOfTheSameCategory}
+              />
+            )}
           </View>
         </View>
       </ScrollView>
-      <AddItemToCart product={product} comment={commentValue} />
+      {data && (
+        <AddItemToCart
+          product={product}
+          blocked={prodsInCartAnotherMarket}
+          market={data}
+          comment={commentValue}
+        />
+      )}
     </SafeAreaView>
   )
 }

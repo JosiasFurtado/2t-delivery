@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { StyleProp, TextInput, View, ViewStyle } from 'react-native'
 import { tailwind } from 'lib/styles'
 import { Ionicons } from '@expo/vector-icons'
@@ -6,16 +6,11 @@ import { Ionicons } from '@expo/vector-icons'
 interface SearchInputProps {
   readonly style?: StyleProp<ViewStyle>
   readonly searchProducts?: boolean
+  readonly searchValue: string | undefined
+  setSearchValue: Dispatch<SetStateAction<string | undefined>>
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ style, searchProducts }) => {
-  const [searchValue, setSearchValue] = useState('')
-
-  const handleSearch = () => {
-    if (searchValue === '') {
-      return
-    }
-  }
+const SearchInput: React.FC<SearchInputProps> = ({ style, searchProducts, searchValue, setSearchValue }) => {
 
   return (
     <View style={[style, tailwind('relative justify-center')]}>
@@ -41,7 +36,6 @@ const SearchInput: React.FC<SearchInputProps> = ({ style, searchProducts }) => {
         onChangeText={e => setSearchValue(e)}
         value={searchValue}
         returnKeyType="search"
-        onSubmitEditing={() => handleSearch()}
       />
     </View>
   )

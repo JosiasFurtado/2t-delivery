@@ -14,6 +14,7 @@ export interface ProductInCart extends Product {
   amount: number
   priceFormatted: string
   commit: string
+  marketId: number
 }
 
 export interface ProductWithSubtotal extends ProductInCart {
@@ -22,7 +23,7 @@ export interface ProductWithSubtotal extends ProductInCart {
 
 export type AdvertisingCarouselItemType = {
   id: string
-  image_url?: string
+  image: any
   description?: string
 }
 
@@ -43,9 +44,47 @@ export type ProfileModals = 'address' | 'help' | 'config' | 'newAddress'
 
 export type CartModals = 'comment' | 'cleanCart'
 
+export type CheckoutModals = 'address' | 'newAddress' | 'payments'
+
+export interface CheckoutFormData {
+  phone: string
+  cpf: string
+}
+
 export interface SignInFormData {
   email: string
   password: string
+}
+
+export interface ForgotPasswordFormData {
+  email: string
+}
+
+export interface AddressFormData {
+  zipcode: string
+  name: string
+  number: number
+  aditionalInfo: string
+}
+
+export interface CheckoutFormDataToSubmit {
+  isTakeOut: boolean
+  marketId: number
+  items: {
+    productId: number
+    amount: number
+  }[]
+  paymentMethodId: number
+  addressId: number
+  windowId: number
+  contact: string
+}
+
+export interface FullAddressData {
+  zipcode: string
+  name: string
+  number: number
+  aditionalInfo: string
 }
 
 export interface SignUpFormData {
@@ -67,6 +106,11 @@ export interface UserState {
   user: IUser | null
   activeAddressId: number | null
   addresses: UserAddress[] | null
+  loading: boolean
+}
+
+export interface CartState {
+  products: ProductInCart[]
 }
 
 export interface UpdateUserFormData {
@@ -110,8 +154,9 @@ export interface Market {
   updatedAt: string
   tags: Tag[] | []
   phones: Phone[]
-  windows: Window[] | []
+  windows: Window[]
   deliveryRanges: DeliveryRange[] | []
+  distanceBetweenUser: number
 }
 
 export interface Phone {
@@ -150,7 +195,7 @@ export interface Address {
 
 export interface DeliveryRange {
   id: number
-  price: number
+  price: string
   startsAt: number
   endsAt: number
   createdAt: string
@@ -158,7 +203,14 @@ export interface DeliveryRange {
   marketId: number
 }
 
-export type Weekday = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
+export type Weekday =
+  | 'sunday'
+  | 'monday'
+  | 'tuesday'
+  | 'wednesday'
+  | 'thursday'
+  | 'friday'
+  | 'saturday'
 
 export interface Window {
   id: number
@@ -225,7 +277,86 @@ export interface Product {
   createdAt: string
   updatedAt: string
   subcategoryId: number
+  isExclusive: boolean
 }
 
-export interface NutritionalTable {
+export interface NutritionalTable {}
+
+export type Payments = Payment[]
+
+export type PaymentTypes =
+  | 'Vale Refeição'
+  | 'Cartões de Débito'
+  | 'Principais'
+  | 'Vale Alimentação'
+  | 'Cartões de Crédito'
+
+export interface Payment {
+  id: number
+  name: PaymentTypes
+  createdAt: string
+  updatedAt: string
+  marketId: number
+  methods: Method[]
+}
+
+export interface Method {
+  id: number
+  delivery: boolean
+  online: boolean
+  name: string
+  createdAt: string
+  updatedAt: string
+  paymentTypeId: number
+}
+
+export interface PaymentSelected {
+  id: number
+  payment: PaymentTypes
+  method: string
+}
+
+export type OrderStatus =
+  | 'SENT'
+  | 'SEEN'
+  | 'DOING'
+  | 'READY'
+  | 'FINISHED'
+  | 'CANCELED'
+
+export interface Order {
+  id: number
+  status: OrderStatus
+  total: string
+  isTakeOut: boolean
+  seenAt: string | null
+  readyAt: string | null
+  finishedAt: string | null
+  canceledAt: string | null
+  createdAt: string
+  window: Window | null
+  market: {
+    id: number
+    name: string
+    imageUrl: string
+    email: string
+    address: Address
+    phones: Phone[]
+  }
+  user: IUser
+  address: Address
+  items: OrderItem[]
+  paymentMethod: {
+    id: number
+    name: string
+  }
+}
+
+export interface OrderItem {
+  amount: number
+  comment: string
+  price: string
+  orderId: number
+  id: number
+  product: Product
 }

@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleProp, View, SafeAreaView, ViewStyle, Text } from 'react-native'
 import { tailwind } from 'lib/styles'
 import TutorialCarousel from 'components/TutorialCarousel'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from 'store/modules/rootReducer'
+import { updateUserAddresses } from 'store/modules/user/actions'
 
 interface TutorialProps {
   readonly style?: StyleProp<ViewStyle>
@@ -12,6 +15,8 @@ interface TutorialProps {
 }
 
 const Tutorial: React.FC<TutorialProps> = ({ route }) => {
+  const dispatch = useDispatch()
+  const { user, activeAddressId } = useSelector((state: RootState) => state.user)
   const fromProfile = route.params && route.params.fromProfile
   const { navigate, goBack } = useNavigation()
   const handleNavigate = () => {
@@ -20,6 +25,16 @@ const Tutorial: React.FC<TutorialProps> = ({ route }) => {
     }
     return navigate('Login')
   }
+
+  useEffect(() => {
+    if (user && activeAddressId && !fromProfile) {
+      dispatch(updateUserAddresses(user.id))
+      navigate('Home')
+    }
+    if (user && !activeAddressId && !fromProfile) {
+      navigate('InitialAddress')
+    }
+  }, [user, activeAddressId])
 
   return (
     <SafeAreaView style={tailwind('flex-1 relative bg-white')}>

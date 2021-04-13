@@ -15,53 +15,9 @@ import StoreModal from 'components/modals/Store/WarnMinimumValues'
 import CategoriesList from 'components/List/CategoriesList'
 import { Market } from 'types/app'
 import useMarketDetails from 'utils/useMarketDetails'
-
-export const productsMock = [
-  {
-    id: 'uifisd',
-    name: 'Tomates 1kg',
-    price: 1199,
-    img: 'https://belezaesaude.com/i/730/56/tomate.jpg',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
-  },
-  {
-    id: 'uiasdasdfisd',
-    name: 'Manga',
-    price: 870,
-    img:
-      'https://s2.glbimg.com/QeQ9cqGo-kE-TyD1crH7jpUiDE4=/620x455/e.glbimg.com/og/ed/f/original/2020/01/21/gettyimages-463651383.jpg',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
-  },
-  {
-    id: 'uifissd',
-    name: 'Uva',
-    price: 499,
-    img:
-      'https://alemdovinho.files.wordpress.com/2015/12/uva-tannat.jpg?w=862&h=689',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
-  },
-  {
-    id: 'uifi22sd',
-    name: 'Maça',
-    price: 600,
-    img:
-      'https://media.gazetadopovo.com.br/2019/03/04330279e3c5551ef98b4e48c609d286-gpMedium.jpg',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
-  },
-  {
-    id: 'uifiasdsd',
-    name: 'Mamão',
-    price: 550,
-    img:
-      'https://www.sitiodamata.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/e/semente-mamao-papaya-hawaii-carica-papaya..jpg',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut orci feugiat, tempor elit vitae, malesuada neque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam bibendum sit amet enim id iaculis. Vivamus lacinia odio justo, molestie euismod elit accumsan a. Mauris ultrices sapien at fringilla',
-  },
-]
+import { useSelector } from 'react-redux'
+import { RootState } from 'store/modules/rootReducer'
+import Toast from 'components/Toast'
 
 interface StorePageProps {
   readonly style?: StyleProp<ViewStyle>
@@ -73,38 +29,48 @@ interface StorePageProps {
 }
 
 const StorePage: React.FC<StorePageProps> = ({ route }) => {
+  const { error } = useSelector((state: RootState) => state.auth)
   const marketInProps = route.params.market
   const [openModal, setOpenModal] = useState(false)
   const [{ data }] = useMarketDetails(marketInProps.id)
 
+  const existProdutcs = data && data.categories[0] && data.categories[0].categories[0] && data.categories[0].categories[0].products
   return (
     <SafeAreaView style={tailwind('flex-1 bg-primary-500 relative')}>
-      <ScrollView style={tailwind('bg-primary-500')}>
-        <Header storeName={marketInProps.name} searchProducts hiddenAddress />
+      <Toast error={error} />
+      <ScrollView style={tailwind(`${data ? "bg-gray-50" : "bg-primary-500"}`)}>
         {data ? (
-          <View style={tailwind('-mt-4 h-full rounded-t-xl bg-gray-50 pb-6')}>
-            <View style={tailwind('mt-4 px-4 flex-row')}>
-              <CategoriesList style={tailwind('px-4 py-2')} market={data} />
+          <>
+            <Header store={data} hiddenSearch hiddenAddress />
+            <View style={tailwind('-mt-4 h-full rounded-t-xl bg-gray-50 pb-6')}>
+              <View style={tailwind('mt-4 px-4 flex-row')}>
+                <CategoriesList style={tailwind('px-4 py-2')} market={data} />
+              </View>
+              {existProdutcs ? (
+                <View style={tailwind('px-4')}>
+                  <Text style={tailwind('text-lg text-primary-500 mb-2')}>
+                    Produtos em destaque
+                  </Text>
+                  {data.categories.map(category =>
+                    category.categories.map(subcategory => (
+                      <ItemList
+                        key={String(subcategory.id)}
+                        products={subcategory.products}
+                        categoryName={category.name}
+                        title={subcategory.name}
+                        market={data}
+                        subcategoryList={subcategory.products}
+                        style={tailwind('mb-4')}
+                      />
+                    )),
+                  )}
+                </View>
+              ) : (
+                  <View style={tailwind('h-full py-24')}>
+                    <Text style={tailwind('px-4 text-center text-lg')}>Esse mercado ainda não possui produtos cadastrados :(</Text>
+                  </View>)}
             </View>
-            <View style={tailwind('px-4')}>
-              <Text style={tailwind('text-lg text-primary-500 mb-2')}>
-                Produtos em destaque
-              </Text>
-              {data.categories.map(category =>
-                category.categories.map(subcategory => (
-                  <ItemList
-                    key={String(subcategory.id)}
-                    products={subcategory.products}
-                    categoryName={category.name}
-                    title={subcategory.name}
-                    market={marketInProps}
-                    subcategoryList={subcategory.products}
-                    style={tailwind('mb-4')}
-                  />
-                )),
-              )}
-            </View>
-          </View>
+          </>
         ) : (
             <View style={tailwind('py-24 items-center justify-center')}>
               <ActivityIndicator color="#fff" size={40} />

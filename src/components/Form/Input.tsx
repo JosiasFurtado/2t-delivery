@@ -90,6 +90,10 @@ const Input: React.RefForwardingComponent<InputRefProps, InputProps> = (
           style,
         ]}
         onChangeText={value => {
+          if (name === 'boarnDate') {
+            inputValueRef.current.value = 'data'
+            return
+          }
           inputValueRef.current.value = value
         }}
         defaultValue={defaultValue}

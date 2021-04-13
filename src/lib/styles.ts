@@ -39,11 +39,17 @@ const { tailwind, getColor } = create({
   'text-primary-500': {
     color: '#00BF68',
   },
+  'text-primary-600': {
+    color: '#00AC5E',
+  },
   'border-primary-500': {
     borderColor: '#00BF68',
   },
   'w-38': {
     width: 185,
+  },
+  'h-65': {
+    height: 330,
   },
   'shadow-sm': {
     shadowColor: '#000',
@@ -88,6 +94,9 @@ const { tailwind, getColor } = create({
     shadowRadius: 2.62,
 
     elevation: 18,
+  },
+  'w-48p': {
+    width: '48%',
   },
 })
 export { tailwind, getColor }

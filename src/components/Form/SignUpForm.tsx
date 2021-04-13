@@ -69,7 +69,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
               password1InputRef.current?.focus()
             }}
           />
-
           <Input
             ref={password1InputRef}
             secureTextEntry

@@ -2,8 +2,7 @@
   "expo": {
     "name": "2T Delivery",
     "slug": "2tdelivery",
-    "platforms": ["ios", "android"],
-    "version": "1.0.0",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -17,14 +16,19 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.doist.delivery"
+      "buildNumber": "1.0.3",
+      "bundleIdentifier": "com.doist.delivery",
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
-      "package": "com.doist.delivery"
+      "package": "com.doist.delivery",
+      "versionCode": 2
     },
     "extra": {
-      "EXPO_API_URL": "https://smerca-api-staging.herokuapp.com/api/v1",
-      "EXPO_2T_CONTACT": "5514996037486",
+      "EXPO_API_URL": "https://backend.2tdelivery.com.br/api/v1",
+      "EXPO_2T_CONTACT": "5562996037486",
       "EXPO_MSG_TO_CONTACT": "Olá,%20atendente%20da%202T,%20preciso%20de%20ajuda."
     }
   }

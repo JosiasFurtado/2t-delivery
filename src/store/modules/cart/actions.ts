@@ -1,13 +1,15 @@
-import { Product, ProductInCart } from 'types/app'
+import { Market, MarketWithCategories, Product, ProductInCart } from 'types/app'
 
 export function addToCartRequest(
   product: Product,
+  market: Market | MarketWithCategories,
   amount?: number,
-  commit?: string | undefined,
+  commit?: string | undefined
 ) {
   return {
     type: '@cart/ADD_REQUEST',
     product,
+    market,
     amount,
     commit,
   }
@@ -32,6 +34,14 @@ export function removeAllFromCart() {
   }
 }
 
+export function updateProductComment(comment: string, id: number) {
+  return {
+    type: '@cart/UPDATE_PRODUCT_COMMENT',
+    comment,
+    id
+  }
+}
+
 export function updateAmountRequest(id: number, amount: number) {
   return {
     type: '@cart/UPDATE_AMOUNT_REQUEST',
@@ -45,5 +55,12 @@ export function updateAmountSuccess(id: number, amount: number) {
     type: '@cart/UPDATE_AMOUNT_SUCCESS',
     id,
     amount,
+  }
+}
+
+export function updateAmountFailure(error: string[] | null) {
+  return {
+    type: '@cart/UPDATE_AMOUNT_FAILURE',
+    error,
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   View,
   Text,
@@ -15,11 +15,41 @@ import { LoginModals } from 'types/app'
 import LoginModal from 'components/modals/LoginModal'
 import { useNavigation } from '@react-navigation/native'
 import Eyes from '../../../assets/icons/eyes.png'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from 'store/modules/rootReducer'
+import { signInRequest } from 'store/modules/auth/actions'
 
-const Login: React.FC = () => {
+interface LoginProps {
+  readonly route: any
+}
+const Login: React.FC<LoginProps> = ({ route }) => {
+  const newUserSignUp = route.params && route.params.fromVisitor
+  const dispatch = useDispatch()
+  const { user, activeAddressId } = useSelector(
+    (state: RootState) => state.user,
+  )
   const { navigate } = useNavigation()
   const [openModal, setOpenModal] = useState(false)
   const [typeModal, setTypeModal] = useState<LoginModals>('signin')
+
+  useEffect(() => {
+    if (user && user.firstName === 'Visitante') {
+      navigate('VisitorInitialAddress')
+      return
+    }
+    if (user && activeAddressId) {
+      setOpenModal(false)
+      navigate('Home')
+      return
+    }
+    if (user && !activeAddressId) {
+      setOpenModal(false)
+      navigate('InitialAddress')
+    }
+    if (newUserSignUp) {
+      openSignUpModal()
+    }
+  }, [user, activeAddressId])
 
   const openSignUpModal = () => {
     setTypeModal('signup')
@@ -36,8 +66,12 @@ const Login: React.FC = () => {
   }
 
   const handleSetVisitorAndNavigateToAddress = () => {
-    // add settings visitor
-    navigate('InitialAddress')
+    const data = {
+      email: 'visitante@visitante.com',
+      password: '123456',
+    }
+    dispatch(signInRequest(data))
+    navigate('VisitorInitialAddress')
   }
 
   return (

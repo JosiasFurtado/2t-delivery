@@ -13,11 +13,12 @@ import AddAndRemoveBtns from 'components/styledComponents/AddAndRemoveBtns'
 import { useDispatch } from 'react-redux'
 import { removeFromCart, updateAmountRequest } from 'store/modules/cart/actions'
 import { ProductWithSubtotal } from 'types/app'
+import formatPrice from 'utils/formatPrice'
 
 interface ItemCartProps {
   readonly style?: StyleProp<ViewStyle>
   readonly product: ProductWithSubtotal
-  openCommitModal(x: string): void
+  openCommitModal(x: string, productId: number): void
 }
 
 const ItemCart: React.FC<ItemCartProps> = ({
@@ -77,10 +78,12 @@ const ItemCart: React.FC<ItemCartProps> = ({
               numberOfLines={1}
               style={tailwind('text-sm')}
             >
-              {product.priceFormatted}
+              {product.promotionPrice
+                ? formatPrice(product.promotionPrice)
+                : product.priceFormatted}
             </Text>
             <TouchableOpacity
-              onPress={() => openCommitModal(product.commit)}
+              onPress={() => openCommitModal(product.commit, product.id)}
               style={tailwind('flex-row items-center')}
             >
               <FontAwesome5

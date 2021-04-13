@@ -2,7 +2,9 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "commonjs",
-    "lib": ["es6"],
+    "lib": [
+      "es6"
+    ],
     "allowJs": true,
     "jsx": "react-native",
     "noEmit": true,
@@ -12,9 +14,6 @@
     "strict": true,
     "moduleResolution": "node",
     "baseUrl": "./src",
-    "paths": {
-      "@*": ["./"]
-    },
     "typeRoots": [
       "./node_modules/@types",
       "./src/types/app",

@@ -6,48 +6,56 @@ interface ICartAction extends Action {
   id?: number
   amount: number
   product: ProductInCart
+  error: string[] | null
+  comment: string
 }
 
 const Cart: Reducer<any, ICartAction> = (
   state: ProductInCart[] = [],
   action: ICartAction,
 ) => {
+  return produce(state, draft => {
   switch (action.type) {
-    case '@cart/ADD_SUCCESS':
-      return produce(state, draft => {
-        const { product } = action
-
-        draft.push(product)
-      })
+    case '@cart/ADD_SUCCESS': {
+        draft.push(action.product)
+        break
+    }
     case '@cart/UPDATE_AMOUNT_SUCCESS': {
-      return produce(state, (draft: any[]) => {
         const productIndex = draft.findIndex(
-          product => product.id === action.id,
+          (product: ProductInCart) => product.id === action.id,
         )
-
         if (productIndex >= 0) {
           draft[productIndex].amount = Number(action.amount)
         }
-      })
-    }
-    case '@cart/REMOVE':
-      return produce(state, (draft: any[]) => {
+        break
+      }
+    case '@cart/UPDATE_PRODUCT_COMMENT': {
         const productIndex = draft.findIndex(
-          product => product.id === action.id,
+          (product: ProductInCart) => product.id === action.id,
         )
-
+          draft[productIndex].commit = action.comment
+        break
+      }
+    case '@cart/REMOVE': {
+        const productIndex = draft.findIndex(
+          (product: ProductInCart) => product.id === action.id,
+        )
         if (productIndex >= 0) {
           draft.splice(productIndex, 1)
         }
-      })
-    case '@cart/REMOVE_ALL':
-      return produce(state, (draft: any[]) => {
+        break 
+      }
+    case '@cart/REMOVE_ALL': {
         draft.splice(0, state.length)
-      })
-
+        break
+    }
+    case '@auth/SIGN_OUT': {
+        draft.splice(0, state.length)
+        break
+    }
     default:
-      return state
-  }
+    }
+  })
 }
 
 export default Cart

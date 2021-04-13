@@ -6,8 +6,14 @@ import { CartModals } from 'types/app'
 interface CartModalProps {
   readonly type: CartModals
   readonly open: boolean
-  readonly comment: string | undefined
-  setComment: Dispatch<SetStateAction<string | undefined>>
+  readonly comment: { 
+    comment: string | undefined
+    productId: number | undefined
+  } | undefined
+  setComment: Dispatch<SetStateAction<{ 
+    comment: string | undefined
+    productId: number | undefined
+  } | undefined>>
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 

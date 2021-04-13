@@ -16,6 +16,8 @@ import MyRequests from '../pages/MyRequests'
 import InitialAddress from '../pages/InitialAddress'
 import Profile from '../pages/Profile'
 
+import VisitorInitialAddress from '../pages/VisitorInitialAddress'
+
 const Stack = createStackNavigator()
 
 export default function StackRoutes() {
@@ -27,6 +29,10 @@ export default function StackRoutes() {
       <Stack.Screen name="Home" component={TabNavRoutes} />
       <Stack.Screen name="ItemPage" component={ItemPage} />
       <Stack.Screen name="Checkout" component={Checkout} />
+      <Stack.Screen
+        name="VisitorInitialAddress"
+        component={VisitorInitialAddress}
+      />
     </StackNavigator>
   )
 }

@@ -1,9 +1,14 @@
-import React, { useState, PureComponent, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { StyleProp, View, ViewStyle, Dimensions } from 'react-native'
 import CarouselView, { Pagination } from 'react-native-snap-carousel'
 import { tailwind } from 'lib/styles'
 import AdvertisingCarouselItem from './AdvertisingCarouselItem'
 import { AdvertisingCarouselItemType } from 'types/app'
+import banner01 from '../../../assets/banners/01.jpg'
+import banner02 from '../../../assets/banners/02.jpg'
+import banner03 from '../../../assets/banners/03.jpg'
+import banner04 from '../../../assets/banners/04.jpg'
+import banner05 from '../../../assets/banners/05.jpg'
 
 interface CarouselProps {
   readonly style?: StyleProp<ViewStyle>
@@ -11,25 +16,25 @@ interface CarouselProps {
 
 const dataCarousel: AdvertisingCarouselItemType[] = [
   {
-    id: '0',
-    image_url:
-      'https://image.freepik.com/vetores-gratis/modelo-de-anuncio-comida-para-hamburguer_23-2148449854.jpg',
+    id: '01',
+    image: banner01
   },
   {
-    id: '1',
-    image_url:
-      'https://i.pinimg.com/736x/e2/c9/80/e2c980b8ea4ca3c53be25d7d885012a5.jpg',
+    id: '02',
+    image: banner02
   },
   {
-    id: '2',
-    image_url:
-      'https://image.freepik.com/fotos-gratis/close-up-de-escuro-ardosia-preta-pedra-fundo_23-2148118059.jpg',
-    description: 'Descrição opcional',
+    id: '03',
+    image: banner03,
   },
   {
-    id: '3',
-    description: 'Descrição de exemplo',
+    id: '04',
+    image: banner04,
   },
+  {
+    id: '05',
+    image: banner05,
+  }
 ]
 
 const Carousel: React.FC<CarouselProps> = ({ style }) => {
@@ -46,7 +51,6 @@ const Carousel: React.FC<CarouselProps> = ({ style }) => {
       <CarouselView
         layout="default"
         data={dataCarousel}
-        // @ts-ignore
         renderItem={memoizedValue}
         sliderWidth={viewportWidth}
         itemWidth={viewportWidth}

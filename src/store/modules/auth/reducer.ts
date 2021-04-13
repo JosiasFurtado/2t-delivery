@@ -26,6 +26,10 @@ const Auth: Reducer<AuthState, IUserAction> = (
         draft.loading = true
         break
       }
+      case '@auth/SIGN_UP_REQUEST': {
+        draft.loading = true
+        break
+      }
       case '@auth/SIGN_IN_SUCCESS': {
         const { token } = action
         draft.loading = false
@@ -33,10 +37,15 @@ const Auth: Reducer<AuthState, IUserAction> = (
         draft.token = token
         break
       }
-      case '@auth/SIGN_FAILURE': {
+      case '@auth/SET_ERROR': {
         const { error } = action
         draft.error = error
         draft.loading = false
+        break
+      }
+      case '@cart/UPDATE_AMOUNT_FAILURE': {
+        const { error } = action
+        draft.error = error
         break
       }
       case '@auth/SIGN_OUT': {

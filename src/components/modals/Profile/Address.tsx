@@ -47,13 +47,13 @@ const Address: React.FC<AddressProps> = ({
           Escolha um dos que já cadastrou ou cadastre um novo
         </Text>
         <AddressList
-          style={tailwind('mb-4')}
+          style={tailwind('mb-4 h-64')}
           addresses={addresses}
           checked={checked}
           setChecked={setChecked}
         />
         <PrimaryButton
-          onPress={handleChangeUserAddress}
+          onPress={() => handleChangeUserAddress()}
           style={tailwind('mb-4')}
         >
           <Text style={tailwind('text-xl text-white')}>Confirmar</Text>
